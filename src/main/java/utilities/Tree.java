@@ -15,7 +15,6 @@ public class Tree<T> {
         this.root = root;
     }
 
-
     public boolean isLeaf(){
         return root.isLeaf();
     }
