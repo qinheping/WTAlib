@@ -2,8 +2,8 @@ package automata;
 
 
 import utilities.Tree;
-import java.util.Collection;
-import java.util.LinkedList;
+
+import java.util.*;
 
 /**
  *  Automata abstract class
@@ -110,16 +110,6 @@ public abstract class Automaton<S, R> {
     public abstract Integer getInitialState();
 
     /**
-     * @return true if the set <code>conf</code> contains an initial state
-     */
-    public boolean isInitialConfiguration(Collection<Integer> conf) {
-        for (Integer state : conf)
-            if (isInitialState(state))
-                return true;
-        return false;
-    }
-
-    /**
      * @return true if <code>state</code> is an initial state
      */
     public boolean isInitialState(Integer state) {
@@ -130,30 +120,21 @@ public abstract class Automaton<S, R> {
     // Auxiliary protected functions
     // ------------------------------------------------------
 
-    protected Collection<Integer> getNextState(Collection<Integer> currState, S inputElement, BooleanAlgebra<P, S> ba) throws TimeoutException {
-        Collection<Integer> nextState = new HashSet<Integer>();
-        for (Move<P, S> t : getMovesFrom(currState)) {
-            if (!t.isEpsilonTransition()) {
-                if (t.hasModel(inputElement, ba))
-                    nextState.add(t.to);
+    protected Collection<Tree<Integer>> getRuns(Integer currState, Tree<S> inputTree){
+        Collection<Tree<Integer>> runs = new HashSet<Tree<Integer>>();
+        for (Move<S, R> t : getMovesFrom(currState)) {
+            if(t.getRank() == 0)
+                runs.add(new Tree<Integer>(currState));
+            else {
+                Iterator<Tree<S>> subTreeItr = inputTree.getSubTrees().iterator();
+                Collection<Tree<Integer>> runs_move = new HashSet<Tree<Integer>>();
+                for(Integer state: t.to){
+                    Collection<Tree<Integer>> subRuns = getRuns(state,subTreeItr.next());
+                }
             }
         }
 
         return nextState;
-    }
-
-    /**
-     * If <code>state<code> belongs to reached returns reached(state) otherwise
-     * add state to reached and to toVisit and return corresponding id
-     */
-    public static <A, B> int getStateId(A state, Map<A, Integer> reached, LinkedList<A> toVisit) {
-        if (!reached.containsKey(state)) {
-            int newId = reached.size();
-            reached.put(state, newId);
-            toVisit.add(state);
-            return newId;
-        } else
-            return reached.get(state);
     }
 
     // ------------------------------------------------------
