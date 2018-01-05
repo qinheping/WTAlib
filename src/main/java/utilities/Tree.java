@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tree<T> {
+    public Node<T> getRoot() {
+        return root;
+    }
+
     private Node<T> root;
 
     public Tree(T rootData) {
@@ -13,6 +17,16 @@ public class Tree<T> {
     }
     public Tree(Node<T> root) {
         this.root = root;
+    }
+
+    public Tree(Tree<T> t){
+        root = new Node<T>();
+        root.data = t.getRoot().getData();
+        root.setChildren(new ArrayList<Node<T>>(root.getChildren()));
+    }
+
+    public void addChild(Tree<T> child){
+        root.getChildren().add(child.getRoot());
     }
 
     public boolean isLeaf(){
@@ -33,12 +47,9 @@ public class Tree<T> {
             return data;
         }
 
-
-        private Node<T> parent;
-        public Node<T> getParent() {
-            return parent;
+        public void setChildren(List<Node<T>> children) {
+            this.children = children;
         }
-
 
         private List<Node<T>> children;
         public List<Node<T>> getChildren() {

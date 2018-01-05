@@ -12,24 +12,21 @@ import java.util.List;
  *      semiring
  */
 
-public abstract class Move<S, R> {
+public abstract class Move<S> {
     // Source state
     public Integer from;
     // Target state
     public List<Integer> to;
     // Consumed symbol
     public S symbol;
-    // Weight
-    public R weight;
 
     /**
      * Transition from state <code>from</code> to state <code>to</code>
      */
-    public Move(Integer from, List<Integer> to, S symbol, R weight) {
+    public Move(Integer from, List<Integer> to, S symbol) {
         this.from = from;
         this.to = to;
         this.symbol = symbol;
-        this.weight = weight;
     }
 
     /**
