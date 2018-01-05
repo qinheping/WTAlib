@@ -58,26 +58,16 @@ public abstract class Automaton<S> {
      * Set of moves from set of states
      */
     public Collection<Move<S>> getMovesFrom(Collection<Integer> states) {
-        Collection<Move<S>> transitions = new LinkedList<Move<S,>>();
+        Collection<Move<S>> transitions = new LinkedList<Move<S>>();
         for (Integer state : states)
             transitions.addAll(getMovesFrom(state));
         return transitions;
     }
 
     /**
-     * Set of moves to <code>state</code>
+     * Set of moves to list of state
      */
-    public abstract Collection<Move<S>> getMovesTo(Integer state);
-
-    /**
-     * Set of moves to a set of states <code>states</code>
-     */
-    public Collection<Move<S>> getMovesTo(Collection<Integer> states) {
-        Collection<Move<S>> transitions = new LinkedList<Move<S>>();
-        for (Integer state : states)
-            transitions.addAll(getMovesTo(state));
-        return transitions;
-    }
+    public abstract Collection<Move<S>> getMovesFrom(List<Integer> states);
 
     /**
      * Returns the set of states
@@ -103,6 +93,9 @@ public abstract class Automaton<S> {
     protected Collection<Tree<Integer>> getRuns(Integer currState, Tree<S> inputTree){
         Collection<Tree<Integer>> runs = new HashSet<Tree<Integer>>();
         for (Move<S> t : getMovesFrom(currState)) {
+            if(!inputTree.getChildrenData().equals(t.to))
+                continue;;
+
             if(t.getRank() == 0)
                 runs.add(new Tree<Integer>(currState));
             else {
@@ -110,24 +103,25 @@ public abstract class Automaton<S> {
                 Collection<Tree<Integer>> runs_move = new HashSet<Tree<Integer>>();
                 for(Integer subState: t.to){
                     Collection<Tree<Integer>> subRuns = getRuns(subState,subTreeItr.next());
+                    Collection<Tree<Integer>> runs_temp = new HashSet<Tree<Integer>>();
                     for(Tree<Integer> subRun:subRuns){
-                        subRun = new Tree<Integer>(subRun);
-                        subRun.addChild();
+                        if(runs_move.size() ==0)
+                            runs_temp.add(new Tree<Integer>(currState, subRun));
+                        else {
+                            for(Tree<Integer> partial: runs_move){
+                                Tree<Integer> partial_temp = new Tree<Integer>(partial);
+                                partial_temp.addChild(subRun);
+                                runs_temp.add(partial_temp);
+                            }
+                        }
                     }
+                    runs_move.addAll(runs_temp);
                 }
+                runs.addAll(runs_move);
             }
         }
 
-        return nextState;
-    }
-
-    protected Collection<Tree<Integer>> addAllChildren(Collection<Tree<Integer>> roots, Collection<Tree<Integer>> newChildren){
-        Collection<Tree<Integer>> runs = new HashSet<Tree<Integer>>();
-        for (Tree<Integer> rootTree: roots){
-            for(Tree<Integer> child: newChildren){
-
-            }
-        }
+        return runs;
     }
 
     // ------------------------------------------------------

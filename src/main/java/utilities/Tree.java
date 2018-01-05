@@ -15,6 +15,14 @@ public class Tree<T> {
         root.data = rootData;
         root.children = new ArrayList<Node<T>>();
     }
+
+    public Tree(T rootData, Tree<T> child) {
+        root = new Node<T>();
+        root.data = rootData;
+        root.children = new ArrayList<Node<T>>();
+        root.children.add(child.getRoot());
+    }
+
     public Tree(Node<T> root) {
         this.root = root;
     }
@@ -39,6 +47,14 @@ public class Tree<T> {
             subTrees.add(new Tree<T>(child));
         }
         return subTrees;
+    }
+
+    public List<T> getChildrenData(){
+        List<T> childrenData = new ArrayList<T>();
+        for(Node<T> child: root.children){
+            childrenData.add(child.data);
+        }
+        return childrenData;
     }
 
     public static class Node<T>{
