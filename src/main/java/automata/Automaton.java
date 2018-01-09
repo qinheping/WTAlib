@@ -67,7 +67,7 @@ public abstract class Automaton<S> {
     /**
      * Set of moves to list of state
      */
-    public abstract Collection<Move<S>> getMovesFrom(List<Integer> states);
+    public abstract Collection<Move<S>> getMovesTo(List<Integer> states);
 
     /**
      * Returns the set of states
@@ -94,7 +94,7 @@ public abstract class Automaton<S> {
         Collection<Tree<Integer>> runs = new HashSet<Tree<Integer>>();
         for (Move<S> t : getMovesFrom(currState)) {
             if(!inputTree.getChildrenData().equals(t.to))
-                continue;;
+                continue;
 
             if(t.getRank() == 0)
                 runs.add(new Tree<Integer>(currState));

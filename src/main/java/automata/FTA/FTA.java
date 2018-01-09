@@ -98,7 +98,7 @@ public class FTA<S> extends Automaton<S> {
         return transitions;
     }
 
-    public Collection<Move<S>> getMovesFrom(List<Integer> states) {
+    public Collection<Move<S>> getMovesTo(List<Integer> states) {
         Collection<Move<S>> transitions = new LinkedList<Move<S>>();
         for(Collection<FTAMove<S>> bucket: movesFrom.values()){
             for(FTAMove<S> transition: bucket){
