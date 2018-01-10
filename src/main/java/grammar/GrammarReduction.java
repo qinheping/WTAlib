@@ -1,6 +1,7 @@
 package grammar;
 
 import automata.FTA.FTA;
+import automata.FTA.FTAMove;
 import automata.Move;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
@@ -21,6 +22,7 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
+        Collection<FTAMove<S>> ftaMoves = new ArrayList<FTAMove<S>>();
         Collection<WTAMove<S,R>> leafTransitions = wAut.getLeafTransitions();
         Map<Integer,Collection<R>> reachedWeight = new HashMap<Integer, Collection<R>>();
         for(WTAMove<S,R> leafTransition: leafTransitions){
@@ -30,11 +32,20 @@ public class GrammarReduction<S,R>{
         }
 
         Boolean reachedWeightChanged = true;
-        Map<Integer,Collection<R>> updatedStateIds = new HashMap<Integer, Collection<R>>(reachedWeight);
+        Collection<Integer> updatedStateIds = new ArrayList<Integer>(reachedWeight.keySet());
 
         while(reachedWeightChanged){
-            Collection<WTAMove<S,R>> applicableTransitions = findApplicableTransitions(wAut, updatedStateIds.keySet(), reachedWeight.keySet());
-            // TODO here
+            reachedWeightChanged = false;
+            Collection<WTAMove<S,R>> applicableTransitions = findApplicableTransitions(wAut, updatedStateIds, reachedWeight.keySet());
+            for(WTAMove<S,R> transition: applicableTransitions){
+                //TODO sketch
+                Collection<FTAMove<S>> newMoves = getReachedWeight(reachedWeight, c);
+                if(newMoves.size() != 0)
+                    reachedWeightChanged = true;
+                reachedWeight.get(transition.from).addAll(newReachedWeight);
+                ftaMoves.addAll(newMoves);
+                //TODO sketch end
+            }
         }
 
         return null;
