@@ -1,30 +1,42 @@
 package semirings;
 
+import java.util.List;
+
 /**
  * Abstract semiring class.
  *
  * @author "John Salatas"
  *
  */
-public abstract class Semiring{
-    // significant decimal digits in floating point numbers
+public abstract class Semiring<R>{
+    // significant decimal digits in Ring point numbers
     protected static final int accuracy = 5;
 
 
-    public abstract float plus(float w1, float w2);
+    public abstract R plus(R w1, R w2);
 
-    public abstract float reverse(float w1);
+    public abstract R reverse(R w1);
 
-    public abstract float times(float w1, float w2);
+    public abstract R times(R w1, R w2);
 
 
-    public abstract float divide(float w1, float w2);
+    public abstract R divide(R w1, R w2);
 
-    public abstract float zero();
+    public abstract R zero();
 
-    public abstract float one();
+    public abstract R one();
 
-    public abstract boolean isMember(float w);
+    public abstract boolean isMember(R w);
+
+    public R times(List<R> wList){
+        R result = this.one();
+        for(R w: wList){
+            result = this.times(result, w);
+        }
+        return result;
+    }
+
+
 
     /*
      * (non-Javadoc)
@@ -56,7 +68,7 @@ public abstract class Semiring{
      * @param w2 second operand
      * @return less or more
      */
-    public boolean naturalLess(float w1, float w2) {
+    public boolean naturalLess(R w1, R w2) {
         return (plus(w1, w2) == w1) && (w1 != w2);
     }
 

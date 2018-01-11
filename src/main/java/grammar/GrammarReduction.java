@@ -22,7 +22,7 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
-        Collection<FTAMove<S>> ftaMoves = new ArrayList<FTAMove<S>>();
+        Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         Collection<WTAMove<S,R>> leafTransitions = wAut.getLeafTransitions();
         Map<Integer,Collection<R>> reachedWeight = new HashMap<Integer, Collection<R>>();
         for(WTAMove<S,R> leafTransition: leafTransitions){
@@ -39,7 +39,7 @@ public class GrammarReduction<S,R>{
             Collection<WTAMove<S,R>> applicableTransitions = findApplicableTransitions(wAut, updatedStateIds, reachedWeight.keySet());
             for(WTAMove<S,R> transition: applicableTransitions){
                 //TODO sketch
-                Collection<FTAMove<S>> newMoves = getReachedWeight(reachedWeight, c);
+                Collection<FTAMove<S>> newMoves = getNewMoves(transition, reachedWeight, c);
                 if(newMoves.size() != 0)
                     reachedWeightChanged = true;
                 reachedWeight.get(transition.from).addAll(newReachedWeight);
@@ -47,6 +47,11 @@ public class GrammarReduction<S,R>{
                 //TODO sketch end
             }
         }
+
+        return null;
+    }
+
+    private Collection<FTAMove<S>> getNewMoves(WTAMove<S,R> transition, Map<Integer,Collection<R>> reachedWeight, R c){
 
         return null;
     }
