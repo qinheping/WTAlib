@@ -11,11 +11,11 @@ import semirings.Semiring;
 import java.util.*;
 
 public class GrammarReduction<S,R>{
-    private Semiring sr;
+    private Semiring<R> sr;
     private Map<Integer, Map<R,Integer>> newIdDic;
     private Integer maxNewId;
 
-    public GrammarReduction(Semiring sr){
+    public GrammarReduction(Semiring<R> sr){
         this.sr = sr;
         this.newIdDic = new HashMap<Integer, Map<R, Integer>>();
         this.maxNewId = 0;
@@ -24,7 +24,7 @@ public class GrammarReduction<S,R>{
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
         Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         Collection<WTAMove<S,R>> leafTransitions = wAut.getLeafTransitions();
-        Map<Integer,Collection<R>> reachedWeight = new HashMap<Integer, Collection<R>>();
+        Map<Integer,List<R>> reachedWeight = new HashMap<Integer, List<R>>();
         for(WTAMove<S,R> leafTransition: leafTransitions){
             List<R> leafWeight = new ArrayList<R>();
             leafWeight.add(leafTransition.weight);
@@ -51,9 +51,37 @@ public class GrammarReduction<S,R>{
         return null;
     }
 
-    private Collection<FTAMove<S>> getNewMoves(WTAMove<S,R> transition, Map<Integer,Collection<R>> reachedWeight, R c){
+    private Collection<Tuple<FTAMove<S>,R>> getNewMoves(WTAMove<S,R> transition, Map<Integer,List<R>> reachedWeight, R c){
+        Integer oldId = transition.from;
+        Collection<Tuple<FTAMove<S>,R>> result = new ArrayList<Tuple<FTAMove<S>, R>>();
+        List<Integer> indexes = new ArrayList<Integer>();
+        // initial indexes
+        for(int i = 0; i < transition.to.size(); i++){
+            indexes.add(1);
+        }
 
-        return null;
+        // caculate moveCount
+        Integer moveBound = 1;
+        for(Integer state: transition.to){
+            moveBound *= reachedWeight.get(state).size();
+        }
+
+        // fill moves
+        while(result.size() < moveBound){
+            List<R> childrenWeight = new ArrayList<R>();
+            List<Integer> newIdChildren = new ArrayList<Integer>();
+            for(int i = 0; i < transition.to.size(); i++) {
+                childrenWeight.add(reachedWeight.get(transition.to.get(i)).get(indexes.get(i)));
+                newIdChildren.add(accessNewId(transition.to.get(i),childrenWeight.get(i)));
+            }
+            R weight = this.sr.times(childrenWeight);
+            FTAMove<S> newMove = new FTAMove<S>(accessNewId(transition.from,weight), newIdChildren, transition.symbol);
+            result.add(new Tuple<FTAMove<S>, R>(newMove, weight));
+
+            // TODO update indexes
+
+        }
+        return result;
     }
 
     private Collection<WTAMove<S,R>> findApplicableTransitions(WTA<S,R> wAut, Collection<Integer> checkedSet, Collection<Integer>machedSet){
@@ -102,6 +130,16 @@ public class GrammarReduction<S,R>{
         maxNewId++;
         this.newIdDic.put(oldId, subDic);
         return maxNewId-1;
+    }
+
+
+    public class Tuple<X, Y> {
+        public final X x;
+        public final Y y;
+        public Tuple(X x, Y y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
 }
