@@ -28,6 +28,15 @@ public abstract class Semiring<R>{
 
     public abstract boolean isMember(R w);
 
+    public abstract boolean lessThan(R w1, R w2);
+
+    public boolean lessOrEqual(R w1, R w2){
+        if (w1==w2 || lessThan(w1, w2))
+            return true;
+        else
+            return false;
+    }
+
     public R times(List<R> wList){
         R result = this.one();
         for(R w: wList){

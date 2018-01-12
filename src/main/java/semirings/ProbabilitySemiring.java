@@ -19,23 +19,23 @@ package semirings;
  * @author "John Salatas"
  *
  */
-public class ProbabilitySemiring extends Semiring {
+public class ProbabilitySemiring extends Semiring <Float>{
 
     // zero value
-    private static float zero = 0.f;
+    private static Float zero = 0.f;
 
     // one value
-    private static float one = 1.f;
+    private static Float one = 1.f;
 
     /*
      * (non-Javadoc)
      *
      * @see
      * edu.cmu.sphinx.fst.weight.AbstractSemiring#Plus(edu.cmu.sphinx.fst.weight
-     * .float, edu.cmu.sphinx.fst.weight.float)
+     * .Float, edu.cmu.sphinx.fst.weight.Float)
      */
     @Override
-    public float plus(float w1, float w2) {
+    public Float plus(Float w1, Float w2) {
         if (!isMember(w1) || !isMember(w2)) {
             return Float.NEGATIVE_INFINITY;
         }
@@ -48,10 +48,10 @@ public class ProbabilitySemiring extends Semiring {
      *
      * @see
      * edu.cmu.sphinx.fst.weight.AbstractSemiring#Times(edu.cmu.sphinx.fst.weight
-     * .float, edu.cmu.sphinx.fst.weight.float)
+     * .Float, edu.cmu.sphinx.fst.weight.Float)
      */
     @Override
-    public float times(float w1, float w2) {
+    public Float times(Float w1, Float w2) {
         if (!isMember(w1) || !isMember(w2)) {
             return Float.NEGATIVE_INFINITY;
         }
@@ -64,10 +64,10 @@ public class ProbabilitySemiring extends Semiring {
      *
      * @see
      * edu.cmu.sphinx.fst.weight.AbstractSemiring#Divide(edu.cmu.sphinx.fst.
-     * weight.float, edu.cmu.sphinx.fst.weight.float)
+     * weight.Float, edu.cmu.sphinx.fst.weight.Float)
      */
     @Override
-    public float divide(float w1, float w2) {
+    public Float divide(Float w1, Float w2) {
         // TODO Auto-generated method stub
         return Float.NEGATIVE_INFINITY;
     }
@@ -78,7 +78,7 @@ public class ProbabilitySemiring extends Semiring {
      * @see edu.cmu.sphinx.fst.weight.AbstractSemiring#zero()
      */
     @Override
-    public float zero() {
+    public Float zero() {
         return zero;
     }
 
@@ -88,7 +88,7 @@ public class ProbabilitySemiring extends Semiring {
      * @see edu.cmu.sphinx.fst.weight.AbstractSemiring#one()
      */
     @Override
-    public float one() {
+    public Float one() {
         return one;
     }
 
@@ -97,21 +97,25 @@ public class ProbabilitySemiring extends Semiring {
      *
      * @see
      * edu.cmu.sphinx.fst.weight.Semiring#isMember(edu.cmu.sphinx.fst.weight
-     * .float)
+     * .Float)
      */
     @Override
-    public boolean isMember(float w) {
+    public boolean isMember(Float w) {
         return !Float.isNaN(w) // not a NaN,
                 && ((w == 0) || (w == 1)); // and positive
+    }
+
+    public boolean lessThan(Float w1, Float w2) {
+        return w2<w1;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see edu.cmu.sphinx.fst.semiring.Semiring#reverse(float)
+     * @see edu.cmu.sphinx.fst.semiring.Semiring#reverse(Float)
      */
     @Override
-    public float reverse(float w1) {
+    public Float reverse(Float w1) {
         // TODO: ???
         System.out.println("Not Implemented");
         return Float.NEGATIVE_INFINITY;

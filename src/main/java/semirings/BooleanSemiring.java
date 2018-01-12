@@ -7,6 +7,8 @@ package semirings;
  *
  */
 public class BooleanSemiring extends Semiring<Float>{
+
+
     // zero value
     private static Float zero = 0.f;
 
@@ -101,5 +103,10 @@ public class BooleanSemiring extends Semiring<Float>{
         // TODO: ???
         System.out.println("Not Implemented");
         return Float.NEGATIVE_INFINITY;
+    }
+
+    @Override
+    public boolean lessThan(Float w1, Float w2) {
+        return w1<w2;
     }
 }
