@@ -92,6 +92,35 @@ public class FTA<S> extends Automaton<S> {
     }
 
 
+
+    // ------------------------------------------------------
+    // Boolean automata operations
+    // ------------------------------------------------------
+
+    public FTA<S> intersectionWith(FTA<S> aut){
+        //TODO
+        return null;
+    }
+
+    public FTA<S> union(FTA<S> aut){
+        //TODO
+        return null;
+    }
+
+    public FTA<S> complement(FTA<S> aut){
+        //TODO
+        return null;
+    }
+
+    // ------------------------------------------------------
+    // Other automata operations
+    // ------------------------------------------------------
+
+    public FTA<S> removeUnreachedStates(){
+        Co
+        return null;
+    }
+
     public Collection<Move<S>> getMovesFrom(Integer state) {
         Collection<Move<S>> transitions = new LinkedList<Move<S>>();
         transitions.addAll(movesFrom.get(state));
