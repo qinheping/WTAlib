@@ -3,17 +3,21 @@ grammar QSygusParser;
 start       :   prog
             ;
 
-prog        :   setWeightCmd (setLogicCmd cmdPlus | cmdPlus)
+prog        :   setWeightCmd cmdPlus
             ;
 
-setLogicCmd :   '(' 'set-logic' Symbol ')'
+setLogicCmd :   '(' 'set-logic' SYMBOL ')'
             ;
+
+setWeightCmd    :   '(' 'set-weight' symbolPlus ')'
+                ;
 
 cmdPlus     :   cmdPlus cmd
             |   cmd
             ;
 
-cmd         :   funDefCmd
+cmd         :   setLogicCmd
+            |   funDefCmd
             |   funDeclCmd
             |   synthFunCmd
             |   checkSynthCmd
@@ -24,6 +28,12 @@ cmd         :   funDefCmd
             |   weightOptimizationCmd
             |   varDeclCmd
             ;
+
+weightOptimizationCmd   :   '(' 'Optimization' (SYMBOL)? symbolPlus ')'
+                        ;
+
+weightConstraintCmd     :   '(' 'weight-constraint' term ')'
+                        ;
 
 varDeclCmd  :   '(' 'declare-var' SYMBOL sortExpr ')'
             ;
@@ -133,7 +143,8 @@ constraintCmd   :   '(' 'constraint' term ')'
 synthFunCmd :   '(' 'synth-fun' SYMBOL argList sortExpr '(' ntDefPlus ')' ')'
             ;
 
-gTerm       :   SYMBOL
+gTerm       :   '(' gTerm ':' literal ')'
+            |   SYMBOL
             |   literal
             |   '(' SYMBOL gTermStar ')'
             |   '(' 'Constant' sortExpr ')'
@@ -157,7 +168,7 @@ gTermStar   :   gTermStar gTerm
             |   /* epsilon */
             ;
 
-WS          :   [\t\f]
+WS          :   [\t\f] -> channel(HIDDEN)
             ;
 
 LETTER      :   [a-zA-Z_]
@@ -166,7 +177,7 @@ LETTER      :   [a-zA-Z_]
 DIGIT       :   [0-9]
             ;
 
-HEXDIGIT    :   {DIGIT}
+HEXDIGIT    :   DIGIT
             |   [a-f]
             |   [A-F]
             ;
