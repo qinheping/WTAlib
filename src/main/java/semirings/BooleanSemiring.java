@@ -109,4 +109,9 @@ public class BooleanSemiring extends Semiring<Float>{
     public boolean lessThan(Float w1, Float w2) {
         return w1<w2;
     }
+
+    @Override
+    public Float parse(String s) {
+        return Float.parseFloat(s);
+    }
 }

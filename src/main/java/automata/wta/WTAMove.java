@@ -13,7 +13,8 @@ public class WTAMove<S,R> extends Move<S> {
         this.weight = weight;
     }
 
-    public String toDotString() {
-        return null;
+    public String toDotString(){
+        String result = from +" -> (" + symbol + ", " + weight +") " +to;
+        return result;
     }
 }

@@ -1,7 +1,6 @@
 package automata.wta;
 
 import automata.Automaton;
-import automata.FTA.FTAMove;
 import automata.Move;
 
 import java.util.*;
@@ -14,7 +13,7 @@ public class WTA<S,R> extends Automaton<S> {
     private Integer initialState;
     private Collection<Integer> states;
 
-    protected Map<Integer, Collection<WTAMove<S, R>>> movesFrom;
+    protected Map<Integer, Collection<Move<S>>> movesFrom;
 
     private Integer maxStateId;
     private Integer transitionCount;
@@ -46,16 +45,16 @@ public class WTA<S,R> extends Automaton<S> {
     // ------------------------------------------------------
 
     // Initializes all the fields of the automaton
-    private WTA() {
+    public WTA() {
         super();
         states = new HashSet<Integer>();
-        movesFrom = new HashMap<Integer, Collection<WTAMove<S, R>>>();
+        movesFrom = new HashMap<Integer, Collection<Move<S>>>();
         transitionCount = 0;
         maxStateId = 0;
     }
 
     // Adds a transition to the WFA
-    private void addTransition(WTAMove<S, R> transition){
+    public void addTransition(WTAMove<S, R> transition){
         transitionCount++;
 
         if (transition.from > maxStateId)
@@ -68,7 +67,13 @@ public class WTA<S,R> extends Automaton<S> {
 
         states.add(transition.from);
 
-        getMovesFrom(transition.from).add((WTAMove<S, R>) transition);
+        if (movesFrom.get(transition.from) != null)
+            movesFrom.get(transition.from).add((WTAMove<S, R>) transition);
+        else{
+            Collection<Move<S>> transitions = new LinkedList<Move<S>>();
+            transitions.add(transition);
+            movesFrom.put(transition.from, transitions);
+        }
     }
 
 
@@ -76,10 +81,10 @@ public class WTA<S,R> extends Automaton<S> {
     // Boolean automata operations
     // ------------------------------------------------------
 
-    public Collection<WTAMove<S,R>> getLeafTransitions(){
-        Collection<WTAMove<S,R>> leafTransitions = new LinkedList<WTAMove<S, R>>();
-        for(Collection<WTAMove<S,R>> bucket: movesFrom.values()){
-            for(WTAMove<S,R> transition: bucket){
+    public Collection<Move<S>> getLeafTransitions(){
+        Collection<Move<S>> leafTransitions = new LinkedList<Move<S>>();
+        for(Collection<Move<S>> bucket: movesFrom.values()){
+            for(Move<S> transition: bucket){
                 if(transition.to.size() == 0)
                     leafTransitions.add(transition);
             }
@@ -89,14 +94,17 @@ public class WTA<S,R> extends Automaton<S> {
 
     public Collection<Move<S>> getMovesFrom(Integer state) {
         Collection<Move<S>> transitions = new LinkedList<Move<S>>();
-        transitions.addAll(movesFrom.get(state));
+        if(movesFrom.get(state) != null)
+            transitions.addAll(movesFrom.get(state));
+        else
+            movesFrom.put(state,transitions);
         return transitions;
     }
 
     public Collection<Move<S>> getMovesTo(List<Integer> states) {
         Collection<Move<S>> transitions = new LinkedList<Move<S>>();
-        for(Collection<WTAMove<S,R>> bucket: movesFrom.values()){
-            for(WTAMove<S,R> transition: bucket){
+        for(Collection<Move<S>> bucket: movesFrom.values()){
+            for(Move<S> transition: bucket){
                 if(states.equals(transition.to))
                     transitions.add(transition);
             }
@@ -111,5 +119,11 @@ public class WTA<S,R> extends Automaton<S> {
 
     public Integer getInitialState() {
         return initialState;
+    }
+
+    public void setInitialState(Integer init) { this.initialState = init;}
+
+    public String toString(){
+        return states.toString() + movesFrom.toString();
     }
 }

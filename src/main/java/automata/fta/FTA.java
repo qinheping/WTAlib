@@ -1,11 +1,9 @@
-package automata.FTA;
+package automata.fta;
 
 import automata.Automaton;
 import automata.Move;
 
 import java.util.*;
-
-import static java.util.Collections.addAll;
 
 public class FTA<S> extends Automaton<S> {
     // ------------------------------------------------------

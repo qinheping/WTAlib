@@ -130,8 +130,8 @@ ntDefPlus   :   ntDefPlus ntDef
 ntDef       :   '(' SYMBOL sortExpr '(' gTermPlus ')' ')'
             ;
 
-gTermPlus   :   gTermPlus gTerm
-            |   gTerm
+gTermPlus   :   gTermPlus gTermWeighted
+            |   gTermWeighted
             ;
 
 checkSynthCmd   :   '(' 'check-synth' ')'
@@ -143,8 +143,16 @@ constraintCmd   :   '(' 'constraint' term ')'
 synthFunCmd :   '(' 'synth-fun' SYMBOL argList sortExpr '(' ntDefPlus ')' ')'
             ;
 
-gTerm       :   '(' gTerm ':' literal ')'
-            |   SYMBOL
+gTermWeighted   :   '(' gTerm ':' literalPlus ')'
+                |   gTerm
+                ;
+
+literalPlus :   literalPlus literal
+            |   literal
+            ;
+
+
+gTerm       :   SYMBOL
             |   literal
             |   '(' SYMBOL gTermStar ')'
             |   '(' 'Constant' sortExpr ')'
@@ -168,24 +176,24 @@ gTermStar   :   gTermStar gTerm
             |   /* epsilon */
             ;
 
-WS          :   [\t\f] -> channel(HIDDEN)
+WS          :   [ \t\r\n\u000C]+ -> skip
             ;
-
+fragment
 LETTER      :   [a-zA-Z_]
             ;
-
+fragment
 DIGIT       :   [0-9]
             ;
-
+fragment
 HEXDIGIT    :   DIGIT
             |   [a-f]
             |   [A-F]
             ;
-
+fragment
 BIT         :   '0'
             |   '1'
             ;
-
+fragment
 INTEGER     :   '-'? DIGIT+
             ;
 
@@ -199,6 +207,7 @@ BVCONST     :   '#x'HEXDIGIT+
 REALCONST   :   '-'? DIGIT+ '.' DIGIT+
             ;
 
+fragment
 SYMBOLCC    :   [a-z]
             |   [A-Z]
             |   '_'

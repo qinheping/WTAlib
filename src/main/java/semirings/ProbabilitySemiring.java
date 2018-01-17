@@ -109,6 +109,11 @@ public class ProbabilitySemiring extends Semiring <Float>{
         return w2<w1;
     }
 
+    @Override
+    public Float parse(String s) {
+        return Float.parseFloat(s);
+    }
+
     /*
      * (non-Javadoc)
      *

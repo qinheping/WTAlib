@@ -233,6 +233,18 @@ public interface QSygusParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSynthFunCmd(QSygusParserParser.SynthFunCmdContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QSygusParserParser#gTermWeighted}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGTermWeighted(QSygusParserParser.GTermWeightedContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QSygusParserParser#literalPlus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteralPlus(QSygusParserParser.LiteralPlusContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QSygusParserParser#gTerm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

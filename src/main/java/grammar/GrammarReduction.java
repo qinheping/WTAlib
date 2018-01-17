@@ -1,11 +1,10 @@
 package grammar;
 
-import automata.FTA.FTA;
-import automata.FTA.FTAMove;
+import automata.fta.FTA;
+import automata.fta.FTAMove;
 import automata.Move;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
-import javafx.util.Pair;
 import semirings.Semiring;
 
 import java.util.*;
@@ -22,24 +21,29 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
-        // fta moves we need to produce for the result FTA
+        // fta moves we need to produce for the result fta
         Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         // leaf transitions in the input WTA
-        Collection<WTAMove<S,R>> leafTransitions = wAut.getLeafTransitions();
+        Collection<Move<S>> leafTransitions = wAut.getLeafTransitions();
         // <oldId, weight> tuple
         Map<Integer,List<R>> reachedWeight = new HashMap<Integer, List<R>>();
 
         // initial reachedWeight as leaf
-        for(WTAMove<S,R> leafTransition: leafTransitions){
+        for(Move<S> leafTransition: leafTransitions){
             List<R> leafWeight = new ArrayList<R>();
-            leafWeight.add(leafTransition.weight);
+            leafWeight.add(((WTAMove<S,R>)leafTransition).weight);
             reachedWeight.put(leafTransition.from, leafWeight);
         }
 
         // flag for termination
         Boolean reachedWeightChanged = true;
         // state having new weight in last iteration
-        Collection<Integer> updatedStateIds = new ArrayList<Integer>(reachedWeight.keySet());
+        Map<Integer,List<R>> newWeight = new HashMap<Integer, List<R>>();
+        for(Integer oldId : reachedWeight.keySet()){
+            List<R> bucket = new ArrayList<R>();
+            bucket.addAll(reachedWeight.get(oldId));
+            newWeight.put(oldId, )
+        }
 
         // terminate when reach fixed point
         while(reachedWeightChanged){
@@ -59,6 +63,7 @@ public class GrammarReduction<S,R>{
                 updatedStateIds.clear();
                 // update moves and updatedWeights
                 for(Tuple<FTAMove<S>, R> newTuple: newTuples) {
+                    System.out.println(newTuple.x);
                     ftaMoves.add(newTuple.x);
                     reachedWeight.get(newTuple.x.from).add(newTuple.y);
                 }
@@ -122,7 +127,6 @@ public class GrammarReduction<S,R>{
         for(Move<S> transition: wAut.getMoves()){
             Boolean matched = true;
             Boolean checked = false;
-
             for(Integer toState: transition.to){
                 if(!machedSet.contains(toState)){
                     matched = false;

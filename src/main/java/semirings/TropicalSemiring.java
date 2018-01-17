@@ -105,6 +105,11 @@ public class TropicalSemiring extends Semiring <Float>{
         return w1 < w2;
     }
 
+    @Override
+    public Float parse(String s) {
+        return Float.parseFloat(s);
+    }
+
     /*
      * (non-Javadoc)
      *

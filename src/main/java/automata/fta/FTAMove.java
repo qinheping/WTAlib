@@ -1,4 +1,4 @@
-package automata.FTA;
+package automata.fta;
 
 import automata.Move;
 
@@ -9,6 +9,7 @@ public class FTAMove<S> extends Move<S> {
         super(from, to, symbol);
     }
     public String toDotString() {
-        return null;
+        String result = from + " -> (" + symbol +") "+to;
+        return result;
     }
 }
