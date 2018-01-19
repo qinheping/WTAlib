@@ -20,6 +20,8 @@ public abstract class Move<S> {
     // Consumed symbol
     public S symbol;
 
+    public String sort;
+
     /**
      * Transition from state <code>from</code> to state <code>to</code>
      */
@@ -27,6 +29,9 @@ public abstract class Move<S> {
         this.from = from;
         this.to = to;
         this.symbol = symbol;
+    }
+    public Move(Integer from, List<Integer> to, S symbol, String sort){
+        this(from, to, symbol); this.sort = sort;
     }
 
     /**

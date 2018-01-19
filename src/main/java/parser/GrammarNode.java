@@ -1,5 +1,7 @@
 package parser;
 
+import automata.Move;
+import automata.fta.FTA;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
 import semirings.Semiring;
@@ -27,9 +29,39 @@ public class GrammarNode extends ProgramNode {
 
     @Override
     public  String toString(){
-        String result = "( synth-fun" + funName + ' ' +argList + ' ' + sort + " (\n";
+        String result = "( synth-fun " + funName + ' ' +argList + ' ' + sort + " (\n";
         for(NTNode node: ntNodes){
             result = result  + node.toString() + "\n";
+        }
+        return result + "))";
+    }
+
+     String toString(FTA fta){
+        String result = "( synth-fun " + funName + ' ' +argList + ' ' + sort + " (\n";
+        for(Object from : fta.getStates()){
+            if(fta.getMovesFrom((Integer) from) == null || fta.getMovesFrom((Integer) from).size() == 0)
+                continue;
+            if(from == fta.getInitialState()){
+                result += "\t(Start" +" "+((Move)fta.getMovesFrom((Integer)from).iterator().next()).sort+" (";
+            }else
+                result += "\t(NT"+from +" "+((Move)fta.getMovesFrom((Integer)from).iterator().next()).sort+" (";
+            for(Object moveO: fta.getMovesFrom((Integer) from)){
+                Move move = (Move) moveO;
+                if(((String)move.symbol).length()==0){
+                    result += "\t\tNT"+move.to.get(0) + "\n";
+                    continue;
+                }
+                if(move.to.size() == 0){
+                    result += "\t\t"+move.symbol +"\n";
+                    continue;
+                }
+                result+="\t\t("+move.symbol;
+                for(Object to: move.to){
+                    result+=" NT"+to.toString();
+                }
+                result +=")\n";
+            }
+            result+= "))\n";
         }
         return result + "))";
     }
@@ -49,11 +81,14 @@ public class GrammarNode extends ProgramNode {
             }
         }
         for(NTNode ntNode : ntNodes){
-            for(RuleNode rule: ntNode.rules)
-                wta.addTransition(rule.toMove(idDic,sr, index, idDic.get(ntNode.ntName)));
+            for(RuleNode rule: ntNode.rules){
+                WTAMove toAdd = rule.toMove(idDic,sr, index, idDic.get(ntNode.ntName));
+                toAdd.sort = ntNode.ntSort;
+                wta.addTransition(toAdd);
+            }
         }
         wta.setInitialState(0);
-        wta.addTransition(new WTAMove<String, Float>(1, new ArrayList<Integer>(),"", (Float) sr.one()));
+        wta.addTransition(new WTAMove<String, Float>(1, new ArrayList<Integer>(),"", (Float) sr.one(), this.sort));
         return wta;
     }
 

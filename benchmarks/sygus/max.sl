@@ -9,13 +9,13 @@
              (+ Start Start)
              (- Start Start)
              ((ite StartBool Start Start) : 1)))
-
  (StartBool Bool ((and StartBool StartBool)
                   (or StartBool StartBool)
                   (not StartBool)
                   (<= Start Start)
                   (= Start Start)
                   (>= Start Start)))))
+
 
 
 

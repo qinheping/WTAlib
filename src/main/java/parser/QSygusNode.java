@@ -1,5 +1,6 @@
 package parser;
 
+import automata.fta.FTA;
 import automata.wta.WTA;
 import semirings.BooleanSemiring;
 import semirings.ProbabilitySemiring;
@@ -55,6 +56,19 @@ public class QSygusNode extends ProgramNode{
             result = result + cmd + '\n';
         }
         result = result + synthFun.toString() + "\n";
+        for(String cmd: postCmds){
+            result = result + cmd + '\n';
+        }
+        return result;
+    }
+
+    public String toString(FTA fta){
+
+        String result = "";
+        for(String cmd: preCmds){
+            result = result + cmd + '\n';
+        }
+        result = result + synthFun.toString(fta) + "\n";
         for(String cmd: postCmds){
             result = result + cmd + '\n';
         }
