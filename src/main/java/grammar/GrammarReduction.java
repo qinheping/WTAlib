@@ -59,6 +59,7 @@ public class GrammarReduction<S,R>{
         while(reachedWeightChanged){
             reachedWeightChanged = false;
             // transitions involve states updated in last iteration
+            logger.log(Level.INFO, "Start finding applicable transitions");
             Collection<WTAMove<S,R>> applicableTransitions = findApplicableTransitions(wAut, newWeight.keySet(), reachedWeight.keySet());
 
             Collection<Tuple<FTAMove<S>,R>> tmpTuples = new ArrayList<Tuple<FTAMove<S>, R>>();
@@ -187,7 +188,7 @@ public class GrammarReduction<S,R>{
                                 childrenNewId.add(accessNewId(transition.to.get(i), childrenWeight.get(i)));
                             }
                         }
-
+                        childrenWeight.add(transition.weight);
                         // calculate weight
                         R weight = this.sr.times(childrenWeight);
 
