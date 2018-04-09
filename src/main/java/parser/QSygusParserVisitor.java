@@ -29,6 +29,18 @@ public interface QSygusParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSetLogicCmd(QSygusParserParser.SetLogicCmdContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link QSygusParserParser#logicPlus}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicPlus(QSygusParserParser.LogicPlusContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QSygusParserParser#logic}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogic(QSygusParserParser.LogicContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link QSygusParserParser#setWeightCmd}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -52,6 +64,12 @@ public interface QSygusParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWeightOptimizationCmd(QSygusParserParser.WeightOptimizationCmdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link QSygusParserParser#weightPair}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWeightPair(QSygusParserParser.WeightPairContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QSygusParserParser#weightConstraintCmd}.
 	 * @param ctx the parse tree
