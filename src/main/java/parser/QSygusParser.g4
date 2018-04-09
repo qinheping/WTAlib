@@ -6,8 +6,21 @@ start       :   prog
 prog        :   setWeightCmd cmdPlus
             ;
 
-setLogicCmd :   '(' 'set-logic' SYMBOL ')'
+setLogicCmd :   '(' 'set-logic' logicPlus ')'
             ;
+
+// logicList
+logicPlus   :   logicPlus logic
+            |   logic
+            ;
+
+// logic
+logic       :   '(' SYMBOL logic_reserved')'
+            ;
+
+// logic_reserved
+logic_reserved  :   'TROP'  |   'PROB'  |   'BOOL'
+                ;
 
 setWeightCmd    :   '(' 'set-weight' symbolPlus ')'
                 ;
@@ -178,6 +191,7 @@ gTermStar   :   gTermStar gTerm
 
 WS          :   [ \t\r\n\u000C]+ -> skip
             ;
+
 fragment
 LETTER      :   [a-zA-Z_]
             ;
