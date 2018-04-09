@@ -8,7 +8,6 @@
 (synth-fun f ((x (BitVec 32))) (BitVec 32)
     ((Start (BitVec 32) ((bvnot Start)
 						 (bvxor Start Start)
-						 (bvand Start Start)
 						 (bvor Start Start)
 						 (bvneg Start)
 						 (bvadd Start Start)

@@ -1,9 +1,5 @@
-; Synthesize a parity-checking circuit using only AND and NOT gates
-
 (set-logic BV)
 
-;(define-fun iff ((a Bool) (b Bool)) Bool
-;  (not (xor a b)))
 
 (define-fun parity ((a Bool) (b Bool) (c Bool) (d Bool)) Bool
   (xor (not (xor a b)) (not (xor c d))))
@@ -16,7 +12,11 @@
 (declare-var c Bool)
 (declare-var d Bool)
 
-(constraint (= (parity a b c d) (AIG a b c d)))
+(constraint
+ (= (parity a b c d) 
+    (and (AIG a b c d)
+        (not (and (and (not (and a b)) (not (and (not a) (not b))))
+               (and (not (and (not c) (not d))) (not (and c d))))))))
 (set-options ((samples "0")))
 (check-synth)
 

@@ -1,0 +1,6 @@
+/Makefile.am
+/Makefile.in
+/ffi.3
+/ffi_call.3
+/ffi_prep_cif.3
+/ffi_prep_cif_var.3

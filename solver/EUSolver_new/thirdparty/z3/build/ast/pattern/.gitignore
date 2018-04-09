@@ -1,0 +1,9 @@
+/database.h.node
+/expr_pattern_match.h.node
+/expr_pattern_match.o
+/pattern.a
+/pattern_inference.h.node
+/pattern_inference.o
+/pattern_inference_params.h.node
+/pattern_inference_params.o
+/pattern_inference_params_helper.hpp.node

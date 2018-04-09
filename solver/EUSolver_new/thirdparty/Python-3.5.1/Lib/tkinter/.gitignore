@@ -1,0 +1,14 @@
+/__init__.py
+/__main__.py
+/colorchooser.py
+/commondialog.py
+/constants.py
+/dialog.py
+/dnd.py
+/filedialog.py
+/font.py
+/messagebox.py
+/scrolledtext.py
+/simpledialog.py
+/tix.py
+/ttk.py

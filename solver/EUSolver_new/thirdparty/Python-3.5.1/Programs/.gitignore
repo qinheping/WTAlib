@@ -1,0 +1,9 @@
+/README
+/_freeze_importlib
+/_freeze_importlib.c
+/_freeze_importlib.o
+/_testembed
+/_testembed.c
+/_testembed.o
+/python.c
+/python.o

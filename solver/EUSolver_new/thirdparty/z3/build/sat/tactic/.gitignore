@@ -1,0 +1,7 @@
+/atom2bool_var.h.node
+/atom2bool_var.o
+/goal2sat.h.node
+/goal2sat.o
+/sat_tactic.a
+/sat_tactic.h.node
+/sat_tactic.o

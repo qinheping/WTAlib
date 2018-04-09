@@ -1,0 +1,4 @@
+/Makefile.am
+/Makefile.in
+/ffi.h.in
+/ffi_common.h

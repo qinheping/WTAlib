@@ -1,0 +1,14 @@
+/README
+/bkfile.py
+/checkextensions.py
+/checkextensions_win32.py
+/extensions_win32.ini
+/flag.py
+/freeze.py
+/hello.py
+/makeconfig.py
+/makefreeze.py
+/makemakefile.py
+/parsesetup.py
+/win32.html
+/winmakemakefile.py

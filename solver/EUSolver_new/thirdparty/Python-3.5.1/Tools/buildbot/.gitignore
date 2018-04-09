@@ -1,0 +1,9 @@
+/build-amd64.bat
+/build.bat
+/buildmsi.bat
+/clean-amd64.bat
+/clean.bat
+/external-amd64.bat
+/external.bat
+/test-amd64.bat
+/test.bat

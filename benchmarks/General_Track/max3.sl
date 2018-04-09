@@ -9,15 +9,15 @@
                  z
                  0
                  1
-                 ((+ Start Start):1)
-                 ((- Start Start):1)
-                 ((ite StartBool Start Start):10)))
-     (StartBool Bool (((and StartBool StartBool):1)
-                      ((or  StartBool StartBool):1)
-                      ((not StartBool):1)
-                      ((<=  Start Start):1)
-                      ((=   Start Start):1)
-                      ((>=  Start Start):1)))))
+                 (+ Start Start)
+                 (- Start Start)
+                 (ite StartBool Start Start)))
+     (StartBool Bool ((and StartBool StartBool)
+                      (or  StartBool StartBool)
+                      (not StartBool)
+                      (<=  Start Start)
+                      (=   Start Start)
+                      (>=  Start Start)))))
 
 (declare-var x Int)
 (declare-var y Int)

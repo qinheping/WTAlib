@@ -1,0 +1,5 @@
+/smt2parser.a
+/smt2parser.h.node
+/smt2parser.o
+/smt2scanner.h.node
+/smt2scanner.o

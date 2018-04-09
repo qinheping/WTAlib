@@ -1,0 +1,16 @@
+/README.txt
+/build.bat
+/buildrelease.bat
+/common.wxs
+/common_en-US.wxl_template
+/csv_to_wxs.py
+/generate_md5.py
+/get_externals.bat
+/make_zip.proj
+/make_zip.py
+/msi.props
+/msi.targets
+/testrelease.bat
+/uploadrelease.bat
+/uploadrelease.proj
+/wix.props

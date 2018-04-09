@@ -1,0 +1,9 @@
+/__init__.py
+/test_font.py
+/test_geometry_managers.py
+/test_images.py
+/test_loadtk.py
+/test_misc.py
+/test_text.py
+/test_variables.py
+/test_widgets.py

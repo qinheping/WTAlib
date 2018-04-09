@@ -1,0 +1,11 @@
+/bvsls_opt_engine.h.node
+/bvsls_opt_engine.o
+/sls_engine.h.node
+/sls_engine.o
+/sls_evaluator.h.node
+/sls_params.hpp.node
+/sls_powers.h.node
+/sls_tactic.a
+/sls_tactic.h.node
+/sls_tactic.o
+/sls_tracker.h.node

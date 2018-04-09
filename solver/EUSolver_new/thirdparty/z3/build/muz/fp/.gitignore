@@ -1,0 +1,9 @@
+/datalog_parser.h.node
+/datalog_parser.o
+/dl_cmds.h.node
+/dl_cmds.o
+/dl_register_engine.h.node
+/dl_register_engine.o
+/fp.a
+/horn_tactic.h.node
+/horn_tactic.o

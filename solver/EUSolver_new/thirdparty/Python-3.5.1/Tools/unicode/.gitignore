@@ -1,0 +1,9 @@
+/Makefile
+/comparecodecs.py
+/gencjkcodecs.py
+/gencodec.py
+/genwincodec.py
+/genwincodecs.bat
+/listcodecs.py
+/makeunicodedata.py
+/mkstringprep.py

@@ -1,0 +1,6 @@
+/ffi.h
+/ffi_common.h
+/fficonfig.h
+/ffitarget.h
+/ppc-ffitarget.h
+/x86-ffitarget.h
