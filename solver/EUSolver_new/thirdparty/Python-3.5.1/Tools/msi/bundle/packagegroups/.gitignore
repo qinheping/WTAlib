@@ -1,0 +1,13 @@
+/core.wxs
+/crt.wxs
+/dev.wxs
+/doc.wxs
+/exe.wxs
+/launcher.wxs
+/lib.wxs
+/packageinstall.wxs
+/pip.wxs
+/postinstall.wxs
+/tcltk.wxs
+/test.wxs
+/tools.wxs

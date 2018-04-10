@@ -1,0 +1,13 @@
+/bounded_int2bv_solver.h.node
+/bounded_int2bv_solver.o
+/default_tactic.h.node
+/default_tactic.o
+/enum2bv_solver.h.node
+/enum2bv_solver.o
+/fd_solver.h.node
+/fd_solver.o
+/pb2bv_solver.h.node
+/pb2bv_solver.o
+/portfolio.a
+/smt_strategic_solver.h.node
+/smt_strategic_solver.o

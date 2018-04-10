@@ -1,0 +1,17 @@
+/nlsat.a
+/nlsat_assignment.h.node
+/nlsat_clause.h.node
+/nlsat_clause.o
+/nlsat_evaluator.h.node
+/nlsat_evaluator.o
+/nlsat_explain.h.node
+/nlsat_explain.o
+/nlsat_interval_set.h.node
+/nlsat_interval_set.o
+/nlsat_justification.h.node
+/nlsat_params.hpp.node
+/nlsat_scoped_literal_vector.h.node
+/nlsat_solver.h.node
+/nlsat_solver.o
+/nlsat_types.h.node
+/nlsat_types.o

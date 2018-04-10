@@ -1,0 +1,12 @@
+/LICENSE
+/README
+/README.ctypes
+/ffi.c
+/ffi.h
+/ffi_common.h
+/fficonfig.h
+/ffitarget.h
+/prep_cif.c
+/types.c
+/win32.c
+/win64.asm

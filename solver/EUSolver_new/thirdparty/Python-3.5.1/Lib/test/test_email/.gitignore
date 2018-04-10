@@ -1,0 +1,17 @@
+/__init__.py
+/__main__.py
+/test__encoded_words.py
+/test__header_value_parser.py
+/test_asian_codecs.py
+/test_contentmanager.py
+/test_defect_handling.py
+/test_email.py
+/test_generator.py
+/test_headerregistry.py
+/test_inversion.py
+/test_message.py
+/test_parser.py
+/test_pickleable.py
+/test_policy.py
+/test_utils.py
+/torture_test.py

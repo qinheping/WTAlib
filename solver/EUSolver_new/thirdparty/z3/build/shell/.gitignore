@@ -1,0 +1,14 @@
+/datalog_frontend.h.node
+/datalog_frontend.o
+/dimacs_frontend.h.node
+/dimacs_frontend.o
+/gparams_register_modules.o
+/install_tactic.o
+/main.o
+/mem_initializer.o
+/opt_frontend.h.node
+/opt_frontend.o
+/smtlib_frontend.h.node
+/smtlib_frontend.o
+/z3_log_frontend.h.node
+/z3_log_frontend.o

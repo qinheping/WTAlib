@@ -1,0 +1,7 @@
+/_iomodule.c.h
+/bufferedio.c.h
+/bytesio.c.h
+/fileio.c.h
+/iobase.c.h
+/stringio.c.h
+/textio.c.h

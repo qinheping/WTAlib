@@ -1,0 +1,15 @@
+/aix.S
+/aix_closure.S
+/asm.h
+/darwin.S
+/darwin_closure.S
+/ffi.c
+/ffi_darwin.c
+/ffi_linux64.c
+/ffi_powerpc.h
+/ffi_sysv.c
+/ffitarget.h
+/linux64.S
+/linux64_closure.S
+/ppc_closure.S
+/sysv.S

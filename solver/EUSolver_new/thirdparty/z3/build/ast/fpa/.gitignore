@@ -1,0 +1,8 @@
+/bv2fpa_converter.h.node
+/bv2fpa_converter.o
+/fpa.a
+/fpa2bv_converter.h.node
+/fpa2bv_converter.o
+/fpa2bv_rewriter.h.node
+/fpa2bv_rewriter.o
+/fpa2bv_rewriter_params.hpp.node

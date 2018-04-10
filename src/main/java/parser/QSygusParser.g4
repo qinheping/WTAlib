@@ -6,7 +6,14 @@ start       :   prog
 prog        :   setWeightCmd cmdPlus
             ;
 
-setLogicCmd :   '(' 'set-logic' SYMBOL ')'
+setLogicCmd :   '(' 'set-logic' logicPlus ')'
+            ;
+
+logicPlus   :   logicPlus '(' logic ')'
+            |   '(' logic ')'
+            ;
+
+logic       :   'TROP'  |   'PROB'  |   'BOOL'
             ;
 
 setWeightCmd    :   '(' 'set-weight' symbolPlus ')'
@@ -29,8 +36,13 @@ cmd         :   setLogicCmd
             |   varDeclCmd
             ;
 
-weightOptimizationCmd   :   '(' 'Optimization' (SYMBOL)? symbolPlus ')'
+weightOptimizationCmd   :   '(' 'optimize' weightPair ')'
                         ;
+
+weightPair  :   '(' SYMBOL symbolPlus ')'
+            |   SYMBOL
+            ;
+
 
 weightConstraintCmd     :   '(' 'weight-constraint' term ')'
                         ;
