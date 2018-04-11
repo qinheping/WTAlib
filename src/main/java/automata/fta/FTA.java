@@ -5,6 +5,7 @@ import automata.Move;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.antlr.v4.runtime.ParserRuleContext;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class FTA<S> extends Automaton<S> {
@@ -144,12 +145,44 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> determinization(){
+        this.compressState();
+        if(states.size()>30) {
+            System.out.println("error: too much state to determinze");
+            return null;
+        }
+        FTA<S> result = new FTA<S>();
+        for(int i = 0; i < Math.pow(2,states.size()); i++){
+            List<Integer> states = powerToSet(i);
+            result.addTransition();
+        }
         return null;
     }
 
+    public Integer powerOfTwo(List<Integer> list){
+        Integer result = 0;
+        for (Integer num: list){
+            result += (int) Math.pow(2,num);
+        }
+        return result;
+    }
+
+    public List<Integer> powerToSet(Integer pow){
+        List<Integer> result = new ArrayList<Integer>();
+        int i = 0;
+        while(pow>0){
+            if(pow%2 == 1) {
+                result.add(i);
+                pow --;
+            }
+            pow = pow/2;
+            i++;
+        }
+        return result;
+    }
+
     public void compressState(){
-        while(this.maxStateId > this.states.size()){
-            for(int i = 0; i < states.size()-1; i++){
+        while(this.maxStateId > this.states.size()-1){
+            for(int i = 0; i < states.size(); i++){
                 if(!states.contains(i)){
                     this.replaceState(maxStateId,i);
                     break;
@@ -236,7 +269,7 @@ public class FTA<S> extends Automaton<S> {
         for(Integer state: toRemove){
             this.states.remove(state);
         }
-
+        this.compressState();
     }
 
     public void statShift(Integer shift){
