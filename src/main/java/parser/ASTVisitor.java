@@ -1,5 +1,6 @@
 package parser;
 
+import javafx.util.Pair;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import semirings.Semiring;
@@ -81,28 +82,29 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
     public OptimizationNode visitWeightOptimizationCmd(QSygusParserParser.WeightOptimizationCmdContext ctx){
         String flag = null;
         List<String> weightTuple = new ArrayList<String>();
-        if(ctx.SYMBOL() != null){
-            flag = ctx.SYMBOL().getText();
+        QSygusParserParser.WeightPairContext weightpair = ctx.weightPair();
+        if(weightpair.symbolPlus() != null){
+            flag = weightpair.SYMBOL().getText();
+            QSygusParserParser.SymbolPlusContext symbolPlus = weightpair.symbolPlus();
+            while(symbolPlus.symbolPlus()!= null){
+                weightTuple.add(0,symbolPlus.SYMBOL().getText());
+                symbolPlus = symbolPlus.symbolPlus();
+            }
+            return new OptimizationNode(flag, weightTuple);
         }
-        QSygusParserParser.SymbolPlusContext symbolPlus = ctx.symbolPlus();
-        while(symbolPlus.symbolPlus()!= null){
-            weightTuple.add(0,symbolPlus.SYMBOL().getText());
-            symbolPlus = symbolPlus.symbolPlus();
-        }
-        weightTuple.add(0,symbolPlus.SYMBOL().getText());
+        weightTuple.add(weightpair.SYMBOL().getText());
         return new OptimizationNode(flag, weightTuple);
     }
 
     @Override
     public ProgramNode visitProg(QSygusParserParser.ProgContext ctx) {
-        List<String> semirings = new ArrayList<String>();
-        QSygusParserParser.SymbolPlusContext symbolplus = ctx.setWeightCmd().symbolPlus();
-        while(symbolplus.symbolPlus() != null){
-            semirings.add(0,symbolplus.SYMBOL().getText());
-            symbolplus = symbolplus.symbolPlus();
+        List<Pair<String,String>> semirings = new ArrayList<Pair<String,String>>();
+        QSygusParserParser.WeightPlusContext weightplus = ctx.setWeightCmd().weightPlus();
+        while(weightplus.weightPlus() != null){
+            semirings.add(0,new Pair<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
+            weightplus = weightplus.weightPlus();
         }
-        semirings.add(0,symbolplus.SYMBOL().getText());
-
+        semirings.add(0,new Pair<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
         List<String> preCmds = new ArrayList<String>();
         List<String> postCmds = new ArrayList<String>();
         GrammarNode synthFun = null;
