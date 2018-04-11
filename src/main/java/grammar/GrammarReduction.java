@@ -5,7 +5,9 @@ import automata.fta.FTAMove;
 import automata.Move;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import semirings.Semiring;
+import sun.rmi.runtime.Log;
 import sun.util.logging.PlatformLogger;
 
 import java.util.*;
@@ -26,6 +28,9 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
+        return this.mkFTAInRange(wAut, sr.one(), c);
+    }
+    public FTA<S> mkFTAInRange(WTA<S,R> wAut, R l, R h){
         // fta moves we need to produce for the result fta
         Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         // leaf transitions in the input WTA
@@ -51,7 +56,6 @@ public class GrammarReduction<S,R>{
             bucket.addAll(reachedWeight.get(oldId));
             newWeight.put(oldId, bucket);
         }
-        System.out.println(newWeight);
 
         reachedWeight.clear();
 
@@ -59,7 +63,6 @@ public class GrammarReduction<S,R>{
         while(reachedWeightChanged){
             reachedWeightChanged = false;
             // transitions involve states updated in last iteration
-            logger.log(Level.INFO, "Start finding applicable transitions");
             Collection<WTAMove<S,R>> applicableTransitions = findApplicableTransitions(wAut, newWeight.keySet(), reachedWeight.keySet());
 
             Collection<Tuple<FTAMove<S>,R>> tmpTuples = new ArrayList<Tuple<FTAMove<S>, R>>();
@@ -69,7 +72,8 @@ public class GrammarReduction<S,R>{
                 // find new moves and their weights
 
                 logger.log(Level.INFO,"Transition: " + transition.toDotString());
-                Collection<Tuple<FTAMove<S>,R>> newTuples = getNewMoves(transition, newWeight, reachedWeight, c);
+                Collection<Tuple<FTAMove<S>,R>> newTuples = getNewMoves(transition, newWeight, reachedWeight, h);
+
 
                 // check if fixed point
                 if(newTuples.size() != 0)
@@ -88,7 +92,7 @@ public class GrammarReduction<S,R>{
 
             // update new weight
             for(Tuple<FTAMove<S>, R> newTuple: tmpTuples) {
-                ftaMoves.add(newTuple.x);
+                    ftaMoves.add(newTuple.x);
                 Integer oldState = accessOldId(newTuple.x.from, newTuple.y);
                 if(reachedWeight.get(oldState)!=null && reachedWeight.get(oldState).contains(newTuple.y))
                     continue;
@@ -102,13 +106,28 @@ public class GrammarReduction<S,R>{
                         newWeight.get(oldState).add(newTuple.y);
                 }
             }
-            System.out.println(newWeight);
-
-            System.out.println(reachedWeight);
             logger.log(Level.INFO,"# of new weights: "+ newWeight.size());
         }
 
-        return null;
+        // construct result fta
+        FTA<S> fta = new FTA<S>();
+        // add all constrcuted transitions
+        for(FTAMove<S> move: ftaMoves){
+            fta.addTransition(move);
+        }
+        // add a new axiom state
+        for(Integer initNewId : newIdDic.get(wAut.getInitialState()).values()){
+            if(!(sr.lessThan(accessWeight(initNewId),h) && sr.lessOrEqual(l, accessWeight(initNewId)))) {
+                continue;
+            }
+            String initSort = fta.getMovesFrom(initNewId).iterator().next().sort;
+            List<Integer> singletonTo = new ArrayList<Integer>();
+            singletonTo.add(initNewId);
+            fta.addTransition(new FTAMove<S>(this.maxNewId, singletonTo, (S)"",initSort));
+        }
+        fta.setInitialState(this.maxNewId);
+        fta.clean();
+        return fta;
     }
 
     private Collection<Tuple<FTAMove<S>,R>> getNewMoves(WTAMove<S,R> transition, Map<Integer,List<R>> newWeightBuckets, Map<Integer,List<R>> weightBuckets, R c){
@@ -128,6 +147,7 @@ public class GrammarReduction<S,R>{
 
                 logger.log(Level.INFO,"Position of new weight: " + posNew);
                 Collection<Tuple<FTAMove<S>,R>> temResult = new ArrayList<Tuple<FTAMove<S>, R>>() ;
+                Integer temMoveCount = 0;
                 List<Integer> indexes_new = new ArrayList<Integer>();
 
                 for(int i = 0; i < transition.to.size(); i++){
@@ -158,10 +178,9 @@ public class GrammarReduction<S,R>{
 
                 logger.log(Level.INFO,"moveBound: " + moveBound);
                 // fill moves
-                while (temResult.size() < moveBound) {
+                while (temMoveCount < moveBound) {
                     Collection<Tuple<FTAMove<S>,R>> temTemResult = new ArrayList<Tuple<FTAMove<S>, R>>() ;
-                    List<R> childrenWeight = new ArrayList<R>();
-                    List<Integer> childrenNewId = new ArrayList<Integer>();
+                    Integer temTemMoveCount = 0;
 
                     Integer oldMoveBound = 1;
                     for (int i = 0; i < transition.to.size(); i++) {
@@ -176,29 +195,34 @@ public class GrammarReduction<S,R>{
                     }
 
                     logger.log(Level.INFO,"oldMoveBound: " + oldMoveBound);
-                    while(temTemResult.size() < oldMoveBound) {
+                    while(temTemMoveCount < oldMoveBound) {
                         // fill children list
+                        List<Integer> childrenNewId = new ArrayList<Integer>();
+                        List<R> childrenWeight = new ArrayList<R>();
                         for (int i = 0; i < transition.to.size(); i++) {
                             // use old weight
                             if (!posNew.contains(i)) {
                                 childrenWeight.add(weightBuckets.get(transition.to.get(i)).get(indexes.get(i)));
-                                childrenNewId.add(accessNewId(transition.to.get(i), childrenWeight.get(i)));
+                                if(!(transition.to.size() == 1 && accessNewId(transition.to.get(i), childrenWeight.get(i)) == 0))
+                                    childrenNewId.add(accessNewId(transition.to.get(i), childrenWeight.get(i)));
                             } else {
                                 childrenWeight.add(newWeightBuckets.get(transition.to.get(i)).get(indexes_new.get(i)));
-                                childrenNewId.add(accessNewId(transition.to.get(i), childrenWeight.get(i)));
+                                if(!(transition.to.size() == 1 && accessNewId(transition.to.get(i), childrenWeight.get(i)) == 0))
+                                    childrenNewId.add(accessNewId(transition.to.get(i), childrenWeight.get(i)));
                             }
                         }
+
                         childrenWeight.add(transition.weight);
                         // calculate weight
                         R weight = this.sr.times(childrenWeight);
-
                         // put tuple to temTemResult
                         if (sr.lessThan(weight, c)) {
                             FTAMove<S> newMove = new FTAMove<S>(accessNewId(transition.from, weight), childrenNewId, transition.symbol);
+                            newMove.sort = transition.sort;
                             temTemResult.add(new Tuple<FTAMove<S>, R>(newMove, weight));
                             logger.log(Level.INFO,"new move added: " + newMove.toDotString());
                         }
-
+                        temTemMoveCount++;
 
                         // update indexes
                         int currentPos = 0;
@@ -217,6 +241,7 @@ public class GrammarReduction<S,R>{
                         }
                     }
                     temResult.addAll(temTemResult);
+                    temMoveCount += temTemMoveCount;
                     // update indexes new
                     for(Integer pos: posNew){
                         if(indexes_new.get(pos) == newWeightBuckets.get(transition.to.get(pos)).size()-1){
@@ -300,6 +325,16 @@ public class GrammarReduction<S,R>{
                 return oldId;
         }
         return -1;
+    }
+
+    public R accessWeight(Integer newId){
+        for(Integer oldId : this.newIdDic.keySet()){
+            for (R weight : this.newIdDic.get(oldId).keySet()){
+                if(this.newIdDic.get(oldId).get(weight) == newId)
+                    return weight;
+            }
+        }
+        return null;
     }
 
 
