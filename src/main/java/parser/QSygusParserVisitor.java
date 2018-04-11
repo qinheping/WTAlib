@@ -29,17 +29,17 @@ public interface QSygusParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSetLogicCmd(QSygusParserParser.SetLogicCmdContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QSygusParserParser#logicPlus}.
+	 * Visit a parse tree produced by {@link QSygusParserParser#weightPlus}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogicPlus(QSygusParserParser.LogicPlusContext ctx);
+	T visitWeightPlus(QSygusParserParser.WeightPlusContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link QSygusParserParser#logic}.
+	 * Visit a parse tree produced by {@link QSygusParserParser#weight}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLogic(QSygusParserParser.LogicContext ctx);
+	T visitWeight(QSygusParserParser.WeightContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link QSygusParserParser#setWeightCmd}.
 	 * @param ctx the parse tree

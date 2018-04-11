@@ -1,6 +1,8 @@
 package parser;
 
+import automata.fta.FTA;
 import automata.wta.WTA;
+import javafx.util.Pair;
 import semirings.BooleanSemiring;
 import semirings.ProbabilitySemiring;
 import semirings.Semiring;
@@ -10,20 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QSygusNode extends ProgramNode{
-    List<Semiring> semirings;
+    public List<Semiring> semirings;
+    public List<String> weightNames;
     List<String> preCmds;
     List<String> postCmds;
     GrammarNode synthFun;
-    TermNode weightConstraint;
+    public TermNode weightConstraint;
     OptimizationNode weightOpt;
 
-    public QSygusNode(List<String> preCmds, List<String> postCmds, GrammarNode synthFun, List<String> semirings, TermNode weightConstraint, OptimizationNode weightOpt){
+    public QSygusNode(List<String> preCmds, List<String> postCmds, GrammarNode synthFun, List<Pair<String,String>> semirings, TermNode weightConstraint, OptimizationNode weightOpt){
         this.preCmds = preCmds;
         this.postCmds = postCmds;
         this.synthFun = synthFun;
         this.semirings = new ArrayList<Semiring>();
-        for(String s: semirings){
-            this.semirings.add(stringToSemiring(s));
+        this.weightNames = new ArrayList<String>();
+        for(Pair<String,String> pss: semirings){
+            this.semirings.add(stringToSemiring(pss.getValue()));
+            this.weightNames.add(pss.getKey());
         }
         this.weightConstraint = weightConstraint;
         this.weightOpt = weightOpt;
@@ -48,6 +53,10 @@ public class QSygusNode extends ProgramNode{
         return wtaList.get(0);
     }
 
+    public GrammarNode getSynthFun() {
+        return synthFun;
+    }
+
     @Override
     public String toString(){
         String result = "";
@@ -61,6 +70,18 @@ public class QSygusNode extends ProgramNode{
         return result;
     }
 
+    public String toString(FTA fta){
+
+        String result = "";
+        for(String cmd: preCmds){
+            result = result + cmd + '\n';
+        }
+        result = result + synthFun.toString(fta) + "\n";
+        for(String cmd: postCmds){
+            result = result + cmd + '\n';
+        }
+        return result;
+    }
 }
 
 

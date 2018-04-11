@@ -6,17 +6,17 @@ start       :   prog
 prog        :   setWeightCmd cmdPlus
             ;
 
-setLogicCmd :   '(' 'set-logic' logicPlus ')'
+setLogicCmd :   '(' 'set-logic' SYMBOL ')'
             ;
 
-logicPlus   :   logicPlus '(' logic ')'
-            |   '(' logic ')'
+weightPlus   :   weightPlus '(' SYMBOL weight ')'
+            |   '(' SYMBOL weight ')'
             ;
 
-logic       :   'TROP'  |   'PROB'  |   'BOOL'
+weight       :   'TROP'  |   'PROB'  |   'BOOL'
             ;
 
-setWeightCmd    :   '(' 'set-weight' symbolPlus ')'
+setWeightCmd    :   '(' 'set-weight' weightPlus ')'
                 ;
 
 cmdPlus     :   cmdPlus cmd

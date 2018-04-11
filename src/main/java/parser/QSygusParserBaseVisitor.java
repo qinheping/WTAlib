@@ -38,14 +38,14 @@ public class QSygusParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impl
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogicPlus(QSygusParserParser.LogicPlusContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWeightPlus(QSygusParserParser.WeightPlusContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLogic(QSygusParserParser.LogicContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWeight(QSygusParserParser.WeightContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
