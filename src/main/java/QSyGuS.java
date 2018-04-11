@@ -2,10 +2,7 @@ import grammar.GrammarReduction;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import parser.ASTVisitor;
-import parser.QSygusNode;
-import parser.QSygusParserLexer;
-import parser.QSygusParserParser;
+import parser.*;
 import semirings.ProbabilitySemiring;
 import semirings.TropicalSemiring;
 
@@ -49,8 +46,32 @@ public class QSyGuS {
 
         // no weight constain
         if(prog.weightConstraint == null){
-            initial_script = prog.toString();
+            initial_script = prog.toString(prog.getSynthFun().toFTA());
+        }else{
+            TermNode constraint = prog.getWeightConstraint();
+            //special case
+            if(isInterval(constraint)){
+                boolean isSupClosed = true;
+                boolean isInfClosed = true;
+
+                TermNode term0 = constraint.getChildren().get(0);
+                TermNode term1 = constraint.getChildren().get(1);
+                if(term0)
+            }
         }
     }
 
+    private static boolean isInterval(TermNode term){
+        if(!term.getSymbol().equals("and"))
+            return false;
+        if(term.getChildren().size()!=2)
+            return false;
+        String s0 = term.getChildren().get(0).getSymbol();
+        String s1 = term.getChildren().get(1).getSymbol();
+        if((s0.equals(">=") || s0.equals(">")) && (s1.equals("<=") || s1.equals("<")))
+            return true;
+        if((s1.equals(">=") || s1.equals(">")) && (s0.equals("<=") || s0.equals("<")))
+            return true;
+        return false;
+    }
 }

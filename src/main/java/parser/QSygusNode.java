@@ -82,6 +82,10 @@ public class QSygusNode extends ProgramNode{
         }
         return result;
     }
+
+    public TermNode getWeightConstraint() {
+        return weightConstraint;
+    }
 }
 
 

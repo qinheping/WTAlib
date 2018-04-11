@@ -47,7 +47,6 @@ public class ParserUnitTest {
 
         System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
         System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f,15.0f)));
-        System.out.println(prog.toString(prog.getSynthFun().toFTA()));
 
     }
 
