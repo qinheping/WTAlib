@@ -7,6 +7,7 @@ import semirings.TropicalSemiring;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ParserUnitTest {
@@ -35,7 +36,7 @@ public class ParserUnitTest {
     }
 
     @org.junit.Test
-    public void testReduction() throws FileNotFoundException{
+    public void testReduction() throws FileNotFoundException,IOException{
         String input = new Scanner(new File("benchmarks/sygus/max.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -45,8 +46,9 @@ public class ParserUnitTest {
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
 
-        System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
-        System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f,15.0f)));
+        //System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
+        //System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, false,3.0f,true)));
+        QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"");
 
     }
 

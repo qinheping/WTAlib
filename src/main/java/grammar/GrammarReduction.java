@@ -16,7 +16,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class GrammarReduction<S,R>{
-    private Semiring<R> sr;
+    public Semiring<R> sr;
     private Map<Integer, Map<R,Integer>> newIdDic;
     private Integer maxNewId;
     private Logger logger = Logger.getLogger("Reduction");
@@ -28,9 +28,10 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTALessThanC(WTA<S,R> wAut, R c){
-        return this.mkFTAInRange(wAut, sr.one(), c);
+        return this.mkFTAInRange(wAut, sr.one(), true, c,false);
     }
-    public FTA<S> mkFTAInRange(WTA<S,R> wAut, R l, R h){
+
+    public FTA<S> mkFTAInRange(WTA<S,R> wAut, R l, boolean infclosed, R h, boolean supclosed){
         // fta moves we need to produce for the result fta
         Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         // leaf transitions in the input WTA
@@ -72,7 +73,7 @@ public class GrammarReduction<S,R>{
                 // find new moves and their weights
 
                 logger.log(Level.INFO,"Transition: " + transition.toDotString());
-                Collection<Tuple<FTAMove<S>,R>> newTuples = getNewMoves(transition, newWeight, reachedWeight, h);
+                Collection<Tuple<FTAMove<S>,R>> newTuples = getNewMoves(transition, newWeight, reachedWeight, h, supclosed);
 
 
                 // check if fixed point
@@ -117,7 +118,8 @@ public class GrammarReduction<S,R>{
         }
         // add a new axiom state
         for(Integer initNewId : newIdDic.get(wAut.getInitialState()).values()){
-            if(!(sr.lessThan(accessWeight(initNewId),h) && sr.lessOrEqual(l, accessWeight(initNewId)))) {
+            if(!((sr.lessThan(accessWeight(initNewId),h)|| supclosed) && (sr.lessOrEqual(accessWeight(initNewId),h)|| !supclosed)
+                    && (sr.lessThan(l, accessWeight(initNewId)) || infclosed) && (sr.lessOrEqual(l, accessWeight(initNewId)) || !infclosed))) {
                 continue;
             }
             String initSort = fta.getMovesFrom(initNewId).iterator().next().sort;
@@ -130,7 +132,7 @@ public class GrammarReduction<S,R>{
         return fta;
     }
 
-    private Collection<Tuple<FTAMove<S>,R>> getNewMoves(WTAMove<S,R> transition, Map<Integer,List<R>> newWeightBuckets, Map<Integer,List<R>> weightBuckets, R c){
+    private Collection<Tuple<FTAMove<S>,R>> getNewMoves(WTAMove<S,R> transition, Map<Integer,List<R>> newWeightBuckets, Map<Integer,List<R>> weightBuckets, R c, boolean supclosed){
         Collection<Tuple<FTAMove<S>,R>> result = new ArrayList<Tuple<FTAMove<S>, R>>() ;
         List<Integer> indexes = new ArrayList<Integer>();
         logger.log(Level.INFO,"Transition: " + transition.toDotString());
@@ -216,7 +218,7 @@ public class GrammarReduction<S,R>{
                         // calculate weight
                         R weight = this.sr.times(childrenWeight);
                         // put tuple to temTemResult
-                        if (sr.lessThan(weight, c)) {
+                        if ((sr.lessThan(weight, c) || supclosed) && (sr.lessOrEqual(weight, c) || !supclosed)) {
                             FTAMove<S> newMove = new FTAMove<S>(accessNewId(transition.from, weight), childrenNewId, transition.symbol);
                             newMove.sort = transition.sort;
                             temTemResult.add(new Tuple<FTAMove<S>, R>(newMove, weight));
