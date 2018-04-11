@@ -33,7 +33,7 @@ public abstract class Semiring<R>{
     public abstract R parse(String s);
 
     public boolean lessOrEqual(R w1, R w2){
-        if (w1==w2 || lessThan(w1, w2))
+        if (w1.equals(w2) || lessThan(w1, w2))
             return true;
         else
             return false;

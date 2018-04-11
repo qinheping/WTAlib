@@ -1,5 +1,6 @@
 package parser;
 
+import automata.fta.FTAMove;
 import automata.wta.WTAMove;
 import semirings.Semiring;
 import sun.awt.Symbol;
@@ -47,5 +48,21 @@ public class RuleNode extends ProgramNode {
         }else
             to.add(1);
         return new WTAMove<S,R>(from,to, (S)symbol, w);
+    }
+
+    public <S>FTAMove<S> toFTAMove(Map<String, Integer> idDic, Integer from){
+        List<Integer> to = new ArrayList<Integer>();
+        if(this.children != null){
+            for(GTermNode child: children) {
+                if (idDic.get(child.symbol) != null) {
+                    to.add(idDic.get(child.symbol));
+                }
+                else
+                    to.add(1);
+            }
+        }else
+            to.add(1);
+        return new FTAMove<S>(from,to,(S)symbol);
+
     }
 }
