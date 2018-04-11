@@ -45,12 +45,15 @@ public class QSygusNode extends ProgramNode{
     }
 
     public WTA toWTA(){
+        return this.toWTA(0);
+    }
+    public WTA toWTA(Integer index){
         List<WTA> wtaList = new ArrayList<WTA>();
         for(int i = 0; i < semirings.size(); i++){
             wtaList.add(synthFun.toWTA(semirings.get(i), i));
         }
         // TODO we can do more
-        return wtaList.get(0);
+        return wtaList.get(index);
     }
 
     public GrammarNode getSynthFun() {

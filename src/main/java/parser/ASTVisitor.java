@@ -163,6 +163,10 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
         }
         return new TermNode(symbol, children);
     }
+    @Override
+    public TermNode visitFunDefCmd(QSygusParserParser.FunDefCmdContext ctx){
+        return visitTerm(ctx.term());
+    }
 
 
     public String getSplitedText(ParseTree ctx){

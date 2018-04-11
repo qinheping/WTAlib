@@ -1,3 +1,4 @@
+import automata.fta.FTA;
 import grammar.GrammarReduction;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -47,9 +48,14 @@ public class ParserUnitTest {
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
 
         //System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
-        //System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, false,3.0f,true)));
-        QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"");
-
+        System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, false,3.0f,true)));
+        System.out.println(QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"",prog.toWTA(),gr.sr));
+        System.out.println(prog.getSynthFun().toFTA());
+        FTA fta = prog.getSynthFun().toFTA();
+        fta.replaceState(0,3);
+        System.out.println(fta);
+        fta.compressState();
+        System.out.println(fta);
     }
 
     @org.junit.Test

@@ -96,7 +96,7 @@ public class GrammarNode extends ProgramNode {
 
     public WTA toWTA(Semiring sr, Integer index){
         idDic = new HashMap<String, Integer>();
-        maxId = 2; // 0 for Start 1 for leaf
+        maxId = 2; // 0 for Start, 1 for leaf
         idDic.put("Start",  0);
 
         WTA wta = new WTA<String, Float>();
@@ -140,7 +140,6 @@ public class GrammarNode extends ProgramNode {
             }
         }
         fta.setInitialState(0);
-        System.out.println(fta.toString());
         return fta;
     }
 

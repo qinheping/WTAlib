@@ -18,4 +18,18 @@ public class TermNode extends ProgramNode {
         this.symbol = symbol;
         this.children = children;
     }
+
+    public boolean hasChild(){
+        if(children == null || children.size() == 0)
+            return false;
+        return true;
+    }
+    @Override
+    public String toString(){
+        String result = this.symbol+"(";
+        for(TermNode child: this.children){
+            result+= child.toString();
+        }
+        return result+")";
+    }
 }
