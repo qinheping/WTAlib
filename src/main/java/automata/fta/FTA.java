@@ -119,13 +119,69 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> union(FTA<S> aut){
-        //TODO
-        return null;
+        FTA<S> result = new FTA<S>();
+        result.setInitialState(0);
+        this.statShift(1);
+        aut.statShift(this.maxStateId);
+        for(Move<S> move: getMovesFrom(this.initialState)){
+            result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+        }
+        for(Move<S> move: aut.getMovesFrom(aut.initialState)){
+            result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+        }
+        for(Move<S> move: getMoves()){
+            result.addTransition((FTAMove<S>) move);
+        }
+        for(Move<S> move: aut.getMoves()){
+            result.addTransition((FTAMove<S>) move);
+        }
+        return result;
     }
 
     public FTA<S> complement(FTA<S> aut){
         //TODO
         return null;
+    }
+
+    public FTA<S> determinization(){
+        return null;
+    }
+
+    public void compressState(){
+        while(this.maxStateId > this.states.size()){
+            for(int i = 0; i < states.size()-1; i++){
+                if(!states.contains(i)){
+                    this.replaceState(maxStateId,i);
+                    break;
+                }
+            }
+            maxStateId = 0;
+            for(int state : states){
+                if(maxStateId < state)
+                    maxStateId = state;
+            }
+        }
+    }
+
+    public void replaceState(int oldState, int newState){
+        if(oldState == this.initialState){
+            this.initialState = newState;
+        }
+        for(Move<S> move : getMoves()){
+            move.replaceState(oldState,newState);
+        }
+
+        movesFrom.put(newState,movesFrom.get(oldState));
+        movesFrom.remove(oldState);
+        states.remove(oldState);
+        states.add(newState);
+
+        maxStateId = 0;
+        for(int state : states){
+            if(maxStateId < state)
+                maxStateId = state;
+        }
+
     }
 
     public void clean(){
@@ -183,6 +239,21 @@ public class FTA<S> extends Automaton<S> {
 
     }
 
+    public void statShift(Integer shift){
+        Collection<Integer> newStates = new HashSet<Integer>();
+        for(Integer state : states){
+            this.movesFrom.put(state+shift,this.movesFrom.get(state));
+            this.movesFrom.remove(state);
+            newStates.add(state+shift);
+        }
+        states = newStates;
+        this.initialState = initialState+shift;
+        for(Move<S> move: this.getMoves()){
+            move.shift(shift);
+        }
+        this.maxStateId = this.maxStateId+shift;
+    }
+
     // ------------------------------------------------------
     // Other automata operations
     // ------------------------------------------------------
@@ -224,7 +295,7 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public String toString(){
-        String result = "Initial State: " + this.initialState + "\nTransitions: " ;
+        String result = "Initial State: " + this.initialState + ", maxState:" + this.maxStateId + ", states: " + this.states +  "\nTransitions: " ;
         for(Move<S> move: getMoves()){
             result += move.toDotString() + "\n";
         }

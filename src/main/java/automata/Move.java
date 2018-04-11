@@ -1,5 +1,6 @@
 package automata;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,8 +9,6 @@ import java.util.List;
  *  @param <S>
  *      domain of the automaton alphabet
  *
- *  @param <R>
- *      semiring
  */
 
 public abstract class Move<S> {
@@ -28,6 +27,8 @@ public abstract class Move<S> {
     public Move(Integer from, List<Integer> to, S symbol) {
         this.from = from;
         this.to = to;
+        if(to == null)
+            this.to = new ArrayList<Integer>();
         this.symbol = symbol;
     }
     public Move(Integer from, List<Integer> to, S symbol, String sort){
@@ -47,6 +48,23 @@ public abstract class Move<S> {
             return 0;
         return to.size();
     }
+
+    public void shift(int shift){
+        this.from = this.from+shift;
+        for(int i  =0; i < to.size(); i++){
+            this.to.set(i,this.to.get(i)+shift);
+        }
+    }
+
+    public void replaceState(int oldState, int newState){
+        if(this.from == oldState)
+            this.from = newState;
+        for(int i  =0; i < to.size(); i++){
+            if(this.to.get(i) == oldState)
+                this.to.set(i,newState);
+        }
+    }
+
     @Override
     public int hashCode(){
 //        int result = 0;
