@@ -89,7 +89,7 @@ public class FTA<S> extends Automaton<S> {
 
         states.add(transition.from);
         if (movesFrom.get(transition.from) != null) {
-            movesFrom.get(transition.from).add((FTAMove<S>) transition);
+            movesFrom.get(transition.from).add(transition);
         }
         else{
             Collection<Move<S>> transitions = new HashSet<Move<S>>();

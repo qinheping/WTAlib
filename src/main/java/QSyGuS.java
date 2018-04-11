@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class QSyGuS {
+    static String h,l;
+    static boolean sup,inf;
+    static List<String> weightName;
     public static  void main(String[] args)throws FileNotFoundException{
         String solverName = args[0];
         List<String> benchmarkPaths = new ArrayList<String>();
@@ -30,6 +33,7 @@ public class QSyGuS {
         QSygusParserParser parser = new QSygusParserParser(tokens);
         ParseTree parseTree = parser.prog();
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
+        weightName = prog.weightNames;
         GrammarReduction<String, Float> gr1, gr2;
         if(prog.semirings.get(0).equals("TROP"))
             gr1 = new GrammarReduction<String, Float>(new TropicalSemiring());
@@ -56,7 +60,6 @@ public class QSyGuS {
 
                 TermNode term0 = constraint.getChildren().get(0);
                 TermNode term1 = constraint.getChildren().get(1);
-                if(term0)
             }
         }
     }
@@ -66,12 +69,44 @@ public class QSyGuS {
             return false;
         if(term.getChildren().size()!=2)
             return false;
-        String s0 = term.getChildren().get(0).getSymbol();
-        String s1 = term.getChildren().get(1).getSymbol();
-        if((s0.equals(">=") || s0.equals(">")) && (s1.equals("<=") || s1.equals("<")))
-            return true;
-        if((s1.equals(">=") || s1.equals(">")) && (s0.equals("<=") || s0.equals("<")))
-            return true;
-        return false;
+        TermNode s0 = term.getChildren().get(0);
+        TermNode s1 = term.getChildren().get(1);
+        if(checkIneq)
+    }
+    private static int checkIneq(TermNode t){
+        if(t.getSymbol().equals("==")) {
+            if(weightName.contains(t.getChildren().get(0))){
+                h = t.getChildren().get(1).getSymbol();
+                l = h;
+                sup = true;
+                inf = true;
+            }else if (weightName.contains(t.getChildren().get(1))){
+                h = t.getChildren().get(0).getSymbol();
+                l = h;
+                sup = true;
+                inf = true;
+            }
+            return 0;
+        }
+        if(t.getSymbol().equals("<")) {
+            if(weightName.contains(t.getChildren().get(0))){
+                h = t.getChildren().get(1).getSymbol();
+                sup = false;
+            }else{
+                l = t.getChildren().get(0).getSymbol();
+                inf = false;
+
+            }
+
+            return 0;
+        }
+
+    }
+
+    private static void reset(){
+        h = null;
+        l = null;
+        sup = false;
+        inf = false;
     }
 }

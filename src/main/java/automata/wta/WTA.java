@@ -68,7 +68,7 @@ public class WTA<S,R> extends Automaton<S> {
         states.add(transition.from);
 
         if (movesFrom.get(transition.from) != null)
-            movesFrom.get(transition.from).add((WTAMove<S, R>) transition);
+            movesFrom.get(transition.from).add(transition);
         else{
             Collection<Move<S>> transitions = new LinkedList<Move<S>>();
             transitions.add(transition);
