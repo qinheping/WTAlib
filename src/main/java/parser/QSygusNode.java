@@ -2,7 +2,6 @@ package parser;
 
 import automata.fta.FTA;
 import automata.wta.WTA;
-import javafx.util.Pair;
 import semirings.BooleanSemiring;
 import semirings.ProbabilitySemiring;
 import semirings.Semiring;
@@ -20,15 +19,15 @@ public class QSygusNode extends ProgramNode{
     public TermNode weightConstraint;
     OptimizationNode weightOpt;
 
-    public QSygusNode(List<String> preCmds, List<String> postCmds, GrammarNode synthFun, List<Pair<String,String>> semirings, TermNode weightConstraint, OptimizationNode weightOpt){
+    public QSygusNode(List<String> preCmds, List<String> postCmds, GrammarNode synthFun, List<Tuple<String,String>> semirings, TermNode weightConstraint, OptimizationNode weightOpt){
         this.preCmds = preCmds;
         this.postCmds = postCmds;
         this.synthFun = synthFun;
         this.semirings = new ArrayList<Semiring>();
         this.weightNames = new ArrayList<String>();
-        for(Pair<String,String> pss: semirings){
-            this.semirings.add(stringToSemiring(pss.getValue()));
-            this.weightNames.add(pss.getKey());
+        for(Tuple<String,String> pss: semirings){
+            this.semirings.add(stringToSemiring(pss.y));
+            this.weightNames.add(pss.x);
         }
         this.weightConstraint = weightConstraint;
         this.weightOpt = weightOpt;
@@ -88,6 +87,15 @@ public class QSygusNode extends ProgramNode{
 
     public TermNode getWeightConstraint() {
         return weightConstraint;
+    }
+    public static class Tuple<X, Y> {
+        public final X x;
+        public final Y y;
+
+        public Tuple(X x, Y y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
 

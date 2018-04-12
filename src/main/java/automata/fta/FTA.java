@@ -153,7 +153,7 @@ public class FTA<S> extends Automaton<S> {
         FTA<S> result = new FTA<S>();
         for(int i = 0; i < Math.pow(2,states.size()); i++){
             List<Integer> states = powerToSet(i);
-            result.addTransition();
+            //result.addTransition();
         }
         return null;
     }

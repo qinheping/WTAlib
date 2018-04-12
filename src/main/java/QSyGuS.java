@@ -22,6 +22,7 @@ public class QSyGuS {
     static List<WTA> weightedGrammars;
     static boolean isPairedWeight;
     static List<Semiring<Float>> semirings;
+    static int constaintedIndex;
     public static  void main(String[] args)throws FileNotFoundException, IOException{
         String solverName = args[0];
         List<String> benchmarkPaths = new ArrayList<String>();
@@ -41,23 +42,23 @@ public class QSyGuS {
         ParseTree parseTree = parser.prog();
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
         weightName = prog.weightNames;
-        GrammarReduction<String, Float> gr1 =null, gr2 = null;
+        List<GrammarReduction<String, Float>> gr = new ArrayList<GrammarReduction<String, Float>>();
         isPairedWeight = false;
         if(prog.semirings.get(0).equals("TROP"))
-            gr1 = new GrammarReduction<String, Float>(new TropicalSemiring());
+            gr.add(new GrammarReduction<String, Float>(new TropicalSemiring()));
         if(prog.semirings.get(0).equals("PROB"))
-            gr1 = new GrammarReduction<String, Float>(new ProbabilitySemiring());
-        semirings.add(gr1.sr);
+            gr.add(new GrammarReduction<String, Float>(new ProbabilitySemiring()));
+        semirings.add(gr.get(0).sr);
         weightedGrammars.add(prog.toWTA());
 
         if(prog.semirings.size()>1){
             isPairedWeight = true;
             if(prog.semirings.get(1).equals("TROP"))
-                gr2 = new GrammarReduction<String, Float>(new TropicalSemiring());
-            if(prog.semirings.get(0).equals("PROB"))
-                gr2 = new GrammarReduction<String, Float>(new ProbabilitySemiring());
+                gr.add(new GrammarReduction<String, Float>(new TropicalSemiring()));
+            if(prog.semirings.get(1).equals("PROB"))
+                gr.add(new GrammarReduction<String, Float>(new ProbabilitySemiring()));
             weightedGrammars.add(prog.toWTA(1));
-            semirings.add(gr2.sr);
+            semirings.add(gr.get(1).sr);
         }
 
 
@@ -71,28 +72,27 @@ public class QSyGuS {
             //special case
             if(isInterval(constraint)){
                 // TODO gr1 or gr2 ?
-                initial_script = prog.toString(gr1.mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
+                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }
             reset();
             int checkFlag = checkIneq(constraint);
             if(checkFlag!=3){
             if(checkFlag == 0){
-                initial_script = prog.toString(gr1.mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
+                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }
             if(checkFlag < 0){
-                initial_script = prog.toString(gr1.mkFTAInRange(prog.toWTA(), gr1.sr.one(), true, Float.parseFloat(h),sup));
+                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true, Float.parseFloat(h),sup));
             }
             if(checkIneq(constraint) > 0  ){
                 // TODO greater than? complement
-                initial_script = prog.toString(gr1.mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
+                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }}
         }
-        Float result = callSolver(initial_script, solverName, weightedGrammars.get(0),semirings.get(0));
+        Float result = callSolver(initial_script, solverName, weightedGrammars.get(constaintedIndex),semirings.get(constaintedIndex));
     }
 
     public static Float callSolver(String script, String solverName, WTA wta, Semiring semiring)throws IOException{
         File dir = new File("tmp");
-        dir.mkdirs();
         File tmp = new File(dir, "SolverInput.txt");
         Runtime rt = Runtime.getRuntime();
         String result = "";
@@ -185,8 +185,13 @@ public class QSyGuS {
             return false;
         TermNode s0 = term.getChildren().get(0);
         TermNode s1 = term.getChildren().get(1);
-        if(checkIneq(s0)*checkIneq(s1) < 0){
-            return true;
+        if(checkIneq(s0)*checkIneq(s1) < 0 ){
+            checkIneq(s0);
+            int weightIndex0 =constaintedIndex;
+            checkIneq(s1);
+            int weightIndex1 =constaintedIndex;
+
+            return weightIndex0 == weightIndex1;
         }else{
             reset();
             return false;
@@ -207,11 +212,13 @@ public class QSyGuS {
             if(weightName.contains(t.getChildren().get(0))){
                 h = t.getChildren().get(1).getSymbol();
                 l = h;
+                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 inf = true;
             }else {
                 h = t.getChildren().get(0).getSymbol();
                 l = h;
+                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 inf = true;
             }
@@ -220,9 +227,11 @@ public class QSyGuS {
         if(t.getSymbol().equals("<")) {
             if(weightName.contains(t.getChildren().get(0))){
                 h = t.getChildren().get(1).getSymbol();
+                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
                 sup = false;
                 return -1;
             }else{
+                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 l = t.getChildren().get(0).getSymbol();
                 inf = false;
                 return 1;
@@ -231,9 +240,11 @@ public class QSyGuS {
         if(t.getSymbol().equals("<=")) {
             if(weightName.contains(t.getChildren().get(0))){
                 h = t.getChildren().get(1).getSymbol();
+                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 return -2;
             }else{
+                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 inf = true;
                 l = t.getChildren().get(0).getSymbol();
                 return 2;
@@ -242,9 +253,11 @@ public class QSyGuS {
         if(t.getSymbol().equals(">")) {
             if(weightName.contains(t.getChildren().get(0))){
                 l = t.getChildren().get(1).getSymbol();
+                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
                 sup = false;
                 return 1;
             }else{
+                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 inf = false;
                 h = t.getChildren().get(0).getSymbol();
                 return -1;
@@ -253,10 +266,12 @@ public class QSyGuS {
         if(t.getSymbol().equals(">=")) {
             if(weightName.contains(t.getChildren().get(0))){
                 l = t.getChildren().get(1).getSymbol();
+                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 return 2;
             }else{
                 h = t.getChildren().get(0).getSymbol();
+                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 inf = true;
                 return -2;
             }

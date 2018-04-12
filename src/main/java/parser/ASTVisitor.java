@@ -1,6 +1,5 @@
 package parser;
 
-import javafx.util.Pair;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import semirings.Semiring;
@@ -98,13 +97,13 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
 
     @Override
     public ProgramNode visitProg(QSygusParserParser.ProgContext ctx) {
-        List<Pair<String,String>> semirings = new ArrayList<Pair<String,String>>();
+        List<QSygusNode.Tuple<String,String>> semirings = new ArrayList<QSygusNode.Tuple<String,String>>();
         QSygusParserParser.WeightPlusContext weightplus = ctx.setWeightCmd().weightPlus();
         while(weightplus.weightPlus() != null){
-            semirings.add(0,new Pair<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
+            semirings.add(0, new  QSygusNode.Tuple<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
             weightplus = weightplus.weightPlus();
         }
-        semirings.add(0,new Pair<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
+        semirings.add(0,new QSygusNode.Tuple<String, String>(weightplus.SYMBOL().getText(),weightplus.weight().getText()));
         List<String> preCmds = new ArrayList<String>();
         List<String> postCmds = new ArrayList<String>();
         GrammarNode synthFun = null;
