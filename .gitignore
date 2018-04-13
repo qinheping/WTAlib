@@ -3,3 +3,4 @@ src/.idea/src.iml
 src/.idea/src.iml
 src/.idea/workspace.xml
 src/.idea/src.iml
+*.class
