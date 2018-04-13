@@ -1,4 +1,5 @@
-(set-weight TROP)
+
+(set-weight (w1 TROP))
 (set-logic BV)
 
 (define-fun hd19 ((x (BitVec 32)) (m (BitVec 32)) (k (BitVec 32))) (BitVec 32) 
@@ -23,10 +24,10 @@
                          x
 						 m
 						 k
-						 #x0000001F
+						 #x0000001f
 						 #x00000001
 						 #x00000000
-						 #xFFFFFFFF))))
+						 #xffffffff))))
 
 
 (declare-var x (BitVec 32))
@@ -34,5 +35,6 @@
 (declare-var k (BitVec 32))
 
 (constraint (= (hd19 x m k) (f x m k)))
+(optimize w1)
 (check-synth)
 

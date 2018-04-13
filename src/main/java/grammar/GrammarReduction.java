@@ -28,6 +28,8 @@ public class GrammarReduction<S,R>{
     }
 
     public FTA<S> mkFTAInRange(WTA<S,R> wAut, R l, boolean infclosed, R h, boolean supclosed){
+        logger.setUseParentHandlers(false);
+
         // fta moves we need to produce for the result fta
         Collection<FTAMove<S>> ftaMoves = new HashSet<FTAMove<S>>();
         // leaf transitions in the input WTA
@@ -106,6 +108,8 @@ public class GrammarReduction<S,R>{
             logger.log(Level.INFO,"# of new weights: "+ newWeight.size());
         }
 
+
+        logger.log(Level.INFO,"Start to construct FTA");
         // construct result fta
         FTA<S> fta = new FTA<S>();
         // add all constrcuted transitions

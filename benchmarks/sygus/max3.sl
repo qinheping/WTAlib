@@ -1,4 +1,4 @@
-(set-weight TROP)
+(set-weight (w1 TROP) )
 (set-logic LIA)
 
 (synth-fun max3 ((x Int) (y Int) (z Int)) Int
@@ -27,6 +27,7 @@
 (constraint (or (= x (max3 x y z))
             (or (= y (max3 x y z))
                 (= z (max3 x y z)))))
+(optimize w1)
 
 (check-synth)
 

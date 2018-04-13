@@ -40,7 +40,7 @@ public class ProbabilitySemiring extends Semiring <Float>{
             return Float.NEGATIVE_INFINITY;
         }
 
-        return (w1 + w2) % 2;
+        return w1+w2;
     }
 
     /*
@@ -102,7 +102,7 @@ public class ProbabilitySemiring extends Semiring <Float>{
     @Override
     public boolean isMember(Float w) {
         return !Float.isNaN(w) // not a NaN,
-                && ((w == 0) || (w == 1)); // and positive
+                && (w >= 0); // and positive
     }
 
     public boolean lessThan(Float w1, Float w2) {

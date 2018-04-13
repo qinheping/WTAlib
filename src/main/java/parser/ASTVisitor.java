@@ -89,6 +89,7 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
                 weightTuple.add(0,symbolPlus.SYMBOL().getText());
                 symbolPlus = symbolPlus.symbolPlus();
             }
+            weightTuple.add(0,symbolPlus.SYMBOL().getText());
             return new OptimizationNode(flag, weightTuple);
         }
         weightTuple.add(weightpair.SYMBOL().getText());

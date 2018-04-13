@@ -22,4 +22,9 @@ public class WTAMove<S,R> extends Move<S> {
         String result = from +" -> (" + symbol + ", " + weight +") " +to;
         return result;
     }
+
+    @Override
+    public String toString(){
+        return this.toDotString();
+    }
 }

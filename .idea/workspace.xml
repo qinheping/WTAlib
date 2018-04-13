@@ -2,18 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65ba6319-6be9-4f2c-987e-d56c8b1f01c9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max-Q.sl" afterPath="$PROJECT_DIR$/benchmarks/sygus/max-Q.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/LIA/array_search_3.sl" afterPath="$PROJECT_DIR$/benchmarks/LIA/array_search_3.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/LIA/array_search_5.sl" afterPath="$PROJECT_DIR$/benchmarks/LIA/array_search_5.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-02-d5-prog-prob.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-02-d5-prog-prob.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-05-d5-mulObj.sl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-05-d5-prog-prob.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-05-d5-prog-prob.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-05-d5-prog.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-05-d5-prog.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-07-d5-prog-mulObj.sl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-07-d5-prog-prob.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-07-d5-prog-prob.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-07-d5-prog.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-07-d5-prog.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-14-d5-prog.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-14-d5-prog.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-prog-mulObj.sl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-prog-prob.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-prog-prob.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-prog.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-prog.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-19-d5-prog.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-19-d5-prog.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/parity/parity-Q.sl" afterPath="$PROJECT_DIR$/benchmarks/parity/parity-Q.sl" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/parity/parity.sl" afterPath="$PROJECT_DIR$/benchmarks/parity/parity.sl" />
       <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max.sl" afterPath="$PROJECT_DIR$/benchmarks/sygus/max.sl" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max3.sl" afterPath="$PROJECT_DIR$/benchmarks/sygus/max3.sl" />
       <change beforePath="$PROJECT_DIR$/src/main/java/QSyGuS.java" afterPath="$PROJECT_DIR$/src/main/java/QSyGuS.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automata/Move.java" afterPath="$PROJECT_DIR$/src/main/java/automata/Move.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" afterPath="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java" afterPath="$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java" afterPath="$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/QSygusNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/QSygusNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/RuleNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/RuleNode.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java" afterPath="$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" afterPath="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" afterPath="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" />
       <change beforePath="$PROJECT_DIR$/target/classes/QSyGuS.class" afterPath="$PROJECT_DIR$/target/classes/QSyGuS.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/automata/AutomataException.class" afterPath="$PROJECT_DIR$/target/classes/automata/AutomataException.class" />
@@ -42,7 +56,7 @@
       <change beforePath="$PROJECT_DIR$/target/test-classes/GrammarReductionUnitTest.class" afterPath="$PROJECT_DIR$/target/test-classes/GrammarReductionUnitTest.class" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ParserUnitTest.class" afterPath="$PROJECT_DIR$/target/test-classes/ParserUnitTest.class" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/WTAUnitTest.class" afterPath="$PROJECT_DIR$/target/test-classes/WTAUnitTest.class" />
-      <change beforePath="$PROJECT_DIR$/wtalib.iml" afterPath="$PROJECT_DIR$/wtalib.iml" />
+      <change beforePath="$PROJECT_DIR$/tmp/SolverInput.txt" afterPath="$PROJECT_DIR$/tmp/SolverInput.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,52 +83,38 @@
       <file leaf-file-name="ParserUnitTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/ParserUnitTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="39" column="93" lean-forward="false" selection-start-line="39" selection-start-column="93" selection-end-line="39" selection-end-column="93" />
+            <state relative-caret-position="357">
+              <caret line="50" column="92" lean-forward="false" selection-start-line="50" selection-start-column="92" selection-end-line="50" selection-end-column="92" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FTAMove.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QSyGuS.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QSyGuS.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/QSyGuS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="162">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/parser/RuleNode.java">
+      <file leaf-file-name="OptimizationNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="49" column="5" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="TropicalSemiring.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="12" column="40" lean-forward="false" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
+            <state relative-caret-position="667">
+              <caret line="103" column="21" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -123,60 +123,8 @@
       <file leaf-file-name="ASTVisitor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="110" column="11" lean-forward="false" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QSygusNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/parser/QSygusNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="19" column="37" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="37" />
-              <folding>
-                <element signature="e#1557#1558#0" expanded="true" />
-                <element signature="e#1623#1624#0" expanded="true" />
-                <element signature="e#2394#2395#0" expanded="true" />
-                <element signature="e#2433#2434#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FTA.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-              <folding>
-                <element signature="e#581#582#0" expanded="true" />
-                <element signature="e#614#615#0" expanded="true" />
-                <element signature="e#714#715#0" expanded="true" />
-                <element signature="e#750#751#0" expanded="true" />
-                <element signature="e#863#864#0" expanded="true" />
-                <element signature="e#901#902#0" expanded="true" />
-                <element signature="e#2443#2452#0" expanded="true" />
-                <element signature="e#2684#2693#0" expanded="true" />
-                <element signature="e#5797#5806#0" expanded="true" />
-                <element signature="e#7125#7134#0" expanded="true" />
-                <element signature="e#7222#7231#0" expanded="true" />
-                <element signature="e#7683#7692#0" expanded="true" />
-                <element signature="e#8393#8402#0" expanded="true" />
-                <element signature="e#9023#9032#0" expanded="true" />
-                <element signature="e#9800#9809#0" expanded="true" />
-                <element signature="e#10124#10133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WTA.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1548">
-              <caret line="95" column="56" lean-forward="false" selection-start-line="95" selection-start-column="56" selection-end-line="95" selection-end-column="56" />
+            <state relative-caret-position="330">
+              <caret line="91" column="61" lean-forward="false" selection-start-line="91" selection-start-column="61" selection-end-line="91" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -185,8 +133,39 @@
       <file leaf-file-name="GrammarReduction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="24" lean-forward="false" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+            <state relative-caret-position="324">
+              <caret line="29" column="94" lean-forward="false" selection-start-line="29" selection-start-column="94" selection-end-line="29" selection-end-column="94" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FTA.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="297" column="40" lean-forward="true" selection-start-line="297" selection-start-column="40" selection-end-line="297" selection-end-column="40" />
+              <folding>
+                <element signature="e#9497#9498#0" expanded="true" />
+                <element signature="e#9558#9559#0" expanded="true" />
+                <element signature="e#11445#11446#0" expanded="true" />
+                <element signature="e#11474#11475#0" expanded="true" />
+                <element signature="e#11514#11515#0" expanded="true" />
+                <element signature="e#11549#11550#0" expanded="true" />
+                <element signature="e#11597#11598#0" expanded="true" />
+                <element signature="e#11638#11639#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GrammarNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/parser/GrammarNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="43" column="69" lean-forward="false" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -203,36 +182,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>toWTA</find>
-      <find>weightedGrammars</find>
-      <find>evluateTerm</find>
-      <find>less</find>
-      <find>maxstateId</find>
-      <find>getmove</find>
-      <find>==</find>
-      <find>leaf</find>
-      <find>to</find>
-      <find>states</find>
-      <find>repl</find>
-      <find>getMoves</find>
-      <find>getmoves</find>
-      <find>getmovesfrom</find>
-      <find>replace</find>
-      <find>clean</find>
-      <find>tofta</find>
-      <find>out</find>
-      <find>flag</find>
-      <find>atomCheck</find>
-      <find>optimizationNode</find>
-      <find>callSolver</find>
-      <find>write</find>
-      <find>runtime</find>
-      <find>solutionfound</find>
-      <find>semiring</find>
-      <find>index</find>
       <find>opt</find>
       <find>semirings</find>
       <find>parse</find>
+      <find>create</find>
+      <find>log</find>
+      <find>constaintedIndex</find>
+      <find>the weight</find>
+      <find>of t</find>
+      <find>optimizingindex</find>
+      <find>optimiz</find>
+      <find>h</find>
+      <find>is</find>
+      <find>timeout</find>
+      <find>already optimized</find>
+      <find>callSolver</find>
+      <find>TIMEOUT</find>
+      <find>..</find>
+      <find>isMember</find>
+      <find>optimizingIndex</find>
+      <find>optimization</find>
+      <find>optimi</find>
+      <find>weightplus</find>
+      <find>s</find>
+      <find>tostring</find>
+      <find>evluate</find>
+      <find>to</find>
+      <find>reachedWeightChanged</find>
+      <find>The weight</find>
+      <find>clean</find>
+      <find>sort</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -255,29 +234,29 @@
         <option value="$PROJECT_DIR$/src/main/java/parser/MetaSolverNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/WeightedGrammarNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/QSygusParserBaseVisitor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" />
         <option value="$PROJECT_DIR$/src/main/java/semirings/BooleanSemiring.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/WeightConstraintNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/GTermNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/NTNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/automata/wta/WTA.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/QSygusParser.g4" />
-        <option value="$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java" />
         <option value="$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java" />
         <option value="$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java" />
         <option value="$PROJECT_DIR$/src/main/java/semirings/Semiring.java" />
-        <option value="$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/TermNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/automata/Move.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/GrammarNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/QSygusNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/RuleNode.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" />
+        <option value="$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/automata/Move.java" />
+        <option value="$PROJECT_DIR$/src/main/java/automata/wta/WTA.java" />
+        <option value="$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java" />
+        <option value="$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java" />
         <option value="$PROJECT_DIR$/src/main/java/QSyGuS.java" />
+        <option value="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
       </list>
     </option>
   </component>
@@ -301,10 +280,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="343" />
-    <option name="y" value="423" />
-    <option name="width" value="1398" />
-    <option name="height" value="992" />
+    <option name="x" value="235" />
+    <option name="y" value="56" />
+    <option name="width" value="1396" />
+    <option name="height" value="956" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -340,10 +319,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -455,6 +430,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -700,25 +679,12 @@
       <workItem from="1516314145079" duration="6682000" />
       <workItem from="1523404021454" duration="30706000" />
       <workItem from="1523544966434" duration="24944000" />
+      <workItem from="1523629689500" duration="1634000" />
+      <workItem from="1523632363482" duration="18742000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 11m 00s.xml">
-      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 11m 03s.xml">
-      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 11m 06s.xml">
-      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 11m 40s.xml">
-      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 11m 47s.xml">
-      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 17h 13m 54s.xml">
       <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
     </history-entry>
@@ -734,9 +700,24 @@
     <history-entry file="ParserUnitTest_testReduction - 2018.04.12 at 20h 30m 01s.xml">
       <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ParserUnitTest_testReduction - 2018.04.13 at 11h 29m 40s.xml">
+      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserUnitTest_testReduction - 2018.04.13 at 15h 25m 28s.xml">
+      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserUnitTest_testReduction - 2018.04.13 at 15h 27m 39s.xml">
+      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserUnitTest_testReduction - 2018.04.13 at 15h 30m 46s.xml">
+      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ParserUnitTest_testReduction - 2018.04.13 at 15h 40m 54s.xml">
+      <configuration name="ParserUnitTest.testReduction" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149256000" />
+    <option name="totallyTimeSpent" value="169632000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -761,11 +742,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946378" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293023" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3283721" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" x="722" y="52" width="928" height="1148" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283721" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" x="722" y="52" width="928" height="1148" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293023" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22664456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23217247" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946378" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="true" internal_type="SLIDING" type="FLOATING" visible="false" show_stripe_button="true" weight="0.25538972" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="3546" y="72" width="246" height="1075" />
@@ -827,27 +808,14 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="26" column="75" lean-forward="false" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/GrammarNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="55" column="91" lean-forward="false" selection-start-line="55" selection-start-column="91" selection-end-line="55" selection-end-column="91" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1170">
           <caret line="74" column="56" lean-forward="false" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
-          <folding />
+          <folding>
+            <element signature="e#3530#3531#0" expanded="false" />
+            <element signature="e#3593#3594#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -855,7 +823,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="40" column="38" lean-forward="false" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -896,7 +866,10 @@
         <state relative-caret-position="486">
           <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
           <folding>
-            <element signature="e#2433#2434#0" expanded="true" />
+            <element signature="e#1557#1558#0" expanded="false" />
+            <element signature="e#1623#1624#0" expanded="false" />
+            <element signature="e#2394#2395#0" expanded="false" />
+            <element signature="e#2433#2434#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -905,7 +878,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3222">
           <caret line="189" column="67" lean-forward="true" selection-start-line="189" selection-start-column="67" selection-end-line="189" selection-end-column="67" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -913,7 +888,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -921,7 +895,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -967,13 +940,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1060,30 +1026,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="83" column="58" lean-forward="false" selection-start-line="83" selection-start-column="55" selection-end-line="83" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/QSygusParser.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="90" column="9" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="14" column="49" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/parser/GTermNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -1113,90 +1055,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/Move.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1116">
-          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
+        <state relative-caret-position="252">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/RuleNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="49" column="5" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/GrammarNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="85" column="41" lean-forward="false" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1548">
-          <caret line="95" column="56" lean-forward="false" selection-start-line="95" selection-start-column="56" selection-end-line="95" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="8" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="20" />
-          <folding>
-            <element signature="e#323#324#0" expanded="false" />
-            <element signature="e#357#358#0" expanded="false" />
-            <element signature="e#388#389#0" expanded="false" />
-            <element signature="e#415#416#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
+        <state relative-caret-position="216">
           <caret line="12" column="40" lean-forward="false" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="24" lean-forward="false" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-          <folding>
-            <element signature="e#581#582#0" expanded="true" />
-            <element signature="e#614#615#0" expanded="true" />
-            <element signature="e#714#715#0" expanded="true" />
-            <element signature="e#750#751#0" expanded="true" />
-            <element signature="e#863#864#0" expanded="true" />
-            <element signature="e#901#902#0" expanded="true" />
-            <element signature="e#2443#2452#0" expanded="true" />
-            <element signature="e#2684#2693#0" expanded="true" />
-            <element signature="e#5797#5806#0" expanded="true" />
-            <element signature="e#7125#7134#0" expanded="true" />
-            <element signature="e#7222#7231#0" expanded="true" />
-            <element signature="e#7683#7692#0" expanded="true" />
-            <element signature="e#8393#8402#0" expanded="true" />
-            <element signature="e#9023#9032#0" expanded="true" />
-            <element signature="e#9800#9809#0" expanded="true" />
-            <element signature="e#10124#10133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1206,46 +1086,147 @@
         <state relative-caret-position="198">
           <caret line="19" column="37" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="37" />
           <folding>
-            <element signature="e#1557#1558#0" expanded="true" />
-            <element signature="e#1623#1624#0" expanded="true" />
-            <element signature="e#2394#2395#0" expanded="true" />
-            <element signature="e#2433#2434#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="110" column="11" lean-forward="false" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/parser/RuleNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="49" column="5" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1557#1558#0" expanded="false" />
+            <element signature="e#1623#1624#0" expanded="false" />
+            <element signature="e#2394#2395#0" expanded="false" />
+            <element signature="e#2433#2434#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ParserUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="39" column="93" lean-forward="false" selection-start-line="39" selection-start-column="93" selection-end-line="39" selection-end-column="93" />
+        <state relative-caret-position="357">
+          <caret line="50" column="92" lean-forward="false" selection-start-line="50" selection-start-column="92" selection-end-line="50" selection-end-column="92" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="105" column="5" lean-forward="false" selection-start-line="105" selection-start-column="5" selection-end-line="105" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/QSygusParser.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="41" column="32" lean-forward="false" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/ASTVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="91" column="61" lean-forward="false" selection-start-line="91" selection-start-column="61" selection-end-line="91" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="865">
+          <caret line="97" column="9" lean-forward="false" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="847">
+          <caret line="126" column="55" lean-forward="false" selection-start-line="126" selection-start-column="55" selection-end-line="126" selection-end-column="55" />
+          <folding>
+            <element signature="e#3530#3531#0" expanded="false" />
+            <element signature="e#3593#3594#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/wta/WTAMove.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+          <folding>
+            <element signature="e#636#637#0" expanded="false" />
+            <element signature="e#677#678#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="667">
+          <caret line="103" column="21" lean-forward="false" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/OptimizationNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="29" column="94" lean-forward="false" selection-start-line="29" selection-start-column="94" selection-end-line="29" selection-end-column="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/QSyGuS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="107" column="31" lean-forward="true" selection-start-line="107" selection-start-column="31" selection-end-line="107" selection-end-column="31" />
+        <state relative-caret-position="162">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/GrammarNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/parser/GrammarNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="43" column="69" lean-forward="false" selection-start-line="43" selection-start-column="57" selection-end-line="43" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="297" column="40" lean-forward="true" selection-start-line="297" selection-start-column="40" selection-end-line="297" selection-end-column="40" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#9497#9498#0" expanded="true" />
+            <element signature="e#9558#9559#0" expanded="true" />
+            <element signature="e#11445#11446#0" expanded="true" />
+            <element signature="e#11474#11475#0" expanded="true" />
+            <element signature="e#11514#11515#0" expanded="true" />
+            <element signature="e#11549#11550#0" expanded="true" />
+            <element signature="e#11597#11598#0" expanded="true" />
+            <element signature="e#11638#11639#0" expanded="true" />
           </folding>
         </state>
       </provider>

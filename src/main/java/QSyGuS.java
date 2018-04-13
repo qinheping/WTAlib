@@ -1,4 +1,4 @@
-import automata.Move;
+
 import automata.wta.WTA;
 import automata.wta.WTAMove;
 import grammar.GrammarReduction;
@@ -6,9 +6,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
-import semirings.ProbabilitySemiring;
 import semirings.Semiring;
-import semirings.TropicalSemiring;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,21 +15,23 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class QSyGuS {
-    static String h,l;
-    static boolean sup,inf;
-    static List<String> weightName;
-    static List<WTA> weightedGrammars;
-    static boolean isPairedWeight;
-    static List<Semiring<Float>> semirings;
-    static int constaintedIndex;
-    static int optimizingIndex;
-    static boolean isPairedOpt;
-    static boolean detail = true;
+    static private Float h,l;
+    static private boolean sup,inf;
+    static private List<String> weightName;
+    static private int constaintedIndex = 0;
+    static private int optimizingIndex = -1;
+    static private boolean isPairedOpt;
+    static private boolean detail = true;
+    static private List<Semiring<Float>> semirings = new ArrayList<>();
 
-    static int timeout = 20;
+    static private List<Float> currentWeight = new ArrayList<>();
 
-    static boolean optFound;
-    public static  void main(String[] args)throws FileNotFoundException,InterruptedException, IOException{
+    static private int timeout = 200;
+    static private List<WTA> weightedGrammars = new ArrayList<WTA>();
+
+    static private boolean optFound;
+
+    public static  void main(String[] args)throws InterruptedException, IOException{
         String solverName = args[0];
         if(!(solverName.equals("ESolver")||solverName.equals("CVC4"))){
 
@@ -39,18 +39,18 @@ public class QSyGuS {
             return;
         }
         System.out.println("Solver: " + solverName);
-        List<String> benchmarkPaths = new ArrayList<String>();
         for(int i = 1; i < args.length; i++){
             solve(args[i],solverName);
         }
 
     }
 
-    private static void solve(String benchmarkPath, String solverName)throws FileNotFoundException,InterruptedException, IOException{
+    private static void solve(String benchmarkPath, String solverName)throws InterruptedException, IOException{
         // initialization
-        weightedGrammars = new ArrayList<WTA>();
         List<GrammarReduction<String, Float>> gr = new ArrayList<GrammarReduction<String, Float>>();
-        isPairedWeight = false;
+        currentWeight.add(0.f);
+        currentWeight.add(0.f);
+        boolean isPairedWeight = false;
 
         System.out.println("testing benchmark: " + benchmarkPath.substring(9));
 
@@ -64,11 +64,10 @@ public class QSyGuS {
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
         // parse end
 
-        semirings = new ArrayList<>();
 
         // first weight
         weightName = prog.weightNames;
-        gr.add(new GrammarReduction<String, Float>(prog.semirings.get(0)));
+        gr.add(new GrammarReduction<String, Float>((Semiring<Float>) prog.semirings.get(0)));
         System.out.println("Semiring for weight " + weightName.get(0) + " is " + prog.semirings.get(0));
         semirings.add(gr.get(0).sr);
         weightedGrammars.add(prog.toWTA());
@@ -89,7 +88,7 @@ public class QSyGuS {
         int atomCheck =3;
 
 
-        System.out.println("Start finding initial solution");
+        System.out.println("Start to find initial solution");
         // no weight constain
         if(prog.weightConstraint == null){
             System.out.println("no weight constraint");
@@ -97,55 +96,98 @@ public class QSyGuS {
         }else{
             //System.out.println("weight constraint: " + prog.weightConstraint);
             TermNode constraint = prog.getWeightConstraint();
-            //special case
+            // parse weight constraint
+            // 1. interval [l,h]
+            // 2. base case (-inf,h] [h,h] [l,inf)
+            // 3. combinzation of base case
+            // special case
             isInterval = isInterval(constraint);
             if(isInterval){
-                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
+                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex),l, inf, h,sup));
+            }else {
+                reset();
+                atomCheck = checkIneq(constraint);
+                if (atomCheck != 3) {
+                    if (atomCheck == 0) {
+                        initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), l, inf, h, sup));
+                    }
+                    if (atomCheck < 0) {
+                        initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), gr.get(constaintedIndex).sr.one(), true, h, sup));
+                    }
+                    if (atomCheck > 0) {
+                        // TODO greater than? complement
+                        initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), l, inf, h, sup));
+                    }
+                }
             }
-            reset();
-            atomCheck = checkIneq(constraint);
-            if(atomCheck!=3){
-            if(atomCheck == 0){
-                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
-            }
-            if(atomCheck < 0){
-                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true, Float.parseFloat(h),sup));
-            }
-            if(atomCheck> 0  ){
-                // TODO greater than? complement
-                initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
-            }}
         }
 
         if(detail) System.out.println("initial script: \n"+initial_script);
 
-        Float result = callSolver(initial_script, solverName, weightedGrammars.get(constaintedIndex),semirings.get(constaintedIndex));
-
-        // no paired
         if(prog.weightOpt.getFlag() == null){
             optimizingIndex = 0;
-            isPairedOpt = false;}
-        else if(prog.weightOpt.getFlag().equals("PARETO")){
+            isPairedOpt = false;}else
+                isPairedOpt = true;
+        // solve the initial script with the specified solver
+        Float result = callSolver(initial_script, solverName, weightedGrammars.get(constaintedIndex),semirings.get(constaintedIndex));
+
+        if(!result.equals(-1f)){ System.out.println("The weight "+weightName.get(constaintedIndex) + " is "+result);
+            if(prog.weightOpt.getFlag() != null)System.out.println("The weight "+weightName.get(1-constaintedIndex) + " is "+currentWeight.get(1-constaintedIndex));
+        }
+        else {
+            System.out.println("no solutions found in the constraint.\nTest done.");
+            return;
+        }
+
+        if(prog.weightOpt == null){
+            System.out.println("No optmization objective.\nTest done.");
+            return;
+        }
+
+
+        // no paired
+        if(isPairedOpt && prog.weightOpt.getFlag().equals("SORT")){
             optimizingIndex = (prog.weightOpt.getWeightTuple().get(0).equals(weightName.get(0)))?0:1;
             isPairedOpt = true;
         }
 
-        String script;
+        // number of weight optimized
         int numOfOptimized = 0;
+        if(l == null){
+            l = semirings.get(optimizingIndex).one();
+        }
+        if((constaintedIndex == optimizingIndex && l.equals(result))){
+            optFound = true;
+            if(!isPairedOpt) {
+                System.out.println("This solution is the optimized within constraint range.\nTest done.");
+                return;
+            }
+            System.out.println("This solution is optimized regard to " +weightName.get(optimizingIndex) + ". Move to next weight");
+            // move optimizing index to next one
+            optimizingIndex = 1-optimizingIndex;
+            numOfOptimized = 1;
+        }
+
+        // start to optimization
+        System.out.println("Start to refine solutions");
+        String script;
+
         while(optimizingIndex!=3){
+
+            System.out.println("----------\nnew iteration starts");
             script = null;
             // if the constaint is an interval
             if(isInterval){
                 // constainted == optimized
                 if(constaintedIndex == optimizingIndex ){
-                    if( semirings.get(optimizingIndex).lessThan(result,Float.parseFloat(h)))
-                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, result, false));
+                    if( semirings.get(optimizingIndex).lessThan(result,h))
+                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex),l, inf, currentWeight.get(optimizingIndex), false));
                     else {
                         System.out.println("no solution in the contraint range");
                         break;
                     }
                 }else{
-                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup).intersectionWith(gr.get(optimizingIndex).mkFTALessThanC(prog.toWTA(), result)));
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex),l, inf, h,sup).intersectionWith(gr.get(optimizingIndex).mkFTALessThanC(prog.toWTA(), currentWeight.get(optimizingIndex))));
                 }
             }
             if(atomCheck!=3){
@@ -155,56 +197,85 @@ public class QSyGuS {
                 }
                 if(atomCheck < 0){
                     if(constaintedIndex == optimizingIndex )
-                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true, result, false));
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex), gr.get(constaintedIndex).sr.one(), true, currentWeight.get(optimizingIndex), false));
                     else {
-
-                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true,  Float.parseFloat(h), sup).intersectionWith(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(optimizingIndex).sr.one(), true, result, false)));
+                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex), gr.get(constaintedIndex).sr.one(), true,  h, sup).intersectionWith(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(optimizingIndex).sr.one(), true, currentWeight.get(optimizingIndex), false)));
                     }
                 }
                 if(atomCheck > 0  ){
                     // TODO greater than? complement
-                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
-                    }
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex),l, inf, h,sup));
                 }
+            }
+
+            if(prog.weightConstraint == null){
+                script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex), gr.get(constaintedIndex).sr.one(), true, currentWeight.get(optimizingIndex), false));
+            }
+
+            if(detail)System.out.println(script);
             result = callSolver(script, solverName, weightedGrammars.get(optimizingIndex),semirings.get(optimizingIndex));
-            if(result == -1){
+
+            if(!result.equals(-1f)) {
+                System.out.println("The weight " + weightName.get(constaintedIndex) + " is " + result);
+                if(isPairedOpt)
+                    if(isPairedOpt)System.out.println("The weight "+weightName.get(1-constaintedIndex) + " is "+currentWeight.get(1-constaintedIndex));
+            }
+            else {
+                System.out.println("no solutions found.");
                 if(isPairedOpt == false||numOfOptimized == 1){
                     System.out.println("already optimized");
                     break;
                 }
+                System.out.println("move to next weight.");
                 numOfOptimized++;
                 optimizingIndex = (optimizingIndex == 0)?1:0;
             }
         }
     }
 
-    public static Float callSolver(String script, String solverName, WTA wta, Semiring semiring)throws IOException,InterruptedException{
+    public static Float callSolver(String script, String solverName, WTA wta, Semiring semiring)throws InterruptedException{
         optFound = false;
         boolean solutionFound = true;
-        File dir = new File("tmp");
+
+        // write script to tmp file
+        File dir = new File("../../../tmp/");
         File tmp = new File(dir, "SolverInput.txt");
         Runtime rt = Runtime.getRuntime();
         String result = "";
         try {
+
             tmp.createNewFile();
             WriteStringToFile(tmp, script);
-            File libdir = new File("./solver/ESolver/bin");
+            File libdir = new File("../../../solver/ESolver/bin");
             final long startTime = System.currentTimeMillis();
+
+            // exec solver
+            System.out.println("Solver running. Timeout is set to " + timeout +" seconds");
             Process proc = rt.exec("bash  starexec_run_Default ../../../tmp/SolverInput.txt",null, libdir);
+
+            // timeout
             if(!proc.waitFor(timeout, TimeUnit.SECONDS)) {
                 //timeout - kill the process.
                 proc.destroy(); // consider using destroyForcibly instead
                 solutionFound = false;
                 optFound = true;
-                System.out.println("TIMEOUT, the last one is optimized");
+                System.out.println("TIMEOUT");
                 return -1f;
             }
             InputStreamReader ir = new InputStreamReader(proc.getInputStream());
-
             final long endTime = System.currentTimeMillis();
+
+            // solved in time
             System.out.println("Solved in "+ (endTime-startTime) + " ms");
             LineNumberReader input = new LineNumberReader(ir);
             String line = input.readLine();
+            if(proc.exitValue() != 0){
+                System.out.println("Failed to solve the script.");
+                solutionFound = false;
+                optFound = false;
+                return -1f;
+            }
+
             if(line.equals("No Solutions!")){
                 solutionFound = false;
                 optFound = true;
@@ -218,11 +289,9 @@ public class QSyGuS {
             e.printStackTrace();
         }
         Float resultWeight = evluateString(wta,result, semiring);
-        if((constaintedIndex == optimizingIndex && l!=null && l.equals(resultWeight))){
-            optFound = true;
-            System.out.println("This solution is the optimized within constraint range.");
-            return -1f;
-        }
+        currentWeight.set(0,evluateString(weightedGrammars.get(0),result,semirings.get(0)));
+        if(isPairedOpt){
+            currentWeight.set(1,evluateString(weightedGrammars.get(1),result,semirings.get(1)));}
         return  resultWeight;
     }
 
@@ -244,7 +313,6 @@ public class QSyGuS {
 
     static List<Float> evluateTerm(WTA wta, Integer root, TermNode term, Semiring<Float> semiring){
         List<Float> result = new ArrayList<Float>();
-
         // leaf
         if(!term.hasChild()){
             for(Object move: wta.getMovesFrom(root)){
@@ -322,68 +390,68 @@ public class QSyGuS {
 
         */
         if(t.getSymbol().equals("==")) {
-            if(weightName.contains(t.getChildren().get(0))){
-                h = t.getChildren().get(1).getSymbol();
+            if(weightName.contains(t.getChildren().get(0).getSymbol())){
+                h = Float.parseFloat(t.getChildren().get(1).getSymbol());
                 l = h;
-                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
+                constaintedIndex = (t.getChildren().get(0).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 inf = true;
             }else {
-                h = t.getChildren().get(0).getSymbol();
+                h = Float.parseFloat(t.getChildren().get(0).getSymbol());
                 l = h;
-                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
+                constaintedIndex = (t.getChildren().get(1).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 inf = true;
             }
             return 0;
         }
         if(t.getSymbol().equals("<")) {
-            if(weightName.contains(t.getChildren().get(0))){
-                h = t.getChildren().get(1).getSymbol();
-                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
+            if(weightName.contains(t.getChildren().get(0).getSymbol())){
+                h = Float.parseFloat(t.getChildren().get(1).getSymbol());
+                constaintedIndex = (t.getChildren().get(0).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = false;
                 return -1;
             }else{
-                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
-                l = t.getChildren().get(0).getSymbol();
+                constaintedIndex = (t.getChildren().get(1).getSymbol().equals(weightName.get(0))) ? 0 : 1;
+                l = Float.parseFloat(t.getChildren().get(0).getSymbol());
                 inf = false;
                 return 1;
             }
         }
         if(t.getSymbol().equals("<=")) {
-            if(weightName.contains(t.getChildren().get(0))){
-                h = t.getChildren().get(1).getSymbol();
-                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
+            if(weightName.contains(t.getChildren().get(0).getSymbol())){
+                h = Float.parseFloat(t.getChildren().get(1).getSymbol());
+                constaintedIndex = (t.getChildren().get(0).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 return -2;
             }else{
-                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
+                constaintedIndex = (t.getChildren().get(1).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 inf = true;
-                l = t.getChildren().get(0).getSymbol();
+                l = Float.parseFloat(t.getChildren().get(0).getSymbol());
                 return 2;
             }
         }
         if(t.getSymbol().equals(">")) {
-            if(weightName.contains(t.getChildren().get(0))){
-                l = t.getChildren().get(1).getSymbol();
-                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
+            if(weightName.contains(t.getChildren().get(0).getSymbol())){
+                l = Float.parseFloat(t.getChildren().get(1).getSymbol());
+                constaintedIndex = (t.getChildren().get(0).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = false;
                 return 1;
             }else{
-                constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
+                constaintedIndex = (t.getChildren().get(1).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 inf = false;
-                h = t.getChildren().get(0).getSymbol();
+                h = Float.parseFloat(t.getChildren().get(0).getSymbol());
                 return -1;
             }
         }
         if(t.getSymbol().equals(">=")) {
-            if(weightName.contains(t.getChildren().get(0))){
-                l = t.getChildren().get(1).getSymbol();
-                constaintedIndex = (t.getChildren().get(0).equals(weightName.get(0))) ? 0 : 1;
+            if(weightName.contains(t.getChildren().get(0).getSymbol())){
+                l = Float.parseFloat(t.getChildren().get(1).getSymbol());
+                constaintedIndex = (t.getChildren().get(0).getSymbol().equals(weightName.get(0))) ? 0 : 1;
                 sup = true;
                 return 2;
             }else{
-                h = t.getChildren().get(0).getSymbol();
+                h = Float.parseFloat(t.getChildren().get(0).getSymbol());
                 constaintedIndex = (t.getChildren().get(1).equals(weightName.get(0))) ? 0 : 1;
                 inf = true;
                 return -2;

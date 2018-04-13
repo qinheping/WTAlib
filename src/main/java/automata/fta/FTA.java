@@ -2,6 +2,8 @@ package automata.fta;
 
 import automata.Automaton;
 import automata.Move;
+import automata.wta.WTAMove;
+
 import java.util.*;
 
 public class FTA<S> extends Automaton<S> {
@@ -17,6 +19,7 @@ public class FTA<S> extends Automaton<S> {
     private Integer maxStateId;
     private Integer transitionCount;
 
+    private int isEmpty;
 
     /**
      * @return the maximum state id
@@ -50,6 +53,7 @@ public class FTA<S> extends Automaton<S> {
         movesFrom = new HashMap<Integer, Collection<Move<S>>>();
         transitionCount = 0;
         maxStateId = 0;
+        isEmpty = -1; // unknown
     }
 
     /*
@@ -143,8 +147,8 @@ public class FTA<S> extends Automaton<S> {
     public FTA<S> determinization(){
         this.compressState();
 
-        // component of new SFA
-        Collection<FTAMove<S>> transitions = new ArrayList<FTAMove<S>>();
+        // component of new FTA
+        FTA<S> result = new FTA<S>();
         Integer leafState = 0;
 
         // reached and tovisit
@@ -165,10 +169,13 @@ public class FTA<S> extends Automaton<S> {
             // TODO check if initial
 
             // get all the moves out of the states in the current subset
-            ArrayList<FTAMove<S>> movesFromCurrState = new ArrayList<FTAMove<S>>(
+            ArrayList<FTAMove<S>> movesToAdd = new ArrayList<FTAMove<S>>(
                     this.getMovesToContaints(curentState));
 
+            Set<List<Integer>> reachedPatterns = new HashSet<List<Integer>>();
+            for(FTAMove move : movesToAdd){
 
+            }
 
         }
 
@@ -215,6 +222,15 @@ public class FTA<S> extends Automaton<S> {
     public void clean(){
         Set<Integer> reachable = new HashSet<Integer>();
         reachable.add(this.initialState);
+
+        // emptygrammar
+        if(getMovesFrom(this.initialState).size() == 0){
+            isEmpty = 1;
+            return;
+        }
+
+        removeEpsilon();
+
         Stack<Integer> toCheck = new Stack<Integer>();
         toCheck.push(initialState);
         while(!toCheck.empty()){
@@ -265,6 +281,39 @@ public class FTA<S> extends Automaton<S> {
             this.states.remove(state);
         }
         this.compressState();
+
+
+        if(getMovesFrom(this.initialState).size() == 0){
+            isEmpty = 1;
+            return;
+        }
+    }
+
+    public void removeEpsilon(){
+        List<Move> toRemove = new ArrayList<>();
+        List<Move> toAdd = new ArrayList<>();
+        for(Move move: getMoves()){
+            // epsilong transition
+            if(move.symbol==null || ((String)move.symbol).length() == 0){
+                if(move.to.size() == 1){
+                    for(Object moveToCopy : this.getMovesFrom((Integer) move.to.get(0))) {
+                        FTAMove fMoveToCopy = new FTAMove(move.from, ((FTAMove) moveToCopy).to, ((FTAMove) moveToCopy).symbol,((FTAMove) moveToCopy).sort);
+                        toAdd.add(fMoveToCopy);
+                    }
+                    toRemove.add(move);
+                }
+            }
+        }
+        for(Move move : toAdd){
+            this.addTransition((FTAMove<S>) move);
+        }
+        for(Move move : toRemove){
+            this.removeTransition(move);
+        }
+    }
+
+    public void removeTransition(Move toRemove){
+        movesFrom.get(toRemove.from).remove(toRemove);
     }
 
     public void statShift(Integer shift){
@@ -340,5 +389,10 @@ public class FTA<S> extends Automaton<S> {
             result += move.toDotString() + "\n";
         }
         return result;
+    }
+
+    public int getIsEmpty(){
+        this.clean();
+        return isEmpty;
     }
 }

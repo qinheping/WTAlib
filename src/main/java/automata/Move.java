@@ -95,5 +95,5 @@ public abstract class Move<S> {
                 return false;
         }
         return (move.from == this.from) && (move.symbol.equals(this.symbol));
-    }
+    }    
 }

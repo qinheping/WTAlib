@@ -38,7 +38,7 @@ public class ParserUnitTest {
 
     @org.junit.Test
     public void testReduction() throws FileNotFoundException,IOException,InterruptedException{
-        String input = new Scanner(new File("benchmarks/sygus/max.sl")).useDelimiter("\\Z").next();
+        String input = new Scanner(new File("benchmarks/parity/parity.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -48,7 +48,7 @@ public class ParserUnitTest {
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
 
         //System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
-        System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)));
+        System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),11.0f, true,11.0f,true)));
         //System.out.println(QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"",prog.toWTA(),gr.sr));
         //System.out.println(prog.getSynthFun().toFTA());
         //FTA fta = prog.getSynthFun().toFTA();

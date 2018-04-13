@@ -1,4 +1,5 @@
-(set-weight TROP)
+
+(set-weight (w1 TROP))
 (set-logic BV)
 
 (define-fun hd17 ((x (BitVec 32))) (BitVec 32) (bvand (bvadd (bvor x (bvsub x #x00000001)) #x00000001) x))
@@ -20,12 +21,13 @@
 						 ((bvsrem Start Start):1)
 						 ((bvsub Start Start):1)
                          x
-						 #x0000001F
+						 #x0000001f
 						 #x00000001
 						 #x00000000
-						 #xFFFFFFFF))))
+						 #xffffffff))))
 
 (declare-var x (BitVec 32))
 (constraint (= (hd17 x) (f x)))
+(optimize w1)
 (check-synth)
 
