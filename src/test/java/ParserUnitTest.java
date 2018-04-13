@@ -49,7 +49,7 @@ public class ParserUnitTest {
 
         //System.out.println(": "+ gr.mkFTAInRange(prog.toWTA(), 2.0f, 3.0f));
         System.out.println("GR: "+ prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)));
-        System.out.println(QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"",prog.toWTA(),gr.sr));
+        //System.out.println(QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"",prog.toWTA(),gr.sr));
         //System.out.println(prog.getSynthFun().toFTA());
         //FTA fta = prog.getSynthFun().toFTA();
         //fta.replaceState(0,3);

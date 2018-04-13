@@ -136,65 +136,43 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> complement(FTA<S> aut){
-        while(this.maxStateId > this.states.size()-1){
-            for(int i = 0; i < states.size(); i++){
-                if(!states.contains(i)){
-                    this.replaceState(maxStateId,i);
-                    FTA<S> result = new FTA<S>();
-                    result.setInitialState(0);
-                    this.statShift(1);
-                    aut.statShift(this.maxStateId);
-                    for(Move<S> move: getMovesFrom(this.initialState)){
-                        result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
-                    }
-                    for(Move<S> move: aut.getMovesFrom(aut.initialState)){
-                        result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
-                    }
-                    for(Move<S> move: getMoves()){
-                        result.addTransition((FTAMove<S>) move);
-                    }
-                    for(Move<S> move: aut.getMoves()){
-                        result.addTransition((FTAMove<S>) move);
-                    }
-                    return result;
-                    //break;
-                }
-            }
-            maxStateId = 0;
-            for(int state : states){
-                if(maxStateId < state)
-                    maxStateId = state;
-            }
-        }
         //TODO
         return null;
     }
 
     public FTA<S> determinization(){
         this.compressState();
+
+        // component of new SFA
+        Collection<FTAMove<S>> transitions = new ArrayList<FTAMove<S>>();
+        Integer leafState = 0;
+
+        // reached and tovisit
+        HashMap<Collection<Integer>, Integer> reachedStates = new HashMap<>();
+        LinkedList<Collection<Integer>> toVisitStates = new LinkedList<>();
+
+        // empty state for leaf
+        Collection<Integer> detLeafState = new HashSet<>();
+        reachedStates.put(detLeafState, leafState);
+        toVisitStates.add(detLeafState);
+
+        // Explore the automaton until no new subset states can be reached
+        while(!toVisitStates.isEmpty()){
+
+            Collection<Integer> curentState = toVisitStates.removeFirst();
+            int currentStateId = reachedStates.get(curentState);
+
+            // TODO check if initial
+
+            // get all the moves out of the states in the current subset
+            ArrayList<FTAMove<S>> movesFromCurrState = new ArrayList<FTAMove<S>>(
+                    this.getMovesToContaints(curentState));
+
+
+
+        }
+
         return null;
-    }
-
-    public Integer powerOfTwo(List<Integer> list){
-        Integer result = 0;
-        for (Integer num: list){
-            result += (int) Math.pow(2,num);
-        }
-        return result;
-    }
-
-    public List<Integer> powerToSet(Integer pow){
-        List<Integer> result = new ArrayList<Integer>();
-        int i = 0;
-        while(pow>0){
-            if(pow%2 == 1) {
-                result.add(i);
-                pow --;
-            }
-            pow = pow/2;
-            i++;
-        }
-        return result;
     }
 
     public void compressState(){
@@ -311,6 +289,18 @@ public class FTA<S> extends Automaton<S> {
     public FTA<S> removeUnreachedStates(){
 
         return null;
+    }
+
+    public ArrayList<FTAMove<S>>  getMovesToContaints(Collection<Integer> states){
+        ArrayList<FTAMove<S>> result = new ArrayList<>();
+
+        for(Move<S> move: getMoves()){
+            for(Integer state : states){
+                if(move.to.contains(state))
+                    result.add((FTAMove<S>) move);
+            }
+        }
+        return result;
     }
 
     public Collection<Move<S>> getMovesFrom(Integer state) {
