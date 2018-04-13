@@ -10,4 +10,12 @@ public class OptimizationNode extends ProgramNode {
         this.flag = flag;
         this.weightTuple = weightTuple;
     }
+
+    public List<String> getWeightTuple() {
+        return weightTuple;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
 }

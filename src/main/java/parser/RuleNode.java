@@ -3,7 +3,6 @@ package parser;
 import automata.fta.FTAMove;
 import automata.wta.WTAMove;
 import semirings.Semiring;
-import sun.awt.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class RuleNode extends ProgramNode {
 
     public <S,R> WTAMove<S,R> toMove(Map<String, Integer> idDic, Semiring<R> sr, int index, Integer from){
         R w = sr.one();
-        if(weight.size() != 0)
+        if(weight.size() > index)
             w=sr.parse(weight.get(index));
         List<Integer> to = new ArrayList<Integer>();
         if(children != null){

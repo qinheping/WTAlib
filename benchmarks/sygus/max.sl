@@ -1,4 +1,4 @@
-(set-weight TROP)
+(set-weight (w1 TROP) (w3 TROP))
 (set-logic LIA)
 
 (declare-var x Int)
@@ -23,6 +23,6 @@
 (constraint (>= (max2 x y) y))
 (constraint (or (= x (max2 x y)) (= y (max2 x y))))
 
-(weight-constraint (<WEIGHT1 4))
+(weight-constraint (and (<= w1 3)(<= 2 w1)))
 
 (check-synth)

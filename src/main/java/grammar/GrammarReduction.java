@@ -5,14 +5,10 @@ import automata.fta.FTAMove;
 import automata.Move;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import semirings.Semiring;
-import sun.rmi.runtime.Log;
-import sun.util.logging.PlatformLogger;
 
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class GrammarReduction<S,R>{

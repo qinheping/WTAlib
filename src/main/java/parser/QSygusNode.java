@@ -17,7 +17,7 @@ public class QSygusNode extends ProgramNode{
     List<String> postCmds;
     GrammarNode synthFun;
     public TermNode weightConstraint;
-    OptimizationNode weightOpt;
+    public OptimizationNode weightOpt;
 
     public QSygusNode(List<String> preCmds, List<String> postCmds, GrammarNode synthFun, List<Tuple<String,String>> semirings, TermNode weightConstraint, OptimizationNode weightOpt){
         this.preCmds = preCmds;
@@ -47,12 +47,7 @@ public class QSygusNode extends ProgramNode{
         return this.toWTA(0);
     }
     public WTA toWTA(Integer index){
-        List<WTA> wtaList = new ArrayList<WTA>();
-        for(int i = 0; i < semirings.size(); i++){
-            wtaList.add(synthFun.toWTA(semirings.get(i), i));
-        }
-        // TODO we can do more
-        return wtaList.get(index);
+        return synthFun.toWTA(semirings.get(index), index);
     }
 
     public GrammarNode getSynthFun() {

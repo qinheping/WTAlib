@@ -2,10 +2,6 @@ package automata.fta;
 
 import automata.Automaton;
 import automata.Move;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.antlr.v4.runtime.ParserRuleContext;
-
-import java.math.BigInteger;
 import java.util.*;
 
 public class FTA<S> extends Automaton<S> {
@@ -140,21 +136,42 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> complement(FTA<S> aut){
+        while(this.maxStateId > this.states.size()-1){
+            for(int i = 0; i < states.size(); i++){
+                if(!states.contains(i)){
+                    this.replaceState(maxStateId,i);
+                    FTA<S> result = new FTA<S>();
+                    result.setInitialState(0);
+                    this.statShift(1);
+                    aut.statShift(this.maxStateId);
+                    for(Move<S> move: getMovesFrom(this.initialState)){
+                        result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+                    }
+                    for(Move<S> move: aut.getMovesFrom(aut.initialState)){
+                        result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+                    }
+                    for(Move<S> move: getMoves()){
+                        result.addTransition((FTAMove<S>) move);
+                    }
+                    for(Move<S> move: aut.getMoves()){
+                        result.addTransition((FTAMove<S>) move);
+                    }
+                    return result;
+                    //break;
+                }
+            }
+            maxStateId = 0;
+            for(int state : states){
+                if(maxStateId < state)
+                    maxStateId = state;
+            }
+        }
         //TODO
         return null;
     }
 
     public FTA<S> determinization(){
         this.compressState();
-        if(states.size()>30) {
-            System.out.println("error: too much state to determinze");
-            return null;
-        }
-        FTA<S> result = new FTA<S>();
-        for(int i = 0; i < Math.pow(2,states.size()); i++){
-            List<Integer> states = powerToSet(i);
-            //result.addTransition();
-        }
         return null;
     }
 

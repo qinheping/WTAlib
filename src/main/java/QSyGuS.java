@@ -14,6 +14,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class QSyGuS {
     static String h,l;
@@ -23,8 +24,21 @@ public class QSyGuS {
     static boolean isPairedWeight;
     static List<Semiring<Float>> semirings;
     static int constaintedIndex;
-    public static  void main(String[] args)throws FileNotFoundException, IOException{
+    static int optimizingIndex;
+    static boolean isPairedOpt;
+    static boolean detail = true;
+
+    static int timeout = 20;
+
+    static boolean optFound;
+    public static  void main(String[] args)throws FileNotFoundException,InterruptedException, IOException{
         String solverName = args[0];
+        if(!(solverName.equals("ESolver")||solverName.equals("CVC4"))){
+
+            System.out.println("No solver found");
+            return;
+        }
+        System.out.println("Solver: " + solverName);
         List<String> benchmarkPaths = new ArrayList<String>();
         for(int i = 1; i < args.length; i++){
             solve(args[i],solverName);
@@ -32,8 +46,15 @@ public class QSyGuS {
 
     }
 
-    private static void solve(String benchmarkPath, String solverName)throws FileNotFoundException, IOException{
+    private static void solve(String benchmarkPath, String solverName)throws FileNotFoundException,InterruptedException, IOException{
+        // initialization
         weightedGrammars = new ArrayList<WTA>();
+        List<GrammarReduction<String, Float>> gr = new ArrayList<GrammarReduction<String, Float>>();
+        isPairedWeight = false;
+
+        System.out.println("testing benchmark: " + benchmarkPath.substring(9));
+
+        // read and parse benchmark
         String input = new Scanner(new File(benchmarkPath)).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -41,22 +62,22 @@ public class QSyGuS {
         QSygusParserParser parser = new QSygusParserParser(tokens);
         ParseTree parseTree = parser.prog();
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
+        // parse end
+
+        semirings = new ArrayList<>();
+
+        // first weight
         weightName = prog.weightNames;
-        List<GrammarReduction<String, Float>> gr = new ArrayList<GrammarReduction<String, Float>>();
-        isPairedWeight = false;
-        if(prog.semirings.get(0).equals("TROP"))
-            gr.add(new GrammarReduction<String, Float>(new TropicalSemiring()));
-        if(prog.semirings.get(0).equals("PROB"))
-            gr.add(new GrammarReduction<String, Float>(new ProbabilitySemiring()));
+        gr.add(new GrammarReduction<String, Float>(prog.semirings.get(0)));
+        System.out.println("Semiring for weight " + weightName.get(0) + " is " + prog.semirings.get(0));
         semirings.add(gr.get(0).sr);
         weightedGrammars.add(prog.toWTA());
 
+        // second weight
         if(prog.semirings.size()>1){
             isPairedWeight = true;
-            if(prog.semirings.get(1).equals("TROP"))
-                gr.add(new GrammarReduction<String, Float>(new TropicalSemiring()));
-            if(prog.semirings.get(1).equals("PROB"))
-                gr.add(new GrammarReduction<String, Float>(new ProbabilitySemiring()));
+            gr.add(new GrammarReduction<String, Float>(prog.semirings.get(1)));
+            System.out.println("Semiring for weight " + weightName.get(1) + " is " + prog.semirings.get(1));
             weightedGrammars.add(prog.toWTA(1));
             semirings.add(gr.get(1).sr);
         }
@@ -64,34 +85,102 @@ public class QSyGuS {
 
         String initial_script = null;
 
+        boolean isInterval = false;
+        int atomCheck =3;
+
+
+        System.out.println("Start finding initial solution");
         // no weight constain
         if(prog.weightConstraint == null){
+            System.out.println("no weight constraint");
             initial_script = prog.toString(prog.getSynthFun().toFTA());
         }else{
+            //System.out.println("weight constraint: " + prog.weightConstraint);
             TermNode constraint = prog.getWeightConstraint();
             //special case
-            if(isInterval(constraint)){
-                // TODO gr1 or gr2 ?
+            isInterval = isInterval(constraint);
+            if(isInterval){
                 initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }
             reset();
-            int checkFlag = checkIneq(constraint);
-            if(checkFlag!=3){
-            if(checkFlag == 0){
+            atomCheck = checkIneq(constraint);
+            if(atomCheck!=3){
+            if(atomCheck == 0){
                 initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }
-            if(checkFlag < 0){
+            if(atomCheck < 0){
                 initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true, Float.parseFloat(h),sup));
             }
-            if(checkIneq(constraint) > 0  ){
+            if(atomCheck> 0  ){
                 // TODO greater than? complement
                 initial_script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
             }}
         }
+
+        if(detail) System.out.println("initial script: \n"+initial_script);
+
         Float result = callSolver(initial_script, solverName, weightedGrammars.get(constaintedIndex),semirings.get(constaintedIndex));
+
+        // no paired
+        if(prog.weightOpt.getFlag() == null){
+            optimizingIndex = 0;
+            isPairedOpt = false;}
+        else if(prog.weightOpt.getFlag().equals("PARETO")){
+            optimizingIndex = (prog.weightOpt.getWeightTuple().get(0).equals(weightName.get(0)))?0:1;
+            isPairedOpt = true;
+        }
+
+        String script;
+        int numOfOptimized = 0;
+        while(optimizingIndex!=3){
+            script = null;
+            // if the constaint is an interval
+            if(isInterval){
+                // constainted == optimized
+                if(constaintedIndex == optimizingIndex ){
+                    if( semirings.get(optimizingIndex).lessThan(result,Float.parseFloat(h)))
+                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, result, false));
+                    else {
+                        System.out.println("no solution in the contraint range");
+                        break;
+                    }
+                }else{
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup).intersectionWith(gr.get(optimizingIndex).mkFTALessThanC(prog.toWTA(), result)));
+                }
+            }
+            if(atomCheck!=3){
+                if(atomCheck == 0){
+                    System.out.println("already optimized");
+                    break;
+                }
+                if(atomCheck < 0){
+                    if(constaintedIndex == optimizingIndex )
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true, result, false));
+                    else {
+
+                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(constaintedIndex).sr.one(), true,  Float.parseFloat(h), sup).intersectionWith(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(optimizingIndex).sr.one(), true, result, false)));
+                    }
+                }
+                if(atomCheck > 0  ){
+                    // TODO greater than? complement
+                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(),Float.parseFloat(l), inf, Float.parseFloat(h),sup));
+                    }
+                }
+            result = callSolver(script, solverName, weightedGrammars.get(optimizingIndex),semirings.get(optimizingIndex));
+            if(result == -1){
+                if(isPairedOpt == false||numOfOptimized == 1){
+                    System.out.println("already optimized");
+                    break;
+                }
+                numOfOptimized++;
+                optimizingIndex = (optimizingIndex == 0)?1:0;
+            }
+        }
     }
 
-    public static Float callSolver(String script, String solverName, WTA wta, Semiring semiring)throws IOException{
+    public static Float callSolver(String script, String solverName, WTA wta, Semiring semiring)throws IOException,InterruptedException{
+        optFound = false;
+        boolean solutionFound = true;
         File dir = new File("tmp");
         File tmp = new File(dir, "SolverInput.txt");
         Runtime rt = Runtime.getRuntime();
@@ -100,17 +189,41 @@ public class QSyGuS {
             tmp.createNewFile();
             WriteStringToFile(tmp, script);
             File libdir = new File("./solver/ESolver/bin");
+            final long startTime = System.currentTimeMillis();
             Process proc = rt.exec("bash  starexec_run_Default ../../../tmp/SolverInput.txt",null, libdir);
+            if(!proc.waitFor(timeout, TimeUnit.SECONDS)) {
+                //timeout - kill the process.
+                proc.destroy(); // consider using destroyForcibly instead
+                solutionFound = false;
+                optFound = true;
+                System.out.println("TIMEOUT, the last one is optimized");
+                return -1f;
+            }
             InputStreamReader ir = new InputStreamReader(proc.getInputStream());
+
+            final long endTime = System.currentTimeMillis();
+            System.out.println("Solved in "+ (endTime-startTime) + " ms");
             LineNumberReader input = new LineNumberReader(ir);
             String line = input.readLine();
+            if(line.equals("No Solutions!")){
+                solutionFound = false;
+                optFound = true;
+                System.out.println("No solution found, the last one is optimized");
+                return -1f;
+            }
             while(!(line=input.readLine()).equals("-----------------------------------------------"))
                 result+=line;
-            System.out.println(result);
+            System.out.println("Solution:\n" + result);
         }catch (IOException e) {
             e.printStackTrace();
         }
-        return  evluateString(wta,result, semiring);
+        Float resultWeight = evluateString(wta,result, semiring);
+        if((constaintedIndex == optimizingIndex && l!=null && l.equals(resultWeight))){
+            optFound = true;
+            System.out.println("This solution is the optimized within constraint range.");
+            return -1f;
+        }
+        return  resultWeight;
     }
 
     static Float evluateString(WTA wta, String fun, Semiring semiring){
