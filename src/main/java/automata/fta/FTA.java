@@ -3,6 +3,7 @@ package automata.fta;
 import automata.Automaton;
 import automata.Move;
 import automata.wta.WTAMove;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.text.CollationElementIterator;
 import java.util.*;
@@ -220,8 +221,48 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> complement(){
-        //TODO
+        FTA<S> result = this.determinization();
+        result.complete();
+
+        Integer newInitial = maxStateId + 1;
+
+        for(Integer state: states){
+            this.addTransition(new FTAMove<S>(newInitial, Arrays.asList(state), null,getMovesFrom(initialState).iterator().next().sort));
+        }
+
+
+        result.clean();
         return null;
+    }
+
+    public void complete(){
+        Integer sink = maxStateId +1;
+        List<FTAMove<S>> toAdd = new ArrayList<>();
+        Set<String> visitedSymbols = new HashSet<>();
+        for(Move<S> move : getMoves()){
+            if(visitedSymbols.contains(move.symbol))
+                continue;
+            int arity = move.to.size();
+            visitedSymbols.add((String)move.symbol);
+
+            Map<Integer,List<Integer>> buckets = new HashMap<>();
+            for(int i = 0; i < arity; i++){
+                buckets.put(i,new ArrayList<>(states));
+            }
+            Collection<List<Integer>> patterns = bucketToPatterns(buckets);
+            for(List<Integer> pattern : patterns){
+                boolean exists = false;
+                for(Move toCheck: getMovesTo(pattern)){
+                    if(toCheck.symbol.equals(move.symbol)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists){
+                    this.addTransition(new FTAMove<>(sink,pattern,move.symbol,move.sort));
+                }
+            }
+        }
     }
 
     public FTA<S> determinization(){
@@ -242,7 +283,7 @@ public class FTA<S> extends Automaton<S> {
 
         // Explore the automaton until no new subset states can be reached
         while(!toVisitStates.isEmpty()){
-
+            String sort =null;
             Collection<Integer> curentState = toVisitStates.removeFirst();
             int currentStateId = reachedStates.get(curentState);
 
@@ -253,13 +294,93 @@ public class FTA<S> extends Automaton<S> {
                     this.getMovesToContaints(curentState));
 
             Set<List<Integer>> reachedPatterns = new HashSet<List<Integer>>();
+            Map<List<Integer>,Map<String, Collection<Integer>>> newTransitions = new HashMap<>();
             for(FTAMove move : movesToAdd){
+                for(int i = 0; i < move.to.size() ;i++){
+                    // the i-th state is contained in currentstate
+                    if(curentState.contains(move.to.get(i))){
+                        boolean validMove = true;
+                        Map<Integer,List<Integer>> toPatterns = new HashMap<>();
+                        toPatterns.put(i, Arrays.asList(reachedStates.get(curentState)));
+                        for(int j = 0; j < move.to.size(); j++){
+                            List<Integer> newTo = new ArrayList<>();
+                            if(i == j)
+                                continue;
+                            for(Collection<Integer> subSet: reachedStates.keySet()){
+                                if(subSet.contains(move.to.get(j)))
+                                    newTo.add(reachedStates.get(subSet));
+                            }
+                            if(newTo.size()==0) {
+                                validMove = false;
+                                break;
+                            }
+                            toPatterns.put(j,newTo);
+                        }
+                        if(validMove){
+                            sort = move.sort;
+                            Collection<List<Integer>> patterns = bucketToPatterns(toPatterns);
+                            //result.addTransition(new FTAMove<S>());
+                            for(List<Integer> pattern: patterns){
+                                if(newTransitions.get(pattern) == null){
+                                    HashSet<Integer> newState = new HashSet<>();
+                                    Map<String,Collection<Integer>> newMap = new HashMap<>();
+                                    newState.add(move.from);
+                                    newMap.put((String)move.symbol,newState);
+                                }else if(newTransitions.get(pattern).get(move.symbol)==null){
+                                    newTransitions.get(pattern).put((String)move.symbol,pattern);
+                                }else {
 
+                                    newTransitions.get(pattern).get(move.symbol).add(move.from);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            for(List<Integer> to: newTransitions.keySet()){
+                for(String symbol : newTransitions.get(to).keySet()){
+                    if(reachedStates.get(newTransitions.get(to).get(symbol))==null){
+                        reachedStates.put(newTransitions.get(to).get(symbol), getSubsetId(newTransitions.get(to).get(symbol),reachedStates));
+                        toVisitStates.add(newTransitions.get(to).get(symbol));
+                    }
+                    result.addTransition(new FTAMove<S>(reachedStates.get(newTransitions.get(to).get(symbol)),to,(S)symbol,sort));
+                }
             }
 
         }
+        result.clean();
+        return result;
+    }
 
-        return null;
+    public Collection<List<Integer>> bucketToPatterns(Map<Integer,List<Integer>> buckets){
+        int countAll = 1;
+        Collection<List<Integer>> result = new ArrayList();
+        for(Collection<Integer> bucket : buckets.values()){
+            countAll = countAll*bucket.size();
+        }
+        for(int i = 0; i < buckets.keySet().size(); i++){
+            if(result.size() == 0){
+                for(int j = 0; j < buckets.get(i).size(); j++){
+                    List newlist = new ArrayList();
+                    newlist.add(buckets.get(i));
+                }
+            }else {
+                Collection<List<Integer>> toAdd = new ArrayList<>();
+                for(List<Integer> partialTo : result) {
+                    for (int j = 1; j < buckets.get(i).size(); j++) {
+                        List<Integer> copy = new ArrayList<>(partialTo);
+                        copy.add(buckets.get(i).get(j));
+                        toAdd.add(copy);
+                    }
+                    partialTo.add(buckets.get(i).get(0));
+                }
+                result.addAll(toAdd);
+            }
+        }
+        assert(countAll == result.size());
+        return  result;
     }
 
     public void compressState(){

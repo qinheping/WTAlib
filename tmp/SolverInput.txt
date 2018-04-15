@@ -1,43 +1,23 @@
-  ( set-logic BV )
-  ( define-fun hd17  (    ( x  ( BitVec 32 ) ) )  ( BitVec 32 )  ( bvand     ( bvadd     ( bvor     x  ( bvsub     x   #x00000001 ) )   #x00000001 )  x ) )
-( synth-fun f  (    ( x  ( BitVec 32 ) ) )  ( BitVec 32 ) (
-	(Start  ( BitVec 32 ) (		x
-		(bvudiv NT1 NT1)
-		(bvadd NT1 NT1)
-		(bvxor NT1 NT1)
-		(bvmul NT1 NT1)
-		(bvlshr NT1 NT1)
-		#xFFFFFFFF
-		(bvneg NT1)
-		(bvshl NT1 NT1)
-		(bvnot NT1)
-		(bvsub NT1 NT1)
-		(bvurem NT1 NT1)
-		(bvsdiv NT1 NT1)
-		#x00000000
-		#x0000001F
-		#x00000001
-		(bvor NT1 NT1)
+  ( set-logic LIA )
+  ( declare-var x  Int )
+  ( declare-var y  Int )
+( synth-fun max2  (     ( x  Int )  ( y  Int ) )  Int (
+	(Start  Int (		x
+		y
+		0
+		1
+		(+ NT0 NT0)
+		(- NT0 NT0)
 ))
-	(NT1  ( BitVec 32 ) (		(bvadd NT1 NT1)
-		(bvxor NT1 NT1)
-		(bvmul NT1 NT1)
-		(bvlshr NT1 NT1)
-		(bvsub NT1 NT1)
-		(bvurem NT1 NT1)
-		(bvsdiv NT1 NT1)
-		x
-		#x0000001F
-		#x00000001
-		#x00000000
-		#xFFFFFFFF
-		(bvnot NT1)
-		(bvor NT1 NT1)
-		(bvneg NT1)
-		(bvshl NT1 NT1)
-		(bvudiv NT1 NT1)
+	(NT0  Int (		x
+		y
+		0
+		1
+		(+ NT0 NT0)
+		(- NT0 NT0)
 ))
 ))
-  ( declare-var x  ( BitVec 32 ) )
-  ( constraint  ( =     ( hd17    x )  ( f    x ) ) )
+  ( constraint  ( >=     ( max2     x  y )  x ) )
+  ( constraint  ( >=     ( max2     x  y )  y ) )
+  ( constraint  ( or     ( =     x  ( max2     x  y ) )  ( =     y  ( max2     x  y ) ) ) )
   ( check-synth )

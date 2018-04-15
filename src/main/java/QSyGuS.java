@@ -139,8 +139,8 @@ public class QSyGuS {
         // solve the initial script with the specified solver
         Float result = callSolver(initial_script, solverName, weightedGrammars.get(constaintedIndex),semirings.get(constaintedIndex));
 
-        if(!result.equals(-1f)){ System.out.println("The weight "+weightName.get(constaintedIndex) + " is "+result);
-            if(prog.weightOpt.getFlag() != null)System.out.println("The weight "+weightName.get(1-constaintedIndex) + " is "+currentWeight.get(1-constaintedIndex));
+        if(!result.equals(-1f)){ System.out.println("The weight "+weightName.get(0) + " is "+currentWeight.get(0));
+            if(weightName.size()>1)System.out.println("The weight "+weightName.get(1) + " is "+currentWeight.get(1));
         }
         else {
             System.out.println("no solutions found in the constraint.\nTest done.");
@@ -241,25 +241,11 @@ public class QSyGuS {
                     }
 
                 }
-            }
+            }else
+            if(prog.weightConstraint !=null){
 
-            // if constraint is not interval but exists
-            if(atomCheck!=3){
-                if(atomCheck == 0){
-                    System.out.println("already optimized");
-                    break;
-                }
-                if(atomCheck < 0){
-                    if(constaintedIndex == optimizingIndex )
-                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex), gr.get(constaintedIndex).sr.one(), true, currentWeight.get(optimizingIndex), false));
-                    else {
-                        script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex), gr.get(constaintedIndex).sr.one(), true,  h, sup).intersectionWith(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(), gr.get(optimizingIndex).sr.one(), true, currentWeight.get(optimizingIndex), false)));
-                    }
-                }
-                if(atomCheck > 0  ){
-                    // TODO greater than? complement
-                    script = prog.toString(gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(optimizingIndex),l, inf, h,sup));
-                }
+                currentGrammar = currentGrammar.intersectionWith(gr.get(optimizingIndex).mkFTALessThanC(prog.toWTA(),currentWeight.get(optimizingIndex)));
+                script = prog.toString(currentGrammar);
             }
 
             // no weight constraint
@@ -312,7 +298,8 @@ public class QSyGuS {
 
             }
 
-            if(detail)System.out.println(script);
+            if(detail)
+                System.out.println(script);
             result = callSolver(script, solverName, weightedGrammars.get(optimizingIndex),semirings.get(optimizingIndex));
 
             if(!result.equals(-1f)) {
@@ -351,7 +338,7 @@ public class QSyGuS {
             return getGrammarFromTerm(term.getChildren().get(0), prog).union(getGrammarFromTerm(term.getChildren().get(1), prog));
         }
         if (term.getSymbol().equals("not")) {
-            return getGrammarFromTerm(term.getChildren().get(0), prog).complement();
+            return getGrammarFromTerm(term.getChildren().get(0), prog).complement().intersectionWith(prog.getSynthFun().toFTA());
         }
 
         reset();
@@ -365,7 +352,7 @@ public class QSyGuS {
             }
             if (atomCheck > 0) {
                 // TODO greater than? complement
-                return gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), semirings.get(constaintedIndex).one(), true, l, !inf).complement();
+                return gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), semirings.get(constaintedIndex).one(), true, l, !inf).complement().intersectionWith(prog.getSynthFun().toFTA());
             }
         }
         return  null;

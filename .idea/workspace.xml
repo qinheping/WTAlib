@@ -3,25 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="65ba6319-6be9-4f2c-987e-d56c8b1f01c9" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-sort.sl" afterPath="$PROJECT_DIR$/benchmarks/hackers/hd-17-d5-sort.sl" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/parity/parity-Q.sl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/parity/parity.sl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/Untitled Document" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max-Q.sl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max.sl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/benchmarks/sygus/max3-Q.sl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/main/java/QSyGuS.java" afterPath="$PROJECT_DIR$/src/main/java/QSyGuS.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/automata/Move.java" afterPath="$PROJECT_DIR$/src/main/java/automata/Move.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" afterPath="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java" afterPath="$PROJECT_DIR$/src/main/java/automata/fta/FTAMove.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/GrammarNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/GrammarNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/parser/TermNode.java" afterPath="$PROJECT_DIR$/src/main/java/parser/TermNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/semirings/BooleanSemiring.java" afterPath="$PROJECT_DIR$/src/main/java/semirings/BooleanSemiring.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" afterPath="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/semirings/Semiring.java" afterPath="$PROJECT_DIR$/src/main/java/semirings/Semiring.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java" afterPath="$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" afterPath="$PROJECT_DIR$/src/test/java/ParserUnitTest.java" />
       <change beforePath="$PROJECT_DIR$/target/classes/QSyGuS.class" afterPath="$PROJECT_DIR$/target/classes/QSyGuS.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/automata/AutomataException.class" afterPath="$PROJECT_DIR$/target/classes/automata/AutomataException.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/automata/Automaton.class" afterPath="$PROJECT_DIR$/target/classes/automata/Automaton.class" />
@@ -83,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QSyGuS.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="QSyGuS.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/QSyGuS.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="497" column="72" lean-forward="false" selection-start-line="497" selection-start-column="72" selection-end-line="497" selection-end-column="72" />
+            <state relative-caret-position="4704">
+              <caret line="340" column="81" lean-forward="false" selection-start-line="340" selection-start-column="71" selection-end-line="340" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1094#1127#0" expanded="true" />
@@ -164,20 +147,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FTA.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FTA.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2256">
-              <caret line="223" column="20" lean-forward="true" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
+            <state relative-caret-position="492">
+              <caret line="433" column="21" lean-forward="false" selection-start-line="433" selection-start-column="14" selection-end-line="433" selection-end-column="21" />
               <folding>
-                <element signature="e#13238#13239#0" expanded="true" />
-                <element signature="e#13299#13300#0" expanded="true" />
-                <element signature="e#15664#15665#0" expanded="true" />
-                <element signature="e#15693#15694#0" expanded="true" />
-                <element signature="e#15733#15734#0" expanded="true" />
-                <element signature="e#15768#15769#0" expanded="true" />
-                <element signature="e#15816#15817#0" expanded="true" />
-                <element signature="e#15857#15858#0" expanded="true" />
+                <element signature="e#18987#18988#0" expanded="true" />
+                <element signature="e#19048#19049#0" expanded="true" />
+                <element signature="e#21413#21414#0" expanded="true" />
+                <element signature="e#21442#21443#0" expanded="true" />
+                <element signature="e#21482#21483#0" expanded="true" />
+                <element signature="e#21517#21518#0" expanded="true" />
+                <element signature="e#21565#21566#0" expanded="true" />
+                <element signature="e#21606#21607#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -204,11 +187,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>reachable</find>
-      <find>get</find>
-      <find>gr</find>
-      <find>here</find>
-      <find>reachedWeightChanged</find>
       <find>new ftamo</find>
       <find>the weight</find>
       <find>th</find>
@@ -234,6 +212,11 @@
       <find>l</find>
       <find>weightplus</find>
       <find>evluateterm</find>
+      <find>the wei</find>
+      <find>maxstateid</find>
+      <find>epsilon</find>
+      <find>tofta</find>
+      <find>complement</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -276,8 +259,8 @@
         <option value="$PROJECT_DIR$/src/main/java/semirings/ProbabilitySemiring.java" />
         <option value="$PROJECT_DIR$/src/main/java/semirings/TropicalSemiring.java" />
         <option value="$PROJECT_DIR$/src/main/java/grammar/GrammarReduction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
         <option value="$PROJECT_DIR$/src/main/java/parser/TermNode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/automata/fta/FTA.java" />
         <option value="$PROJECT_DIR$/src/main/java/QSyGuS.java" />
       </list>
     </option>
@@ -707,7 +690,7 @@
       <workItem from="1523404021454" duration="30706000" />
       <workItem from="1523544966434" duration="24944000" />
       <workItem from="1523629689500" duration="1634000" />
-      <workItem from="1523632363482" duration="45839000" />
+      <workItem from="1523632363482" duration="50901000" />
     </task>
     <servers />
   </component>
@@ -744,7 +727,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="196729000" />
+    <option name="totallyTimeSpent" value="201791000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -1240,30 +1223,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/QSyGuS.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="497" column="72" lean-forward="false" selection-start-line="497" selection-start-column="72" selection-end-line="497" selection-end-column="72" />
+        <state relative-caret-position="492">
+          <caret line="433" column="21" lean-forward="false" selection-start-line="433" selection-start-column="14" selection-end-line="433" selection-end-column="21" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1094#1127#0" expanded="true" />
+            <element signature="e#18987#18988#0" expanded="true" />
+            <element signature="e#19048#19049#0" expanded="true" />
+            <element signature="e#21413#21414#0" expanded="true" />
+            <element signature="e#21442#21443#0" expanded="true" />
+            <element signature="e#21482#21483#0" expanded="true" />
+            <element signature="e#21517#21518#0" expanded="true" />
+            <element signature="e#21565#21566#0" expanded="true" />
+            <element signature="e#21606#21607#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/automata/fta/FTA.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/QSyGuS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2256">
-          <caret line="223" column="20" lean-forward="true" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
+        <state relative-caret-position="4704">
+          <caret line="340" column="81" lean-forward="false" selection-start-line="340" selection-start-column="71" selection-end-line="340" selection-end-column="81" />
           <folding>
-            <element signature="e#13238#13239#0" expanded="true" />
-            <element signature="e#13299#13300#0" expanded="true" />
-            <element signature="e#15664#15665#0" expanded="true" />
-            <element signature="e#15693#15694#0" expanded="true" />
-            <element signature="e#15733#15734#0" expanded="true" />
-            <element signature="e#15768#15769#0" expanded="true" />
-            <element signature="e#15816#15817#0" expanded="true" />
-            <element signature="e#15857#15858#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1094#1127#0" expanded="true" />
           </folding>
         </state>
       </provider>
