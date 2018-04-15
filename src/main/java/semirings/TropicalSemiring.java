@@ -119,4 +119,8 @@ public class TropicalSemiring extends Semiring <Float>{
     public Float reverse(Float w1) {
         return w1;
     }
+    @Override
+    public String getName(){
+        return "TROP";
+    }
 }

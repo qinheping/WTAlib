@@ -4,6 +4,7 @@ import automata.Automaton;
 import automata.Move;
 import automata.wta.WTAMove;
 
+import java.text.CollationElementIterator;
 import java.util.*;
 
 public class FTA<S> extends Automaton<S> {
@@ -20,6 +21,7 @@ public class FTA<S> extends Automaton<S> {
     private Integer transitionCount;
 
     private int isEmpty;
+
 
     /**
      * @return the maximum state id
@@ -90,10 +92,12 @@ public class FTA<S> extends Automaton<S> {
 
         states.add(transition.from);
         if (movesFrom.get(transition.from) != null) {
-            movesFrom.get(transition.from).add(transition);
+            if(!movesFrom.get(transition.from).contains(transition)) {
+                movesFrom.get(transition.from).add(transition);
+            }
         }
         else{
-            Collection<Move<S>> transitions = new HashSet<Move<S>>();
+            Collection<Move<S>> transitions = new ArrayList<>();
             transitions.add(transition);
             movesFrom.put(transition.from, transitions);
         }
@@ -115,15 +119,90 @@ public class FTA<S> extends Automaton<S> {
     // ------------------------------------------------------
 
     public FTA<S> intersectionWith(FTA<S> aut){
-        //TODO
-        return null;
+        FTA<S> result = new FTA<S>();
+
+        // reached and tovisit
+        HashMap<Collection<Integer>, Integer> reachedStates = new HashMap<>();
+        LinkedList<Collection<Integer>> toVisitStates = new LinkedList<>();
+
+        // find leafs
+        for(Move move_0 : this.getMoves()){
+            if(move_0.to.size() != 0)
+                continue;
+            for(Move move_1 : aut.getMoves()){
+                if(move_1.to.size() != 0)
+                    continue;
+                if(move_0.symbol.equals(move_1.symbol)){
+                    LinkedList<Integer> newState = new LinkedList<>();
+                    newState.add(move_0.from);
+                    newState.add(move_1.from);
+                    reachedStates.put(newState, getSubsetId(newState, reachedStates));
+                    toVisitStates.add(newState);
+                    result.addTransition(new FTAMove<S>(getSubsetId(newState, reachedStates),new ArrayList<>(),(S) move_0.symbol,move_0.sort));
+                }
+            }
+        }
+
+        // explore
+        while(!toVisitStates.isEmpty()){
+            List<Integer> currentState = (List<Integer>)toVisitStates.removeFirst();
+
+            for(Move move_0 : getMovesToContaints(currentState.get(0))){
+                for(Move move_1 : aut.getMovesToContaints(currentState.get(1))){
+                    if(!move_0.symbol.equals(move_1.symbol))
+                        continue;
+                    if(move_0.to.size()!=move_1.to.size())
+                        continue;
+                    boolean isNewTransition = true;
+                    for(int i = 0; i < move_0.to.size(); i++){
+                        LinkedList<Integer> lookUpState = new LinkedList<>();
+                        lookUpState.add((Integer)move_0.to.get(i));
+                        lookUpState.add((Integer)move_1.to.get(i));
+                        if(reachedStates.get(lookUpState) == null) {
+                            isNewTransition = false;
+                            break;
+                        }
+                    }
+
+                    if(isNewTransition){
+                        Collection<Integer> newFromState = new LinkedList();
+                        newFromState.add(move_0.from);
+                        newFromState.add(move_1.from);
+                        Integer newFrom = getSubsetId(newFromState, reachedStates);
+                        if(!reachedStates.containsValue(newFrom)){
+                            reachedStates.put(newFromState, newFrom);
+                            toVisitStates.add(newFromState);
+                        }
+
+                        List<Integer> newTo = new ArrayList<>();
+                        for(int i = 0; i < move_0.to.size(); i++){
+                            Collection<Integer> newToState = new LinkedList();
+                            newToState.add((Integer)move_0.to.get(i));
+                            newToState.add((Integer)move_1.to.get(i));
+                            newTo.add(getSubsetId(newToState,reachedStates));
+                        }
+
+                        result.addTransition(new FTAMove<S>(newFrom,newTo,(S)move_0.symbol,move_0.sort));
+                    }
+                }
+            }
+
+        }
+
+        Collection<Integer> newInitial = new LinkedList();
+        newInitial.add(this.initialState);
+        newInitial.add(aut.initialState);
+        result.setInitialState(getSubsetId(newInitial,reachedStates));
+        result.clean();
+        return result;
     }
 
     public FTA<S> union(FTA<S> aut){
         FTA<S> result = new FTA<S>();
         result.setInitialState(0);
-        this.statShift(1);
-        aut.statShift(this.maxStateId);
+        this.stateShift(this.maxStateId);
+
+        aut.stateShift(this.maxStateId +aut.maxStateId);
         for(Move<S> move: getMovesFrom(this.initialState)){
             result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
         }
@@ -136,16 +215,17 @@ public class FTA<S> extends Automaton<S> {
         for(Move<S> move: aut.getMoves()){
             result.addTransition((FTAMove<S>) move);
         }
+        result.clean();
         return result;
     }
 
-    public FTA<S> complement(FTA<S> aut){
+    public FTA<S> complement(){
         //TODO
         return null;
     }
 
     public FTA<S> determinization(){
-        this.compressState();
+        //this.compressState();
 
         // component of new FTA
         FTA<S> result = new FTA<S>();
@@ -169,7 +249,7 @@ public class FTA<S> extends Automaton<S> {
             // TODO check if initial
 
             // get all the moves out of the states in the current subset
-            ArrayList<FTAMove<S>> movesToAdd = new ArrayList<FTAMove<S>>(
+            LinkedList<FTAMove<S>> movesToAdd = new LinkedList<FTAMove<S>>(
                     this.getMovesToContaints(curentState));
 
             Set<List<Integer>> reachedPatterns = new HashSet<List<Integer>>();
@@ -220,6 +300,7 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public void clean(){
+
         Set<Integer> reachable = new HashSet<Integer>();
         reachable.add(this.initialState);
 
@@ -231,6 +312,7 @@ public class FTA<S> extends Automaton<S> {
 
         removeEpsilon();
 
+        // check reachable
         Stack<Integer> toCheck = new Stack<Integer>();
         toCheck.push(initialState);
         while(!toCheck.empty()){
@@ -245,6 +327,9 @@ public class FTA<S> extends Automaton<S> {
             }
         }
 
+
+
+        // check groundable
         Set<Integer> groundable = new HashSet<Integer>();
         for(Move leafMove : getLeafTransitions()){
             groundable.add(leafMove.from);
@@ -258,6 +343,8 @@ public class FTA<S> extends Automaton<S> {
                     if(!groundable.contains(to))
                         moveGroundable  = false;
                 }
+                if(!moveGroundable)
+                    continue;
                 if(!groundable.contains(move.from)){
                     fixpointReached = false;
                     groundable.add(move.from);
@@ -280,7 +367,7 @@ public class FTA<S> extends Automaton<S> {
         for(Integer state: toRemove){
             this.states.remove(state);
         }
-        this.compressState();
+        //this.compressState();
 
 
         if(getMovesFrom(this.initialState).size() == 0){
@@ -316,7 +403,7 @@ public class FTA<S> extends Automaton<S> {
         movesFrom.get(toRemove.from).remove(toRemove);
     }
 
-    public void statShift(Integer shift){
+    public void stateShift(Integer shift){
         Collection<Integer> newStates = new HashSet<Integer>();
         for(Integer state : states){
             this.movesFrom.put(state+shift,this.movesFrom.get(state));
@@ -338,6 +425,21 @@ public class FTA<S> extends Automaton<S> {
     public FTA<S> removeUnreachedStates(){
 
         return null;
+    }
+
+    public Integer getSubsetId(Collection<Integer> subSet,HashMap<Collection<Integer>,Integer> dic){
+        if(dic.get(subSet) != null)
+            return dic.get(subSet);
+        Integer maxId = 0;
+        for(Integer id : dic.values()){
+            if (id >= maxId)
+                maxId = id + 1;
+        }
+        return maxId;
+    }
+
+    public ArrayList<FTAMove<S>>  getMovesToContaints(Integer states){
+        return getMovesToContaints(Arrays.asList(states));
     }
 
     public ArrayList<FTAMove<S>>  getMovesToContaints(Collection<Integer> states){

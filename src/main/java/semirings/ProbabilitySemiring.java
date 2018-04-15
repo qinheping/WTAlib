@@ -125,5 +125,8 @@ public class ProbabilitySemiring extends Semiring <Float>{
         System.out.println("Not Implemented");
         return Float.NEGATIVE_INFINITY;
     }
-
+    @Override
+    public String getName(){
+        return "PROB";
+    }
 }

@@ -11,6 +11,7 @@ public class TermNode extends ProgramNode {
         return children;
     }
 
+    public void setSymbol(String symbol){this.symbol = symbol;}
     String symbol;
     List<TermNode> children;
 

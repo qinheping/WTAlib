@@ -15,7 +15,9 @@ public class FTAMove<S> extends Move<S> {
         String result = from + " -> (" + symbol +") "+to;
         return result;
     }
-
+    public  String toString(){
+        return toDotString();
+    }
 
 
 }

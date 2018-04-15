@@ -1,0 +1,39 @@
+cd src/main/java
+echo "building"
+find -name "*.java" > sources.txt
+javac -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" @sources.txt
+echo "start to test"
+echo "--------------------------------------------------"
+echo "Test : max_ite(2,3) "
+echo "Benchmark path benchmarks/sygus/max_2_3.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/sygus/max_2_3.sl
+echo "--------------------------------------------------"
+echo "Test : max_ite(2,15) "
+echo "Benchmark path benchmarks/sygus/max_2_15.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/sygus/max_2_15.sl
+echo "--------------------------------------------------"
+echo "Test : max_ite(3,15) "
+echo "Benchmark path benchmarks/sygus/max_3_15.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/sygus/max_3_15.sl	
+echo "--------------------------------------------------"
+echo "Test : hackers_5 "
+echo "Benchmark path benchmarks/hackers/hd-05-d5-prog.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/hackers/hd-05-d5-prog.sl
+echo "--------------------------------------------------"
+echo "Test : hackers_7 "
+echo "Benchmark path benchmarks/hackers/hd-07-d5-prog.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/hackers/hd-07-d5-prog.sl
+echo "--------------------------------------------------"
+echo "Test : hackers_17 "
+echo "Benchmark path benchmarks/hackers/hd-17-d5-prog.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/hackers/hd-17-d5-prog.sl
+echo "--------------------------------------------------"
+echo "Test : hackers_2_prob "
+echo "Benchmark path benchmarks/hackers/hd-05-d5-prog-prob.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/hackers/hd-05-d5-prog-prob.sl
+echo "--------------------------------------------------"
+echo "Test : hackers_5_prob "
+echo "Benchmark path benchmarks/hackers/hd-05-d5-prog-prob.sl"
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/hackers/hd-05-d5-prog-prob.sl
+
+cd ../../..

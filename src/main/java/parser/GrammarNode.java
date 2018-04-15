@@ -121,6 +121,10 @@ public class GrammarNode extends ProgramNode {
     }
 
     public FTA toFTA(){
+        idDic = new HashMap<String, Integer>();
+        maxId = 2; // 0 for Start, 1 for leaf
+        idDic.put("Start",  0);
+
         FTA fta = new FTA<String>();
         for(NTNode ntNode : ntNodes){
             if(idDic.get(ntNode.ntName)==null) {

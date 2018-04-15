@@ -32,6 +32,8 @@ public abstract class Semiring<R>{
 
     public abstract R parse(String s);
 
+    public abstract String getName();
+
     public boolean lessOrEqual(R w1, R w2){
         return w1.equals(w2) || lessThan(w1, w2);
     }
@@ -79,5 +81,6 @@ public abstract class Semiring<R>{
     public boolean naturalLess(R w1, R w2) {
         return (plus(w1, w2) == w1) && (w1 != w2);
     }
+
 
 }

@@ -18,10 +18,10 @@
 						 ((bvsdiv Start Start):0 1)
 						 ((bvsub Start Start):0 1)
                          x
-						 #x0000001F
+						 #x0000001f
 						 #x00000001
 						 #x00000000
-						 #xFFFFFFFF))))
+						 #xffffffff))))
 
 (declare-var x (BitVec 32))
 (constraint (= (hd17 x) (f x)))

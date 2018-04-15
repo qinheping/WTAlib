@@ -114,4 +114,9 @@ public class BooleanSemiring extends Semiring<Float>{
     public Float parse(String s) {
         return Float.parseFloat(s);
     }
+
+    @Override
+    public String getName(){
+        return "BOOL";
+    }
 }

@@ -67,12 +67,11 @@ public abstract class Move<S> {
 
     @Override
     public int hashCode(){
-//        int result = 0;
-//        for(Integer toNode : to){
-//            result += toNode.hashCode();
-//        }
-//        return this.from.hashCode() + result;
-        return  0 ;
+       int result = 0;
+       for(Integer toNode : to){
+            result += toNode.hashCode();
+        }
+        return this.from.hashCode() + result;
     }
 
     @Override
