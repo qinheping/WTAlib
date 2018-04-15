@@ -232,7 +232,7 @@ public class FTA<S> extends Automaton<S> {
 
 
         result.clean();
-        return null;
+        return result;
     }
 
     public void complete(){
