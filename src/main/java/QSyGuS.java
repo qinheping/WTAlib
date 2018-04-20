@@ -384,18 +384,19 @@ public class QSyGuS {
         Runtime rt = Runtime.getRuntime();
         String result = "";
 
+        System.out.println(l + " "+ h +" "+ currentWeight);
         if(l != null){
             script = "; constraint : "+weightName.get(constaintedIndex)+" > "+l + "\n" +script;
         }
-        if(h != null){
-            if(currentWeight.get(0) == null )
-                script = "; constraint : "+weightName.get(0)+" < "+h + "\n" +script;
+            if(currentWeight.get(0) == null ) {
+            if(h!=null)
+                script = "; constraint : " + weightName.get(0) + " < " + h + "\n" + script;
+            }
             else {
                 script = "; constraint : "+weightName.get(0)+" < "+currentWeight.get(0) + "\n" +script;
                 if(currentWeight.get(1) !=null)
                 script = "; constraint : "+weightName.get(1)+" < "+currentWeight.get(1) + "\n" +script;
             }
-        }
 
         try {
 

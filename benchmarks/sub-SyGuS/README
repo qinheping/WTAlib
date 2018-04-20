@@ -1,0 +1,3 @@
+Each benchmark is named by [QSyGuS benchmark]-[i-th iteration].sl
+In the head of each benchmark, there is a comment of describing the weight constraint. The definition of weight can be found from the corresponding QSyGuS benchmark.
+
