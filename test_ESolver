@@ -12,10 +12,6 @@ echo "Test : max_ite(2,15) "
 echo "Benchmark path benchmarks/sygus/max_2_15.sl"
 java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/sygus/max_2_15.sl
 echo "--------------------------------------------------"
-echo "Test : max_ite(3,15) "
-echo "Benchmark path benchmarks/sygus/max_3_15.sl"
-java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/sygus/max_3_15.sl
-echo "--------------------------------------------------"
 echo "Test : parity_not "
 echo "Benchmark path benchmarks/parity/parity_not.sl"
 java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS ESolver ../../../benchmarks/parity/parity_not.sl

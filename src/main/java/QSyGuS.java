@@ -87,14 +87,12 @@ public class QSyGuS {
         // first weight
         weightName = prog.weightNames;
         gr.add(new GrammarReduction<String, Float>((Semiring<Float>) prog.semirings.get(0)));
-        System.out.println("Semiring for weight " + weightName.get(0) + " is " + prog.semirings.get(0));
         semirings.add(gr.get(0).sr);
         weightedGrammars.add(prog.toWTA());
 
         // second weight
         if(prog.semirings.size()>1){
             gr.add(new GrammarReduction<String, Float>(prog.semirings.get(1)));
-            System.out.println("Semiring for weight " + weightName.get(1) + " is " + prog.semirings.get(1));
             weightedGrammars.add(prog.toWTA(1));
             semirings.add(gr.get(1).sr);
         }
@@ -109,7 +107,6 @@ public class QSyGuS {
         System.out.println("Start to find initial solution");
         // no weight constain
         if(prog.weightConstraint == null){
-            System.out.println("no weight constraint");
             currentGrammar = prog.getSynthFun().toFTA();
             initial_script = prog.toString(currentGrammar);
         }else{
@@ -154,6 +151,7 @@ public class QSyGuS {
 
         // SORT
         int numOfOptimized = 0;
+	optimizingIndex = 0;
         if(isPairedOpt && prog.weightOpt.getFlag().equals("SORT")){
             optimizingIndex = (prog.weightOpt.getWeightTuple().get(0).equals(weightName.get(0)))?0:1;
             // number of weight optimized
@@ -302,14 +300,7 @@ public class QSyGuS {
                 System.out.println(script);
             result = callSolver(script, solverName, weightedGrammars.get(optimizingIndex),semirings.get(optimizingIndex));
 
-            if(!result.equals(-1f)) {
-                    System.out.println("The weight " + weightName.get(0) + " is " + currentWeight.get(0));
-                if(isPairedOpt)
-                    if(isPairedOpt)System.out.println("The weight "+weightName.get(1) + " is "+currentWeight.get(1));
-            }
-
-
-            if((constaintedIndex == optimizingIndex && l.equals(result))){
+	    if((constaintedIndex == optimizingIndex && l.equals(result))){
                 optFound = true;
                 if(!isPairedOpt) {
                     System.out.println("This solution is the optimized within constraint range.\nTest done.");
@@ -317,6 +308,14 @@ public class QSyGuS {
                 }
             }
 
+            if(!result.equals(-1f)) {
+                    System.out.println("The weight " + weightName.get(0) + " is " + currentWeight.get(0));
+                if(isPairedOpt)
+                    if(isPairedOpt)System.out.println("The weight "+weightName.get(1) + " is "+currentWeight.get(1));
+            
+
+
+            }
             else {
                 System.out.println("no solutions found.");
                 if(isPairedOpt == false||numOfOptimized == 1 || prog.weightOpt.getFlag().equals("PARETO")){
