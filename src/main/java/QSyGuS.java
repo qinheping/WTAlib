@@ -35,6 +35,8 @@ public class QSyGuS {
     static private String currentSolution;
     static private boolean optFound;
     static private long time;
+    static private String benchmark;
+    static private int numOfIteration = 0;
 
     public static  void main(String[] args)throws InterruptedException, IOException{
         String solverName = args[0];
@@ -55,6 +57,7 @@ public class QSyGuS {
                 detail = true;
                 continue;
             }
+            benchmark = args[i];
             solve(args[i],solverName);
         }
         System.out.println("Final solution: "+ currentSolution);
@@ -66,8 +69,8 @@ public class QSyGuS {
 
     private static void solve(String benchmarkPath, String solverName)throws InterruptedException, IOException{
         // initialization
-        currentWeight.add(0.f);
-        currentWeight.add(0.f);
+        currentWeight.add(null);
+        currentWeight.add(null);
 
         FTA currentGrammar;
 
@@ -365,9 +368,35 @@ public class QSyGuS {
 
         // write script to tmp file
         File dir = new File("../../../tmp/");
-        File tmp = new File(dir, "SolverInput.txt");
+        String tmpName = "";
+        for(int i = 0; i < benchmark.length(); i++){
+            if(!benchmark.substring(benchmark.length()-4-i,benchmark.length()-3-i).equals( "/")) {
+               tmpName = benchmark.substring(benchmark.length() - 4 - i, benchmark.length() - 3 - i) + tmpName;
+            }else
+                break;
+        }
+        System.out.println(tmpName);
+        tmpName = tmpName +"_"+numOfIteration;
+        numOfIteration++;
+        tmpName = tmpName+".sl";
+
+        File tmp = new File(dir, tmpName);
         Runtime rt = Runtime.getRuntime();
         String result = "";
+
+        if(l != null){
+            script = "; constraint : "+weightName.get(constaintedIndex)+" > "+l + "\n" +script;
+        }
+        if(h != null){
+            if(currentWeight.get(0) == null )
+                script = "; constraint : "+weightName.get(0)+" < "+h + "\n" +script;
+            else {
+                script = "; constraint : "+weightName.get(0)+" < "+currentWeight.get(0) + "\n" +script;
+                if(currentWeight.get(1) !=null)
+                script = "; constraint : "+weightName.get(1)+" < "+currentWeight.get(1) + "\n" +script;
+            }
+        }
+
         try {
 
             tmp.createNewFile();
@@ -378,7 +407,7 @@ public class QSyGuS {
             System.out.println("Solver running. Timeout is set to " + timeout +" seconds");
             if(solverName.equals("ESolver")) {
                 File libdir = new File("../../../solver/ESolver/bin");
-                Process proc = rt.exec("bash  starexec_run_Default ../../../tmp/SolverInput.txt", null, libdir);
+                Process proc = rt.exec("bash  starexec_run_Default ../../../tmp/"+tmpName, null, libdir);
 
                 // timeout
                 if (!proc.waitFor(timeout, TimeUnit.SECONDS)) {
