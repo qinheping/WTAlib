@@ -1,3 +1,5 @@
+#WTAlib
+
 There are several handy bash scripts for running QSyGuS
 1) test_ESolver: automatically run all passed benchmarks described in the paper with ESolver
 	
