@@ -3,17 +3,9 @@ package parser;
 import java.util.List;
 
 public class TermNode extends ProgramNode {
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public List<TermNode> getChildren() {
-        return children;
-    }
-
-    public void setSymbol(String symbol){this.symbol = symbol;}
     String symbol;
     List<TermNode> children;
+
 
     public TermNode(String symbol, List<TermNode> children){
         this.symbol = symbol;
@@ -33,4 +25,14 @@ public class TermNode extends ProgramNode {
         }
         return result+")";
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public List<TermNode> getChildren() {
+        return children;
+    }
+
+    public void setSymbol(String symbol){this.symbol = symbol;}
 }

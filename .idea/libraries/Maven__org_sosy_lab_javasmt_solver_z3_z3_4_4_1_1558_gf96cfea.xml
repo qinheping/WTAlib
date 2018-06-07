@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.sosy-lab:javasmt-solver-z3:z3-4.4.1-1558-gf96cfea">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/sosy-lab/javasmt-solver-z3/z3-4.4.1-1558-gf96cfea/javasmt-solver-z3-z3-4.4.1-1558-gf96cfea.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/sosy-lab/javasmt-solver-z3/z3-4.4.1-1558-gf96cfea/javasmt-solver-z3-z3-4.4.1-1558-gf96cfea-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/sosy-lab/javasmt-solver-z3/z3-4.4.1-1558-gf96cfea/javasmt-solver-z3-z3-4.4.1-1558-gf96cfea-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

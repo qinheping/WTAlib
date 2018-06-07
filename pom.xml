@@ -20,6 +20,11 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.sosy-lab</groupId>
+            <artifactId>javasmt-solver-z3</artifactId>
+            <version>z3-4.4.1-1558-gf96cfea</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
