@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TermNode extends ProgramNode {
@@ -11,6 +13,16 @@ public class TermNode extends ProgramNode {
         this.symbol = symbol;
         this.children = children;
     }
+
+    public TermNode(String symbol){
+        this(symbol,new ArrayList<>());
+    }
+    public TermNode(String symbol, TermNode... t){
+        this(symbol,new ArrayList<>());
+        this.children.addAll(Arrays.asList(t));
+    }
+
+
 
     public boolean hasChild(){
         if(children == null || children.size() == 0)

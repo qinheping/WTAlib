@@ -1,6 +1,7 @@
 package prover;
 
 import com.microsoft.z3.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +25,30 @@ public class PredicateSet {
         this(ctx, new ArrayList<>(),new ArrayList<>());
     }
 
-    public void addPredicate(Expr newPredicate){
+    public void addPredicate(BoolExpr newPredicate){
         for(Expr predicate : this.predicateList){
+            try{
             BoolExpr eq = ctx.mkEq(predicate,newPredicate);
-            eq = ctx.mkNot(eq);
-            if(check(ctx,eq) == null)
-                return;
+                eq = ctx.mkNot(eq);
+                if(check(ctx,eq) == null) {
+                    return;
+                }
+            }
+            catch (Z3Exception e){
+                continue;
+            }
         }
-        this.predicateList.add(newPredicate);
+        this.predicateList.add(newPredicate.simplify());
+        addPredicate(ctx.mkNot( newPredicate));
     }
 
     public Integer getSize(){
         return this.predicateList.size();
+    }
+
+    @Override
+    public String toString(){
+        return this.predicateList.toString();
     }
 
     /**
