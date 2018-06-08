@@ -1,7 +1,12 @@
+/**
+ * PredicateSet
+ * Jun 6 2018,
+ * @author Qinheping Hu
+ */
+
 package prover;
 
 import com.microsoft.z3.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;

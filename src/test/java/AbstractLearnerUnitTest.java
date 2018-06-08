@@ -27,6 +27,12 @@ public class AbstractLearnerUnitTest {
         pSet.addPredicate(ctx.mkLt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),
                 ctx.mkIntSort()),ctx.mkInt(2)));
         assert (pSet.getSize() == 6);
+        System.out.println(ctx.mkAnd(ctx.mkLt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),
+                ctx.mkIntSort()),ctx.mkInt(2)),ctx.mkLt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),
+                ctx.mkIntSort()),ctx.mkInt(1))));
+        System.out.println(ctx.mkAnd(ctx.mkLt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),
+                ctx.mkIntSort()),ctx.mkInt(2)),ctx.mkLt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),
+                ctx.mkIntSort()),ctx.mkInt(1))).getFuncDecl());
 
     }
 
