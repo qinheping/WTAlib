@@ -5,3 +5,14 @@ src/.idea/workspace.xml
 src/.idea/src.iml
 *.class
 target/
+.idea/workspace.xml
+lib/libz3.dll
+lib/libz3java.dll
+target/classes/automata/fta/FTA.class
+target/classes/parser/TermNode.class
+target/classes/QSyGuS.class
+target/classes/semirings/BooleanSemiring.class
+target/classes/semirings/ProbabilitySemiring.class
+target/classes/semirings/Semiring.class
+target/classes/semirings/TropicalSemiring.class
+WTAlib.iml
