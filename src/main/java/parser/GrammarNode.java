@@ -14,23 +14,33 @@ import java.util.Map;
 
 public class GrammarNode extends ProgramNode {
     List<NTNode> ntNodes;
-    String funName;
-    String argList;
-    String sort;
+    private String funName;
+    private String argList_string;
+    private List<String> argList_list;
+    private List<SortNode> argSort_list;
+    private String funcSort_string;
+    private SortNode funcSort_node;
 
     Map<String, Integer> idDic;
     Integer maxId;
 
     public GrammarNode(String funName, String argList, String sort, List<NTNode> ntNodes){
         this.funName = funName;
-        this.argList = argList;
-        this.sort = sort;
+        this.argList_string = argList;
+        this.funcSort_string = sort;
         this.ntNodes = ntNodes;
+        this.argList_list = new ArrayList<>();
+        this.argSort_list = new ArrayList<>();
+    }
+    public GrammarNode(String funName, String argList, String sort, List<NTNode> ntNodes, List<String> argList_list, List<SortNode> argSort_list){
+        this(funName,argList,sort,ntNodes);
+        this.argList_list = argList_list;
+        this.argSort_list = argSort_list;
     }
 
     @Override
     public  String toString(){
-        String result = "( synth-fun " + funName + ' ' +argList + ' ' + sort + " (\n";
+        String result = "( synth-fun " + funName + ' ' +argList_string + ' ' + funcSort_string + " (\n";
         for(NTNode node: ntNodes){
             result = result  + node.toString() + "\n";
         }
@@ -38,7 +48,7 @@ public class GrammarNode extends ProgramNode {
     }
 
     String toString(FTA fta){
-        String result = "( synth-fun " + funName + ' ' +argList + ' ' + sort + " (\n";
+        String result = "( synth-fun " + funName + ' ' +argList_string + ' ' + funcSort_string + " (\n";
         for(Object from : fta.getStates()){
             if(from == fta.getInitialState()) {
                 result += "\t(Start" + " " + ((Move) fta.getMovesFrom((Integer) from).iterator().next()).sort + " (";
@@ -116,7 +126,7 @@ public class GrammarNode extends ProgramNode {
             }
         }
         wta.setInitialState(0);
-        wta.addTransition(new WTAMove<String, Float>(1, new ArrayList<Integer>(),"", (Float) sr.one(), this.sort));
+        wta.addTransition(new WTAMove<String, Float>(1, new ArrayList<Integer>(),"", (Float) sr.one(), this.funcSort_string));
         return wta;
     }
 
@@ -147,4 +157,31 @@ public class GrammarNode extends ProgramNode {
         return fta;
     }
 
+    public List<String> getArgList_list() {
+        return argList_list;
+    }
+
+    public void setArgList_list(List<String> argList_list) {
+        this.argList_list = argList_list;
+    }
+
+    public String getFunName(){
+        return this.funName;
+    }
+
+    public List<SortNode> getArgSort_list() {
+        return argSort_list;
+    }
+
+    public void setArgSort_list(List<SortNode> argSort_list) {
+        this.argSort_list = argSort_list;
+    }
+
+    public SortNode getFuncSort_node() {
+        return funcSort_node;
+    }
+
+    public void setFuncSort_node(SortNode funcSort_node) {
+        this.funcSort_node = funcSort_node;
+    }
 }

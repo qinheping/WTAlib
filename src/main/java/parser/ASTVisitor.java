@@ -7,6 +7,8 @@ import semirings.Semiring;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
 
     Semiring sr;
@@ -66,7 +68,18 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
     public GrammarNode visitSynthFunCmd(QSygusParserParser.SynthFunCmdContext ctx) {
         String funName = ctx.SYMBOL().getText();
         String argList = getSplitedText(ctx.argList());
+
+        List<String> argList_list = new ArrayList<>();
+        List<SortNode> argSort_list = new ArrayList<>();
+        QSygusParserParser.SymbolSortPairStarContext sspsc = ctx.argList().symbolSortPairStar();
+        while(sspsc.symbolSortPairStar() != null){
+            argList_list.add(0, sspsc.symbolSortPair().SYMBOL().getText());
+            argSort_list.add(0, visitSortExpr(sspsc.symbolSortPair().sortExpr()));
+            sspsc = sspsc.symbolSortPairStar();
+        }
+
         String sort = getSplitedText(ctx.sortExpr());
+
         List<NTNode> ntNodes = new ArrayList<NTNode>();
         QSygusParserParser.NtDefPlusContext ntdefPlus = ctx.ntDefPlus();
         while(ntdefPlus.ntDefPlus() != null){
@@ -74,8 +87,35 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
             ntdefPlus = ntdefPlus.ntDefPlus();
         }
         ntNodes.add(0, visitNtDef(ntdefPlus.ntDef()));
-        return new GrammarNode(funName,argList,sort,ntNodes);
+        GrammarNode result =  new GrammarNode(funName,argList,sort,ntNodes, argList_list, argSort_list);
+        result.setFuncSort_node(visitSortExpr(ctx.sortExpr()));
+        return new GrammarNode(funName,argList,sort,ntNodes, argList_list, argSort_list);
     }
+
+    @Override
+    public SortNode visitSortExpr(QSygusParserParser.SortExprContext ctx){
+        String type = ctx.getText();
+        if(ctx.INTCONST() != null) {
+            try{
+                return new SortNode(SortNode.BV, Integer.parseInt(ctx.INTCONST().getText()));
+            }catch(NumberFormatException e){
+                System.out.println("fail to parse sort: " + type);
+                return null;
+            }
+        }
+        switch(type){
+            case "Bool":
+                return new SortNode(SortNode.BOOL);
+            case "Int":
+                return new SortNode(SortNode.INT);
+            case "Real":
+                return new SortNode(SortNode.REAL);
+            default:
+                System.out.println("fail to parse sort: " + type);
+                return null;
+        }
+    }
+
 
     @Override
     public OptimizationNode visitWeightOptimizationCmd(QSygusParserParser.WeightOptimizationCmdContext ctx){

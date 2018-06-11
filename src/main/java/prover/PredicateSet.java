@@ -35,7 +35,7 @@ public class PredicateSet {
             try{
             BoolExpr eq = ctx.mkEq(predicate,newPredicate);
                 eq = ctx.mkNot(eq);
-                if(check(ctx,eq) == null) {
+                if(ProverUtilities.check(ctx,eq) == null) {
                     return;
                 }
             }
@@ -54,22 +54,5 @@ public class PredicateSet {
     @Override
     public String toString(){
         return this.predicateList.toString();
-    }
-
-    /**
-     * Check if the given expression <code>f</code> is satisfiable
-     * @param ctx   Context
-     * @param f     Expression to check
-     * @return      null if unsat,
-     *              model if sat
-     */
-    Model check(Context ctx, BoolExpr f)
-    {
-        Solver s = ctx.mkSolver();
-        s.add(f);
-        if (s.check() == Status.SATISFIABLE)
-            return s.getModel();
-        else
-            return null;
     }
 }

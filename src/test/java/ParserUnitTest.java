@@ -37,7 +37,7 @@ public class ParserUnitTest {
     }
 
     @org.junit.Test
-    public void testReduction() throws FileNotFoundException,IOException,InterruptedException{
+    public void testReduction() throws IOException {
         String input = new Scanner(new File("benchmarks/sygus/max.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);

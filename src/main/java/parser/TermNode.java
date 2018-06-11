@@ -15,7 +15,7 @@ public class TermNode extends ProgramNode {
     }
 
     public TermNode(String symbol){
-        this(symbol,new ArrayList<>());
+        this(symbol,new ArrayList());
     }
     public TermNode(String symbol, TermNode... t){
         this(symbol,new ArrayList<>());
@@ -25,9 +25,7 @@ public class TermNode extends ProgramNode {
 
 
     public boolean hasChild(){
-        if(children == null || children.size() == 0)
-            return false;
-        return true;
+        return children != null && children.size() != 0;
     }
     @Override
     public String toString(){
