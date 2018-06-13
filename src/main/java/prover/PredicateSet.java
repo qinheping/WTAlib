@@ -47,6 +47,10 @@ public class PredicateSet {
         addPredicate(ctx.mkNot( newPredicate));
     }
 
+    public Expr getPredicate(int index){
+        return this.predicateList.get(index);
+    }
+
     public Integer getSize(){
         return this.predicateList.size();
     }

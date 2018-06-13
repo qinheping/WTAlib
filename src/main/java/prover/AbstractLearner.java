@@ -60,7 +60,6 @@ public class AbstractLearner {
         String operator = term.getSymbol(); // current operator
         List<Expr> predicateCandidates = new ArrayList();
 
-        System.out.println(term);
 
         // branch operator
         if(operator.equals("ite")){

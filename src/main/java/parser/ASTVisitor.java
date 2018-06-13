@@ -89,7 +89,7 @@ public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
         ntNodes.add(0, visitNtDef(ntdefPlus.ntDef()));
         GrammarNode result =  new GrammarNode(funName,argList,sort,ntNodes, argList_list, argSort_list);
         result.setFuncSort_node(visitSortExpr(ctx.sortExpr()));
-        return new GrammarNode(funName,argList,sort,ntNodes, argList_list, argSort_list);
+        return result;
     }
 
     @Override

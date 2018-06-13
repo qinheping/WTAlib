@@ -32,4 +32,9 @@ public class SortNode extends ProgramNode {
     public void setLength(int length) {
         this.length = length;
     }
+
+    @Override
+    public String toString(){
+        return "type "+ type +" length "+length;
+    }
 }

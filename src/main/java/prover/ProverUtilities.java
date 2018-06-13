@@ -34,6 +34,8 @@ public final class ProverUtilities {
                     return ctx.mkLe((ArithExpr) expr0,(ArithExpr) expr1);
                 case ">" :
                     return ctx.mkGt((ArithExpr) expr0,(ArithExpr) expr1);
+                case ">=" :
+                    return ctx.mkGe((ArithExpr) expr0,(ArithExpr) expr1);
                 case "and" :
                     return ctx.mkAnd((BoolExpr) expr0,(BoolExpr) expr1);
                 case "or" :
@@ -77,10 +79,11 @@ public final class ProverUtilities {
         }
         // Leaf
         if(term.getChildren()==null || term.getChildren().size()==0){
+            if(sortMap.keySet().contains(operator))
+                return ctx.mkConst(operator, sortMap.get(operator));
             if(parseString2Const(ctx, operator) != null){
                 return parseString2Const(ctx, operator);
             }
-            return ctx.mkConst(operator, sortMap.get(operator));
 
         }
         return null;

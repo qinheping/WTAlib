@@ -2,6 +2,7 @@ import com.microsoft.z3.*;
 import parser.TermNode;
 import prover.AbstractLearner;
 import prover.PredicateSet;
+import prover.TAConstructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +48,9 @@ public class AbstractLearnerUnitTest {
         args.add("y");
         AbstractLearner abL = new AbstractLearner(ctx,args,tree,ctx.mkIntSort());
         System.out.println(abL.learn());
-
     }
+
+  
 
     Model check(Context ctx, BoolExpr f)
     {
