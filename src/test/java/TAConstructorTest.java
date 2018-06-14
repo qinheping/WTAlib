@@ -15,15 +15,7 @@ import java.util.List;
 public class TAConstructorTest {
     String grammarString = "(synth-fun max2 ((x Int) (y Int)) Int ((Start Int (x y 0 1\n" +
             "             (+ Start Start)\n" +
-            "             (- Start Start)\n" +
-            "             (ite StartBool Start Start) ))\n" +
-            "\n" +
-            " (StartBool Bool ((and StartBool StartBool)\n" +
-            "                  (or StartBool StartBool)\n" +
-            "                  (not StartBool)\n" +
-            "                  (<= Start Start)\n" +
-            "                  (= Start Start)\n" +
-            "                  (>= Start Start)))))";
+            "             (- Start Start)\n))))";
 
     ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
     QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -58,7 +50,6 @@ public class TAConstructorTest {
         args.add("x");
         args.add("y");
         AbstractLearner abL = new AbstractLearner(ctx,args,tree,ctx.mkIntSort());
-        System.out.println(abL.learn());
         TAConstructor taCon = new TAConstructor(ctx,grammarNode,specNode, abL.learn(),new HashMap<>());
     }
 }

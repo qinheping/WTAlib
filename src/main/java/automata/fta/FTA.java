@@ -79,6 +79,8 @@ public class FTA<S> extends Automaton<S> {
         return aut;
     }
 
+
+
     // Adds a transition to the SFA
     public void addTransition(FTAMove<S> transition){
         transitionCount++;
@@ -428,7 +430,6 @@ public class FTA<S> extends Automaton<S> {
         // emptygrammar
         if(getMovesFrom(this.initialState).size() == 0){
             isEmpty = 1;
-            return;
         }
 
         removeEpsilon();
@@ -472,6 +473,8 @@ public class FTA<S> extends Automaton<S> {
                 }
             }
         }
+
+        System.out.println("REACHABLE: "+reachable);
 
         List<Integer> toRemove = new ArrayList<Integer>();
         for(Integer state: this.states){
@@ -607,11 +610,32 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public String toString(){
-        String result = "Initial State: " + this.initialState + ", maxState:" + this.maxStateId + ", states: " + this.states +  "\nTransitions: " ;
+        String result = "Initial State: " + this.initialState + ", maxState:" + this.maxStateId + ", states: " + this.states + " # of trans: "+ this.getTransitionCount()+  "\nTransitions: " ;
         for(Move<S> move: getMoves()){
             result += move.toDotString() + "\n";
         }
         return result;
+    }
+
+    public String toTimbukString(){
+        String ops = "Ops";
+        Set<String> visited = new HashSet<>();
+        for(Move move:this.getMoves()){
+            if(visited.contains(move.symbol))
+                continue;
+            visited.add((String)move.symbol);
+            ops += " "+move.symbol+":"+move.to.size();
+        }
+        String automata = "Automaton A\nStates";
+        for(Integer state:this.getStates()){
+            automata += " q"+state;
+        }
+        automata+= "\nFinal States q"+this.initialState+"\nTransitions";
+        for(Move move: this.getMoves()){
+            automata += "\n" + move.toTimbukString();
+        }
+
+        return ops+"\n"+automata;
     }
 
     public int getIsEmpty(){

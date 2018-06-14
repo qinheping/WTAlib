@@ -51,7 +51,7 @@ public class AbstractLearnerUnitTest {
         System.out.println(abL.learn());
     }
 
-  
+
 
     Model check(Context ctx, BoolExpr f)
     {

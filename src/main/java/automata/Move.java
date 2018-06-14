@@ -94,5 +94,17 @@ public abstract class Move<S> {
                 return false;
         }
         return (move.from == this.from) && (move.symbol.equals(this.symbol));
-    }    
+    }
+
+    public String toTimbukString() {
+        String result = this.symbol+"(";
+        if(to.size() !=0) {
+            result += "q"+to.get(0);
+            for (int i = 1; i < to.size();i++){
+                result+= ", q"+to.get(i);
+            }
+        }
+        result+=") -> q"+from;
+        return result;
+    }
 }

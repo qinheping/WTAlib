@@ -1,11 +1,15 @@
 package prover;
 
 import com.microsoft.z3.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 public final class ProverUtilities {
@@ -141,10 +145,19 @@ public final class ProverUtilities {
     {
         Solver s = ctx.mkSolver();
         s.add(f);
-        if (s.check() == Status.SATISFIABLE)
+        final long startTime = System.currentTimeMillis();
+        //System.out.println("Starting checking: "+ f);
+        if (s.check() == Status.SATISFIABLE){
+            final long endTime = System.currentTimeMillis();
+            //System.out.println("used time for SMT: " + (endTime - startTime) );
+
             return s.getModel();
-        else
-            return null;
+        }
+        final long endTime = System.currentTimeMillis();
+        //System.out.println("used time for SMT: " + (endTime - startTime) );
+
+        return null;
+
     }
 
     public static TermNode parseString2TermNode(String term_string){
@@ -166,5 +179,93 @@ public final class ProverUtilities {
                 return getSortFromExpr(arg, var);
         }
         return null;
+    }
+
+    public static void getMintermsRec(Context ctx, ArrayList<BoolExpr> predicates, int n,
+                                            BoolExpr currPred, ArrayList<Integer> setBits,
+                                      HashSet<Pair<BoolExpr,ArrayList<Integer>>> minterms){
+        if (!IsSatisfiable(ctx,currPred))
+            return;
+
+        if (n == predicates.size()) {
+            minterms.add(new Pair<BoolExpr, ArrayList<Integer>>(currPred, setBits));
+        }
+        else {
+            ArrayList<Integer> posList = new ArrayList<Integer>(setBits);
+            posList.add(1);
+            BoolExpr pn =predicates.get(n);
+            getMintermsRec(ctx,predicates, n + 1,
+                    ctx.mkAnd(currPred, pn), posList, minterms);
+
+            ArrayList<Integer> negList = new ArrayList<Integer>(setBits);
+            negList.add(0);
+            getMintermsRec(ctx,predicates, n + 1,
+                    ctx.mkAnd(currPred, ctx.mkNot(pn)), negList,
+                    minterms);
+        }
+    }
+
+    public static boolean IsSatisfiable(Context ctx, BoolExpr expr){
+        return check(ctx, expr) != null;
+    }
+
+    public static BoolExpr generateTermFromOperator(Context ctx, String operator, String output, List<String> args){
+        switch (operator){
+            case "+":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkIntSort()),ctx.mkAdd((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+            case "-":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkIntSort()),ctx.mkSub((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+            case "and":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkAnd((BoolExpr) ctx.mkConst(args.get(0),ctx.mkBoolSort()),(BoolExpr) ctx.mkConst(args.get(1),ctx.mkBoolSort())));
+            case "or":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkOr((BoolExpr) ctx.mkConst(args.get(0),ctx.mkBoolSort()),(BoolExpr) ctx.mkConst(args.get(1),ctx.mkBoolSort())));
+            case "not":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkNot((BoolExpr) ctx.mkConst(args.get(0),ctx.mkBoolSort())));
+            case "<=":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkLe((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+            case ">=":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkGe((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+            case "=":
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkEq((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+            default:
+                return null;
+        }
+    }
+
+    public static boolean isOutputBool(String operator){
+        switch(operator){
+            case "and":
+            case "not":
+            case "or":
+            case ">":
+            case ">=":
+            case "<=":
+            case "<":
+            case "==":
+            case "!=":
+                return true;
+            default:
+                return false;
+        }
+    }
+    public static boolean isArgsBool(String operator){
+        switch(operator){
+            case "and":
+            case "not":
+            case "or":
+                return true;
+            default:
+                return false;
+        }
+    }
+    public static boolean isSymmetric(String operator){
+        switch(operator){
+            case "and":
+            case "not":
+            case "+":
+                return true;
+            default:
+                return false;
+        }
     }
 }

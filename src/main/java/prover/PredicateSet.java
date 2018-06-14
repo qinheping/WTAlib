@@ -9,14 +9,15 @@ package prover;
 import com.microsoft.z3.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class PredicateSet {
     private Context ctx;
-    private List<Expr> predicateList;
+    private ArrayList<BoolExpr> predicateList;
     private List<String> symbolicArgumentsList;
 
-    public PredicateSet(Context ctx, List<Expr> abList, List<String> saList){
+    public PredicateSet(Context ctx, ArrayList<BoolExpr> abList, List<String> saList){
         this.ctx = ctx;
         this.predicateList = abList;
         this.symbolicArgumentsList = saList;
@@ -43,11 +44,14 @@ public class PredicateSet {
                 continue;
             }
         }
-        this.predicateList.add(newPredicate.simplify());
-        addPredicate(ctx.mkNot( newPredicate));
+        this.predicateList.add((BoolExpr)newPredicate.simplify());
     }
 
-    public Expr getPredicate(int index){
+    public BoolExpr getPredicate(int index){
+        if(index == -1)
+            return ctx.mkTrue();
+        if(index == -2)
+            return ctx.mkFalse();
         return this.predicateList.get(index);
     }
 
@@ -58,5 +62,16 @@ public class PredicateSet {
     @Override
     public String toString(){
         return this.predicateList.toString();
+    }
+
+    public PredicateSet minTerminize() {
+        HashSet<Pair<BoolExpr,ArrayList<Integer>>> minterms = new HashSet<>();
+        ProverUtilities.getMintermsRec(ctx,this.predicateList,0,ctx.mkTrue(),new ArrayList<>(),minterms);
+        this.predicateList = new ArrayList<>();
+        for(Pair<BoolExpr,ArrayList<Integer>> pair: minterms){
+            this.predicateList.add((BoolExpr) pair.first.simplify());
+        }
+        return this;
+
     }
 }

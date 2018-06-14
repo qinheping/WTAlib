@@ -48,7 +48,7 @@ public class AbstractLearner {
 
     public PredicateSet learn(){
         learnFromTerm(this.currentProgram);
-        return this.predicateSet;
+        return this.predicateSet.minTerminize();
     }
 
     /**
