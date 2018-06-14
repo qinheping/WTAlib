@@ -9,12 +9,9 @@ package prover;
 import automata.fta.FTA;
 import automata.fta.FTAMove;
 import com.microsoft.z3.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import parser.GrammarNode;
-import parser.SortNode;
 import parser.TermNode;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class TAConstructor {
@@ -84,7 +81,6 @@ public class TAConstructor {
         produceAbstractInputOutput(new ArrayList<Integer>());
         System.out.println("abstract I-O: "+this.abstractInputOutputExample);
 
-
         final long endTime = System.currentTimeMillis();
         System.out.println("used time for abstract I-O: " + (endTime - startTime) );
 
@@ -104,14 +100,23 @@ public class TAConstructor {
         anotatedFTA = produceAntotateFTA();
     }
 
+    /**
+     *  Construct FTA that input variables satisfy predicate vector inputAbstract and the root satisfies finalAbstracts
+     * @param ctx
+     * @param pSet  Predicate set
+     * @param fta   Grammar FTA
+     * @param inputAbstract
+     * @param finalAbstracts
+     * @return
+     */
     private FTA<String> constructAbstractFTA(Context ctx, PredicateSet pSet, FTA fta, List<Integer> inputAbstract, Set<Integer> finalAbstracts) {
         FTA<String> result = new FTA<String>();
-        Stack<Integer> toVisit = new Stack<>();
+        Stack<Integer> toVisit_annotated = new Stack<>();
+        Set<Integer> visited_annotated = new HashSet<>();
 
         // start from leaves
         for(Object move: fta.getLeafTransitions()){
             FTAMove<String> leafMove = (FTAMove) move;
-            toVisit.push(leafMove.from);
             String operator = leafMove.symbol;
             // var
             if(this.argList.contains(operator)) {
@@ -120,58 +125,88 @@ public class TAConstructor {
             }else{
                 // constant
                 Expr constant = ProverUtilities.parseString2Const(ctx, operator);
-                BoolExpr newPre = ctx.mkEq(ctx.mkConst(ctx.mkSymbol(0),constant.getSort()),constant);
-                pSet.addPredicate(newPre);
-                int predIndex = -1;
-                for(int i = 0; i < pSet.getSize(); i++){
-                    if(pSet.getPredicate(i).equals(newPre)){
-                        predIndex = i;
-                        break;
+                for(int i  = 0; i < pSet.getSize(); i++) {
+                    // try to construct assertion phi_i(x/constant) is satisfiable
+                    BoolExpr checkConst;
+                    try{ checkConst = (BoolExpr) pSet.getPredicate(i).simplify().substitute(ctx.mkConst(ctx.mkSymbol(0),constant.getSort()),constant);}
+                    catch (com.microsoft.z3.Z3Exception e) { continue; }
+                    if(null != ProverUtilities.check(ctx, checkConst)){
+                        result.addTransition(new FTAMove<>(transId(leafMove.from, i), new ArrayList<>(), operator));
+                        toVisit_annotated.push(transId(leafMove.from, i));
                     }
                 }
-                result.addTransition(new FTAMove<>(transId(leafMove.from,predIndex),new ArrayList<>(),operator));
             }
         }
+        System.out.println(result);
 
-        while(!toVisit.isEmpty()){
-            Integer currentState = toVisit.pop();
-            for(Object move: fta.getMovesToContaints(currentState)){
-                FTAMove<String> checkMove = (FTAMove) move;
-                String operator = checkMove.symbol;
-                Integer from = checkMove.from;
-                List<Integer> to = checkMove.to;
-                List<List<Integer>> predPattern = getPredPattern(result,to, new ArrayList<>());
-                Set<Integer> validTo = checkTransValid(operator,predPattern);
+        // internal nodes
+        while(!toVisit_annotated.isEmpty()){
+            // start visit current State
+            Integer currentState_annotated = toVisit_annotated.pop();
+            visited_annotated.add(currentState_annotated);
+            System.out.println("Current state: "+currentState_annotated + " state:" + transBack2State(currentState_annotated)+ " pred: "+transBack2Pred(currentState_annotated));
+
+            // for each original move, construct some new move
+            for(Object move: fta.getMovesToContaints(transBack2State(currentState_annotated))){
+                FTAMove<String> currentMove = (FTAMove) move;
+                System.out.println("currentMove: "+ currentMove.toString() );
+                String operator = currentMove.symbol;
+                Integer from = currentMove.from;
+                List<Integer> to = currentMove.to;
+                List<List<Integer>> predPatterns = getPredPatternRec(visited_annotated,to, new ArrayList<>(), currentState_annotated,false);
+
+                System.out.println("predPatterns: "+ predPatterns);
+                for(List<Integer> predPattern: predPatterns){
+                    Set<Integer> validTo = checkTransValid(operator,predPattern);
+                }
             }
         }
 
         return result;
     }
 
-    private Set<Integer> checkTransValid(String operator,List<List<Integer>> predPattern) {
-        if(this.validTrans.get(operator) == null){
-            this.validTrans.put(operator, new HashMap<>());
-        }
+    private Set<Integer> checkTransValid(String operator,List<Integer> predPattern) {
+        Set<Integer> result;
+        this.validTrans.putIfAbsent(operator,new HashMap<>());
         Map<List<Integer>,Set<Integer>> bucket = this.validTrans.get(operator);
+
+        bucket.putIfAbsent(predPattern, new HashSet<>());
+        result = bucket.get(predPattern);
+
+        for(int i = 0; i < pSet.getSize(); i++){
+            // predicate of the parent
+            Expr predTo = pSet.getPredicate(i);
+            Sort subsSort = ProverUtilities.getSortFromExpr(predTo,ctx.mkConst(ctx.mkSymbol(0),ctx.mkIntSort()).toString());
+            predTo = predTo.simplify().substitute(ctx.mkConst(ctx.mkSymbol(0),subsSort),ctx.mkConst("T",subsSort));
+
+            // predicate of transformer
+
+
+            for(int j = 0; j <  predPattern.size(); j++){
+
+            }
+        }
+
         return null;
 
     }
 
-    private List<List<Integer>> getPredPattern(FTA<String> fta, List<Integer> to, List<Integer> current) {
+    private List<List<Integer>> getPredPatternRec(Set<Integer> annotatedStates_set, List<Integer> to, List<Integer> currentPredPattern, Integer targetState_annotated, boolean hitted) {
         List<List<Integer>> result = new ArrayList<>();
-        if(current.size() < to.size()){
-            Integer currentIndex = current.size();
-            for(Integer anotatedState: fta.getStates()){
-                if(transBack2State(anotatedState) == to.get(currentIndex)){
-                    List<Integer> child = new ArrayList<>();
-                    for(Integer st: current)
-                        child.add(st);
-                    child.add(transBack2Pred(anotatedState));
-                    result.addAll(getPredPattern(fta,to,child));
+        // PredPattern not full
+        if(currentPredPattern.size() < to.size()){
+            Integer currentIndex = currentPredPattern.size();
+            for(Integer annotatedState: annotatedStates_set){
+                // if annotatedState == to[i], add Pred(annotated) to currentPredPattern
+                if(transBack2State(annotatedState) == to.get(currentIndex)){
+                    List<Integer> child = new ArrayList<>(currentPredPattern);
+                    child.add(transBack2Pred(annotatedState));
+                    result.addAll(getPredPatternRec(annotatedStates_set,to,child, targetState_annotated, (annotatedState == targetState_annotated) || hitted));
                 }
             }
         }else{
-            result.add(current);
+            if(hitted)
+            result.add(currentPredPattern);
         }
 
         return result;
@@ -182,9 +217,7 @@ public class TAConstructor {
         // internal node
         if(inputAbstract.size() < argSort_list.size()){
             for(int i = 0; i < this.pSet.getSize(); i++){
-                List<Integer> child = new ArrayList<>();
-                for(Integer input: inputAbstract)
-                    child.add(input);
+                List<Integer> child = new ArrayList<>(inputAbstract);
                 child.add(i);
                 produceAbstractInputOutput(child);
             }
@@ -208,7 +241,9 @@ public class TAConstructor {
                     }
                     assertion = ctx.mkAnd((BoolExpr) pSet.getPredicate(inputAbstract.get(j)).simplify().substitute(subedVars,subVars), assertion);
                 }
-                subVars[0] = ctx.mkApp(this.funcDeclMap.get(this.synthFunSymbol),(Expr[]) pattern.toArray());
+                Expr[] pattern_array = new Expr[pattern.size()];
+                for(int j = 0; j < pattern.size(); j++) pattern_array[j] = pattern.get(j);
+                subVars[0] = ctx.mkApp(this.funcDeclMap.get(this.synthFunSymbol),pattern_array);
                 assertion = ctx.mkAnd(assertion, (BoolExpr) pSet.getPredicate(i).substitute(subedVars,subVars));
             }
             if(ProverUtilities.check(ctx,assertion) != null) {

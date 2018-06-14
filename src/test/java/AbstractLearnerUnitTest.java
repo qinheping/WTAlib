@@ -2,6 +2,7 @@ import com.microsoft.z3.*;
 import parser.TermNode;
 import prover.AbstractLearner;
 import prover.PredicateSet;
+import prover.ProverUtilities;
 import prover.TAConstructor;
 
 import java.util.ArrayList;

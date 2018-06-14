@@ -1,8 +1,10 @@
 package prover;
 
 import com.microsoft.z3.*;
-import parser.SortNode;
-import parser.TermNode;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import parser.*;
 
 import java.util.Map;
 
@@ -143,5 +145,26 @@ public final class ProverUtilities {
             return s.getModel();
         else
             return null;
+    }
+
+    public static TermNode parseString2TermNode(String term_string){
+        ANTLRInputStream inputStreamSpec = new ANTLRInputStream(term_string);
+        QSygusParserLexer lexerSpec = new QSygusParserLexer(inputStreamSpec);
+        CommonTokenStream tokensSpec = new CommonTokenStream(lexerSpec);
+        QSygusParserParser parserSpec = new QSygusParserParser(tokensSpec);
+        ParseTree parseTreeSpec = parserSpec.term();
+        TermNode specNode = (TermNode) new ASTVisitor().visit(parseTreeSpec);
+        return specNode;
+    }
+
+    public static Sort getSortFromExpr(Expr expr, String var){
+        if(expr.getNumArgs() == 0){
+            return var.equals(expr.toString())? expr.getSort():null;
+        }
+        for(Expr arg: expr.getArgs()){
+            if(getSortFromExpr(arg, var) != null)
+                return getSortFromExpr(arg, var);
+        }
+        return null;
     }
 }

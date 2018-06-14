@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
 import prover.AbstractLearner;
+import prover.ProverUtilities;
 import prover.TAConstructor;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class TAConstructorTest {
     ParseTree parseTreeSpec = parserSpec.term();
     TermNode specNode = (TermNode) new ASTVisitor().visit(parseTreeSpec);
 
+
     @org.junit.Test
     public void testPredicateSet() {
         //Context ctx = new Context();
@@ -50,8 +52,7 @@ public class TAConstructorTest {
     @org.junit.Test
     public void testTAConstructor() {
         Context ctx = new Context();
-        TermNode condition = new TermNode("<",new TermNode("x"),new TermNode("y"));
-        TermNode tree = new TermNode("ite",condition, new TermNode("+",new TermNode("y"),new TermNode("1")), new TermNode("x"));
+        TermNode tree = ProverUtilities.parseString2TermNode("(ite (> x y) x y)");
         System.out.println(tree);
         List<String> args = new ArrayList<>();
         args.add("x");
@@ -59,6 +60,5 @@ public class TAConstructorTest {
         AbstractLearner abL = new AbstractLearner(ctx,args,tree,ctx.mkIntSort());
         System.out.println(abL.learn());
         TAConstructor taCon = new TAConstructor(ctx,grammarNode,specNode, abL.learn(),new HashMap<>());
-
     }
 }
