@@ -1,12 +1,19 @@
 package prover;
 
+import automata.fta.FTA;
 import com.microsoft.z3.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
+import parser.TimbukParser.Timbuk2FTAVisitor;
+import parser.TimbukParser.TimbukLexer;
+import parser.TimbukParser.TimbukParser;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -267,5 +274,53 @@ public final class ProverUtilities {
             default:
                 return false;
         }
+    }
+
+    public static FTA<String> parseTimbuk2FTA(String grammarString){
+
+
+        ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
+        TimbukLexer lexer = new TimbukLexer(inputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        TimbukParser parser = new TimbukParser(tokens);
+        ParseTree parseTree = parser.file();
+        FTA fta = (FTA)new Timbuk2FTAVisitor().visit(parseTree);
+        return fta;
+    }
+
+    public static FTA<String> reduceFTA(FTA<String> fta){
+        String timbukIn = "";
+        String timbuk = fta.toTimbukString();
+        try {
+            File tempOut = File.createTempFile("timbukOut", ".tmp");
+            System.out.println("Temp file : " + tempOut.getAbsolutePath());
+            tempOut.deleteOnExit();
+            File tempIn = File.createTempFile("timbukIn", ".tmp");
+            tempIn.deleteOnExit();
+
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempOut));
+            bw.write(timbuk);
+            bw.close();
+
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("./lib/vata red "+tempOut.getAbsolutePath().toString());
+
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line;
+            while((line = reader.readLine())!=null)
+                timbukIn+="\n"+line;
+
+
+        }catch (java.io.IOException e){
+            System.out.println("fail to create tmp file");
+            return null;
+        }
+
+
+
+
+        return parseTimbuk2FTA(timbukIn);
     }
 }

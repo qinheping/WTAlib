@@ -18,8 +18,7 @@ public class TimbukParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		WS=10, INTCONST=11, BVCONST=12, REALCONST=13, SYMBOL=14, QUOTEDLIT=15, 
-		INTEGER=16;
+		T__9=10, WS=11, SYMBOL=12, INTEGER=13;
 	public static final int
 		RULE_file = 0, RULE_label_list = 1, RULE_label_decl = 2, RULE_automaton = 3, 
 		RULE_state_list = 4, RULE_state = 5, RULE_transition_list = 6, RULE_transition = 7;
@@ -30,11 +29,11 @@ public class TimbukParser extends Parser {
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'Ops'", "':'", "'Automaton'", "'States'", "'Final States'", "'Transitions'", 
-		"'('", "')'", "'->'"
+		"'('", "','", "')'", "'->'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, "WS", "INTCONST", 
-		"BVCONST", "REALCONST", "SYMBOL", "QUOTEDLIT", "INTEGER"
+		null, null, null, null, null, null, null, null, null, null, null, "WS", 
+		"SYMBOL", "INTEGER"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -442,34 +441,38 @@ public class TimbukParser extends Parser {
 			{
 			setState(53);
 			match(SYMBOL);
-			setState(62);
+			setState(65);
 			_la = _input.LA(1);
 			if (_la==T__6) {
 				{
 				setState(54);
 				match(T__6);
-				setState(56); 
+				setState(55);
+				state();
+				setState(60);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				do {
+				while (_la==T__7) {
 					{
 					{
-					setState(55);
+					setState(56);
+					match(T__7);
+					setState(57);
 					state();
 					}
 					}
-					setState(58); 
+					setState(62);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( _la==SYMBOL );
-				setState(60);
-				match(T__7);
+				}
+				setState(63);
+				match(T__8);
 				}
 			}
 
-			setState(64);
-			match(T__8);
-			setState(65);
+			setState(67);
+			match(T__9);
+			setState(68);
 			state();
 			}
 		}
@@ -485,23 +488,24 @@ public class TimbukParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\22F\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\17I\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\3"+
 		"\7\3\30\n\3\f\3\16\3\33\13\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3"+
 		"\5\3\5\3\5\3\6\7\6+\n\6\f\6\16\6.\13\6\3\7\3\7\3\b\7\b\63\n\b\f\b\16\b"+
-		"\66\13\b\3\t\3\t\3\t\6\t;\n\t\r\t\16\t<\3\t\3\t\5\tA\n\t\3\t\3\t\3\t\3"+
-		"\t\2\2\n\2\4\6\b\n\f\16\20\2\2B\2\22\3\2\2\2\4\31\3\2\2\2\6\34\3\2\2\2"+
-		"\b \3\2\2\2\n,\3\2\2\2\f/\3\2\2\2\16\64\3\2\2\2\20\67\3\2\2\2\22\23\7"+
-		"\3\2\2\23\24\5\4\3\2\24\25\5\b\5\2\25\3\3\2\2\2\26\30\5\6\4\2\27\26\3"+
-		"\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\5\3\2\2\2\33\31\3"+
-		"\2\2\2\34\35\7\20\2\2\35\36\7\4\2\2\36\37\7\22\2\2\37\7\3\2\2\2 !\7\5"+
-		"\2\2!\"\7\20\2\2\"#\7\6\2\2#$\5\n\6\2$%\7\7\2\2%&\5\n\6\2&\'\7\b\2\2\'"+
-		"(\5\16\b\2(\t\3\2\2\2)+\5\f\7\2*)\3\2\2\2+.\3\2\2\2,*\3\2\2\2,-\3\2\2"+
-		"\2-\13\3\2\2\2.,\3\2\2\2/\60\7\20\2\2\60\r\3\2\2\2\61\63\5\20\t\2\62\61"+
-		"\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\64\65\3\2\2\2\65\17\3\2\2\2\66\64"+
-		"\3\2\2\2\67@\7\20\2\28:\7\t\2\29;\5\f\7\2:9\3\2\2\2;<\3\2\2\2<:\3\2\2"+
-		"\2<=\3\2\2\2=>\3\2\2\2>?\7\n\2\2?A\3\2\2\2@8\3\2\2\2@A\3\2\2\2AB\3\2\2"+
-		"\2BC\7\13\2\2CD\5\f\7\2D\21\3\2\2\2\7\31,\64<@";
+		"\66\13\b\3\t\3\t\3\t\3\t\3\t\7\t=\n\t\f\t\16\t@\13\t\3\t\3\t\5\tD\n\t"+
+		"\3\t\3\t\3\t\3\t\2\2\n\2\4\6\b\n\f\16\20\2\2E\2\22\3\2\2\2\4\31\3\2\2"+
+		"\2\6\34\3\2\2\2\b \3\2\2\2\n,\3\2\2\2\f/\3\2\2\2\16\64\3\2\2\2\20\67\3"+
+		"\2\2\2\22\23\7\3\2\2\23\24\5\4\3\2\24\25\5\b\5\2\25\3\3\2\2\2\26\30\5"+
+		"\6\4\2\27\26\3\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\5\3"+
+		"\2\2\2\33\31\3\2\2\2\34\35\7\16\2\2\35\36\7\4\2\2\36\37\7\17\2\2\37\7"+
+		"\3\2\2\2 !\7\5\2\2!\"\7\16\2\2\"#\7\6\2\2#$\5\n\6\2$%\7\7\2\2%&\5\n\6"+
+		"\2&\'\7\b\2\2\'(\5\16\b\2(\t\3\2\2\2)+\5\f\7\2*)\3\2\2\2+.\3\2\2\2,*\3"+
+		"\2\2\2,-\3\2\2\2-\13\3\2\2\2.,\3\2\2\2/\60\7\16\2\2\60\r\3\2\2\2\61\63"+
+		"\5\20\t\2\62\61\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\64\65\3\2\2\2\65\17"+
+		"\3\2\2\2\66\64\3\2\2\2\67C\7\16\2\289\7\t\2\29>\5\f\7\2:;\7\n\2\2;=\5"+
+		"\f\7\2<:\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?A\3\2\2\2@>\3\2\2\2AB\7"+
+		"\13\2\2BD\3\2\2\2C8\3\2\2\2CD\3\2\2\2DE\3\2\2\2EF\7\f\2\2FG\5\f\7\2G\21"+
+		"\3\2\2\2\7\31,\64>C";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

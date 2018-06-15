@@ -97,12 +97,13 @@ public class TAConstructor {
             ftaList.add(constructAbstractFTA(ctx,pSet,grammar.toFTA(),inputAbstract,abstractInputOutputExample.get(inputAbstract)));
         }
 
-        FTA<String> ftaIntersection = ftaList.get(0);
+        FTA<String> ftaIntersection = ProverUtilities.reduceFTA(ftaList.get(0));
         for(int i = 1; i<ftaList.size(); i++){
-            ftaIntersection = ftaIntersection.intersectionWith(ftaList.get(i));
             System.out.println(ftaIntersection);
+            ftaIntersection = ProverUtilities.reduceFTA(ftaIntersection.intersectionWith(ProverUtilities.reduceFTA(ftaList.get(i))));
         }
 
+        System.out.println(ftaIntersection);
 
         grammarFTA = grammar.toFTA();
         anotatedFTA = produceAntotateFTA();
@@ -189,7 +190,7 @@ public class TAConstructor {
             result.addTransition(new FTAMove(0,state_annotated,""));
 
         result.clean();
-        System.out.println("fta: "+ result.toTimbukString());
+        System.out.println("fta: "+ result);
         return result;
     }
 

@@ -38,6 +38,7 @@ public class TAConstructorTest {
     public void testPredicateSet() {
         //Context ctx = new Context();
         System.out.println(grammarNode.toFTA());
+        System.out.println(ProverUtilities.reduceFTA(grammarNode.toFTA()));
 
     }
 

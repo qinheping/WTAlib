@@ -101,6 +101,7 @@ public class TimbukParserUnitTest {
     @org.junit.Test
     public void testParser() {
         //Context ctx = new Context();
+        fta.clean();
         System.out.println(fta);
 
     }
