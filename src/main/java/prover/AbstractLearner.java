@@ -48,6 +48,8 @@ public class AbstractLearner {
 
     public PredicateSet learn(){
         learnFromTerm(this.currentProgram);
+
+        this.predicateSet.addPredicate(ctx.mkGt((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),ctx.mkIntSort()),ctx.mkInt(0)));
         return this.predicateSet.minTerminize();
     }
 

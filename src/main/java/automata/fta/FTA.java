@@ -493,11 +493,16 @@ public class FTA<S> extends Automaton<S> {
         }
         //this.compressState();
 
+        // emptygrammar
+        if(getMovesFrom(this.initialState).size() == 0){
+            isEmpty = 1;
+        }
 
         if(getMovesFrom(this.initialState).size() == 0){
             isEmpty = 1;
             return;
         }
+
     }
 
     public void removeEpsilon(){

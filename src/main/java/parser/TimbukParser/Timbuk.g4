@@ -55,6 +55,9 @@ SYMBOLCC    :   [a-z]
             |   '.'
             |   '$'
             |   '^'
+	    |	'['
+ 	    |	']'
+           
             ;
 
 SYMBOL      :   (SYMBOLCC | DIGIT)+

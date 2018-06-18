@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
 import prover.AbstractLearner;
+import prover.PredicateSet;
 import prover.ProverUtilities;
 import prover.TAConstructor;
 
@@ -51,6 +52,7 @@ public class TAConstructorTest {
         args.add("x");
         args.add("y");
         AbstractLearner abL = new AbstractLearner(ctx,args,tree,ctx.mkIntSort());
-        TAConstructor taCon = new TAConstructor(ctx,grammarNode,specNode, abL.learn(),new HashMap<>());
+        PredicateSet pSet = abL.learn();
+        TAConstructor taCon = new TAConstructor(ctx,grammarNode,specNode, pSet,new HashMap<>());
     }
 }

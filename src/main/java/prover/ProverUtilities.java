@@ -1,5 +1,6 @@
 package prover;
 
+import automata.Move;
 import automata.fta.FTA;
 import com.microsoft.z3.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -14,10 +15,7 @@ import parser.TimbukParser.TimbukParser;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class ProverUtilities {
     public static Expr parseTerm2Expr(Context ctx, TermNode term, Map<String, Sort> sortMap, Map<String, FuncDecl> funcDeclMap){
@@ -135,7 +133,7 @@ public final class ProverUtilities {
             Integer size = operator.length()-2;
             try {
                 return ctx.mkBV(Integer.parseInt(operator.substring(2), 16), size);
-            }catch (NumberFormatException e2){
+            }catch (NumberFormatException|StringIndexOutOfBoundsException e2){
                 return null;
             }
         }
@@ -320,6 +318,67 @@ public final class ProverUtilities {
 
 
 
+
+        return parseTimbuk2FTA(timbukIn);
+    }
+
+    public static boolean isConstantFTA(FTA fta){
+        for(Move move: (Collection<Move>)fta.getLeafTransitions()){
+            if(!isConstantSymbol( (String)move.symbol)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isConstantSymbol(String symbol){
+        return parseString2Const(new Context(), symbol) == null;
+    }
+
+    public static FTA<String> callVata(FTA<String> fta1, FTA<String> fta2, String op) {
+
+        String timbukIn = "";
+        String timbuk1 = fta1.toTimbukString();
+        String timbuk2 = fta2.toTimbukString();
+        try {
+            File tempOut1 = File.createTempFile("timbukOut1", ".tmp");
+            System.out.println("Temp file 1: " + tempOut1.getAbsolutePath());
+            tempOut1.deleteOnExit();
+            File tempIn1 = File.createTempFile("timbukIn1", ".tmp");
+            tempIn1.deleteOnExit();
+
+            BufferedWriter bw1 = new BufferedWriter(new FileWriter(tempOut1));
+            bw1.write(timbuk1);
+            bw1.close();
+
+            File tempOut2 = File.createTempFile("timbukOut2", ".tmp");
+            System.out.println("Temp file 2: " + tempOut2.getAbsolutePath());
+            tempOut2.deleteOnExit();
+            File tempIn2 = File.createTempFile("timbukIn2", ".tmp");
+            tempIn2.deleteOnExit();
+
+
+            BufferedWriter bw2 = new BufferedWriter(new FileWriter(tempOut2));
+            bw2.write(timbuk2);
+            bw2.close();
+
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("./lib/vata "+ op +" "+tempOut1.getAbsolutePath().toString()+ " " +tempOut2.getAbsolutePath().toString());
+
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line;
+            while((line = reader.readLine())!=null)
+                timbukIn+="\n"+line;
+
+
+        }catch (java.io.IOException e){
+            System.out.println("fail to create tmp file");
+            return null;
+        }
+
+
+        //System.out.print(timbukIn);
 
         return parseTimbuk2FTA(timbukIn);
     }
