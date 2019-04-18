@@ -16,3 +16,5 @@ target/classes/semirings/ProbabilitySemiring.class
 target/classes/semirings/Semiring.class
 target/classes/semirings/TropicalSemiring.class
 WTAlib.iml
+*.xml
+*.class
