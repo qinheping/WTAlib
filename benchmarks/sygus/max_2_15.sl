@@ -19,9 +19,7 @@
 
 
 
-(constraint (>= (max2 x y) x))
-(constraint (>= (max2 x y) y))
-(constraint (or (= x (max2 x y)) (= y (max2 x y))))
+(constraint (and (>= (max2 x y) x) (and (>= (max2 x y) y) (or (= x (max2 x y)) (= y (max2 x y))))))
 
 (weight-constraint (and (<= 2 w1)(<= w1 15)))
 (optimize w1)
