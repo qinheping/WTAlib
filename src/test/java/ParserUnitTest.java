@@ -6,9 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
 import semirings.TropicalSemiring;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class ParserUnitTest {
@@ -62,8 +60,8 @@ public class ParserUnitTest {
     }
 
     @org.junit.Test
-    public void testReduction_hackers() throws FileNotFoundException{
-        String input = new Scanner(new File("benchmarks/sygus/hackers/hd-11-d1-prog.sl")).useDelimiter("\\Z").next();
+    public void testReduction_hackers() throws FileNotFoundException, IOException{
+        String input = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_array_sum_10_15.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -72,7 +70,11 @@ public class ParserUnitTest {
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
 
-        System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
-        System.out.println("GR: "+ prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
+        //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/out"));
+        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),320.0f)));
+
+        writer.close();
+
     }
 }

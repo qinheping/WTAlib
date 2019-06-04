@@ -325,6 +325,7 @@ public final class ProverUtilities {
     public static boolean isConstantFTA(FTA fta){
         for(Move move: (Collection<Move>)fta.getLeafTransitions()){
             if(!isConstantSymbol( (String)move.symbol)){
+                System.out.println(move.symbol);
                 return false;
             }
         }
@@ -332,7 +333,7 @@ public final class ProverUtilities {
     }
 
     public static boolean isConstantSymbol(String symbol){
-        return parseString2Const(new Context(), symbol) == null;
+        return parseString2Const(new Context(), symbol) != null;
     }
 
     public static FTA<String> callVata(FTA<String> fta1, FTA<String> fta2, String op) {

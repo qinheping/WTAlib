@@ -16,7 +16,7 @@ import java.util.List;
 public class TAConstructorTest {
     String grammarString = "(synth-fun max2 ((x Int) (y Int)) Int ((Start Int (x y 0 1\n" +
             "             (+ Start Start)\n" +
-            "             (- Start Start)\n))))";
+            "            \n))))";
 
     ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
     QSygusParserLexer lexer = new QSygusParserLexer(inputStream);

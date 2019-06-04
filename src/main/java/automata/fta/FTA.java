@@ -2,10 +2,7 @@ package automata.fta;
 
 import automata.Automaton;
 import automata.Move;
-import automata.wta.WTAMove;
-import org.antlr.v4.runtime.ParserRuleContext;
 
-import java.text.CollationElementIterator;
 import java.util.*;
 
 public class FTA<S> extends Automaton<S> {
@@ -13,7 +10,7 @@ public class FTA<S> extends Automaton<S> {
     // Automata properties
     // ------------------------------------------------------
 
-    private Integer initialState;
+    private Set<Integer> initialState;
     private Collection<Integer> states;
 
     protected Map<Integer, Collection<Move<S>>> movesFrom;
@@ -71,7 +68,7 @@ public class FTA<S> extends Automaton<S> {
         aut.states = new HashSet<Integer>();
         aut.states.add(initialState);
 
-        aut.initialState = initialState;
+        aut.initialState = new HashSet<>(Arrays.asList(initialState));
 
         for (FTAMove<A> t : transitions)
             aut.addTransition(t);
@@ -83,6 +80,10 @@ public class FTA<S> extends Automaton<S> {
 
     // Adds a transition to the SFA
     public void addTransition(FTAMove<S> transition){
+
+        if(this.getMoves().contains(transition))
+            return;
+
         transitionCount++;
 
         if (transition.from > maxStateId)
@@ -106,6 +107,10 @@ public class FTA<S> extends Automaton<S> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Collection<Move<S>> getLeafTransitions(){
         Collection<Move<S>> leafTransitions = new LinkedList<Move<S>>();
         for(Collection<Move<S>> bucket: movesFrom.values()){
@@ -193,8 +198,8 @@ public class FTA<S> extends Automaton<S> {
         }
 
         Collection<Integer> newInitial = new LinkedList();
-        newInitial.add(this.initialState);
-        newInitial.add(aut.initialState);
+        newInitial.addAll(this.initialState);
+        newInitial.addAll(aut.initialState);
         result.setInitialState(getSubsetId(newInitial,reachedStates));
         result.clean();
         return result;
@@ -207,10 +212,10 @@ public class FTA<S> extends Automaton<S> {
 
         aut.stateShift(this.maxStateId +aut.maxStateId);
         for(Move<S> move: getMovesFrom(this.initialState)){
-            result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+            result.addTransition(new FTAMove<S>(result.initialState.iterator().next(),move.to,move.symbol,move.sort));
         }
         for(Move<S> move: aut.getMovesFrom(aut.initialState)){
-            result.addTransition(new FTAMove<S>(result.initialState,move.to,move.symbol,move.sort));
+            result.addTransition(new FTAMove<S>(result.initialState.iterator().next(),move.to,move.symbol,move.sort));
         }
         for(Move<S> move: getMoves()){
             result.addTransition((FTAMove<S>) move);
@@ -223,7 +228,7 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public FTA<S> complement(){
-        FTA<S> result = this.determinization();
+        FTA<S> result = this.determinize();
         result.complete();
 
         Integer newInitial = maxStateId + 1;
@@ -267,43 +272,57 @@ public class FTA<S> extends Automaton<S> {
         }
     }
 
-    public FTA<S> determinization(){
+    public FTA<S> determinize(){
         //this.compressState();
 
         // component of new FTA
         FTA<S> result = new FTA<S>();
-        Integer leafState = 0;
+        System.out.println(this);
 
         // reached and tovisit
         HashMap<Collection<Integer>, Integer> reachedStates = new HashMap<>();
+        Collection<Integer> reachedStatesUnion = new HashSet<>();
         LinkedList<Collection<Integer>> toVisitStates = new LinkedList<>();
+        HashMap<String,Collection<Integer>> leafStates = new HashMap<>();
 
         // empty state for leaf
-        Collection<Integer> detLeafState = new HashSet<>();
-        reachedStates.put(detLeafState, leafState);
-        toVisitStates.add(detLeafState);
+        for(Move leafMove: this.getLeafTransitions()){
+            if(!leafStates.containsKey(leafMove.symbol))
+                leafStates.put((String)leafMove.symbol,new HashSet<>());
+            leafStates.get(leafMove.symbol.toString()).add(leafMove.from);
+        }
+        for(Collection<Integer> detState: leafStates.values()){
+            if(!toVisitStates.contains(detState))
+                toVisitStates.add(detState);
+        }
+
+        //System.out.println(leafStates);
 
         // Explore the automaton until no new subset states can be reached
         while(!toVisitStates.isEmpty()){
-            String sort =null;
+            System.out.println(reachedStates);
+            String sort = null;
             Collection<Integer> curentState = toVisitStates.removeFirst();
-            int currentStateId = reachedStates.get(curentState);
+            reachedStates.put(curentState, getSubsetId(curentState,reachedStates));
+            reachedStatesUnion.addAll(curentState);
+            //System.out.println("current: "+ curentState +" reached: "+ reachedStates);
 
             // TODO check if initial
 
             // get all the moves out of the states in the current subset
-            LinkedList<FTAMove<S>> movesToAdd = new LinkedList<FTAMove<S>>(
-                    this.getMovesToContaints(curentState));
+            LinkedList<Move<S>> movesToAdd = new LinkedList<Move<S>>(
+                    this.getMovesToContaints(curentState, reachedStatesUnion));
 
-            Set<List<Integer>> reachedPatterns = new HashSet<List<Integer>>();
             Map<List<Integer>,Map<String, Collection<Integer>>> newTransitions = new HashMap<>();
-            for(FTAMove move : movesToAdd){
+
+
+            for(Move move : movesToAdd){
                 for(int i = 0; i < move.to.size() ;i++){
                     // the i-th state is contained in currentstate
                     if(curentState.contains(move.to.get(i))){
                         boolean validMove = true;
-                        Map<Integer,List<Integer>> toPatterns = new HashMap<>();
-                        toPatterns.put(i, Arrays.asList(reachedStates.get(curentState)));
+                        Map<Integer,List<Integer>> to_buckets = new HashMap<>();
+                        to_buckets.put(i, Arrays.asList(reachedStates.get(curentState)));
                         for(int j = 0; j < move.to.size(); j++){
                             List<Integer> newTo = new ArrayList<>();
                             if(i == j)
@@ -316,11 +335,12 @@ public class FTA<S> extends Automaton<S> {
                                 validMove = false;
                                 break;
                             }
-                            toPatterns.put(j,newTo);
+                            to_buckets.put(j,newTo);
                         }
                         if(validMove){
+
                             sort = move.sort;
-                            Collection<List<Integer>> patterns = bucketToPatterns(toPatterns);
+                            Collection<List<Integer>> patterns = bucketToPatterns(to_buckets);
                             //result.addTransition(new FTAMove<S>());
                             for(List<Integer> pattern: patterns){
                                 if(newTransitions.get(pattern) == null){
@@ -328,10 +348,10 @@ public class FTA<S> extends Automaton<S> {
                                     Map<String,Collection<Integer>> newMap = new HashMap<>();
                                     newState.add(move.from);
                                     newMap.put((String)move.symbol,newState);
+                                    newTransitions.put(pattern,newMap);
                                 }else if(newTransitions.get(pattern).get(move.symbol)==null){
-                                    newTransitions.get(pattern).put((String)move.symbol,pattern);
+                                    newTransitions.get(pattern).put((String)move.symbol,new HashSet<>(Arrays.asList(move.from)));
                                 }else {
-
                                     newTransitions.get(pattern).get(move.symbol).add(move.from);
                                 }
                             }
@@ -341,48 +361,64 @@ public class FTA<S> extends Automaton<S> {
                 }
             }
 
+            System.out.println("new transitions: "+newTransitions );
+
             for(List<Integer> to: newTransitions.keySet()){
                 for(String symbol : newTransitions.get(to).keySet()){
                     if(reachedStates.get(newTransitions.get(to).get(symbol))==null){
                         reachedStates.put(newTransitions.get(to).get(symbol), getSubsetId(newTransitions.get(to).get(symbol),reachedStates));
-                        toVisitStates.add(newTransitions.get(to).get(symbol));
+                        reachedStatesUnion.addAll(newTransitions.get(to).get(symbol));
+                        if(!toVisitStates.contains(newTransitions.get(to).get(symbol)))
+                            toVisitStates.add(newTransitions.get(to).get(symbol));
                     }
                     result.addTransition(new FTAMove<S>(reachedStates.get(newTransitions.get(to).get(symbol)),to,(S)symbol,sort));
                 }
             }
 
         }
+
+
+        Set<Integer> initial = new HashSet<>();
+        for(Collection<Integer> detState: reachedStates.keySet()){
+            if(!detState.contains(this.initialState))
+                continue;
+            initial.add(getSubsetId(detState,reachedStates));
+        }
+        result.setInitialState(initial);
+
+        for(String symbol: leafStates.keySet()){
+            result.addTransition(new FTAMove<S>(getSubsetId(leafStates.get(symbol),reachedStates),new ArrayList<>(), (S)symbol));
+        }
+
+        // TODO add leaf transition
+
         result.clean();
         return result;
     }
 
     public Collection<List<Integer>> bucketToPatterns(Map<Integer,List<Integer>> buckets){
-        int countAll = 1;
-        Collection<List<Integer>> result = new ArrayList();
-        for(Collection<Integer> bucket : buckets.values()){
-            countAll = countAll*bucket.size();
-        }
-        for(int i = 0; i < buckets.keySet().size(); i++){
-            if(result.size() == 0){
-                for(int j = 0; j < buckets.get(i).size(); j++){
-                    List newlist = new ArrayList();
-                    newlist.add(buckets.get(i));
-                }
-            }else {
-                Collection<List<Integer>> toAdd = new ArrayList<>();
-                for(List<Integer> partialTo : result) {
-                    for (int j = 1; j < buckets.get(i).size(); j++) {
-                        List<Integer> copy = new ArrayList<>(partialTo);
-                        copy.add(buckets.get(i).get(j));
-                        toAdd.add(copy);
-                    }
-                    partialTo.add(buckets.get(i).get(0));
-                }
-                result.addAll(toAdd);
+        return  bucketToPatterns_rec(buckets,new ArrayList<>());
+    }
+
+    private Collection<List<Integer>> bucketToPatterns_rec(Map<Integer, List<Integer>> buckets, ArrayList<Integer> index) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(index.size() < buckets.keySet().size()){
+            int curr = index.size();
+            for(int i = 0; i < buckets.get(curr).size(); i++){
+                ArrayList<Integer> newIndex = new ArrayList<>();
+                newIndex.addAll(index);
+                newIndex.add(i);
+                result.addAll(bucketToPatterns_rec(buckets,newIndex));
             }
         }
-        assert(countAll == result.size());
-        return  result;
+        else{
+            List<Integer> entry = new ArrayList<>();
+            for(int i = 0; i < index.size(); i++){
+                entry.add(buckets.get(i).get(index.get(i)));
+            }
+            result.add(entry);
+        }
+        return result;
     }
 
     public void compressState(){
@@ -402,8 +438,9 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public void replaceState(int oldState, int newState){
-        if(oldState == this.initialState){
-            this.initialState = newState;
+        if(this.initialState.contains(oldState)){
+            this.initialState.remove(oldState);
+            this.initialState.add(newState);
         }
         for(Move<S> move : getMoves()){
             move.replaceState(oldState,newState);
@@ -425,7 +462,7 @@ public class FTA<S> extends Automaton<S> {
     public void clean(){
 
         Set<Integer> reachable = new HashSet<Integer>();
-        reachable.add(this.initialState);
+        reachable.addAll(this.initialState);
 
         // emptygrammar
         if(getMovesFrom(this.initialState).size() == 0){
@@ -436,7 +473,7 @@ public class FTA<S> extends Automaton<S> {
 
         // check reachable
         Stack<Integer> toCheck = new Stack<Integer>();
-        toCheck.push(initialState);
+        toCheck.addAll(initialState);
         while(!toCheck.empty()){
             Integer from = toCheck.pop();
             for(Move<S> move: getMovesFrom(from)){
@@ -540,7 +577,13 @@ public class FTA<S> extends Automaton<S> {
             newStates.add(state+shift);
         }
         states = newStates;
-        this.initialState = initialState+shift;
+
+        Set<Integer> newInitial = new HashSet<>();
+        for(Integer init: this.initialState) {
+            newInitial.add(init + shift);
+        }
+        this.initialState = newInitial;
+
         for(Move<S> move: this.getMoves()){
             move.shift(shift);
         }
@@ -567,18 +610,39 @@ public class FTA<S> extends Automaton<S> {
         return maxId;
     }
 
-    public ArrayList<FTAMove<S>>  getMovesToContaints(Integer states){
+    public ArrayList<Move<S>>  getMovesToContaints(Integer states){
         return getMovesToContaints(Arrays.asList(states));
     }
+    public ArrayList<Move<S>>  getMovesToContaints(Collection<Integer> currState, Collection<Integer> reachedStates){
+        ArrayList<Move<S>> result = new ArrayList<>();
+        for(Move<S> move: getMoves()){
+            boolean found = false;
+            for(Integer state : move.to){
+                if(!reachedStates.contains(state) ) {
+                    found=false;
+                    break;
+                }
+                if(currState.contains(state) )
+                    found=true;
+            }
+            if(found)
+                result.add((Move<S>) move);
+        }
+        return result;
+    }
 
-    public ArrayList<FTAMove<S>>  getMovesToContaints(Collection<Integer> states){
-        ArrayList<FTAMove<S>> result = new ArrayList<>();
+    public ArrayList<Move<S>>  getMovesToContaints(Collection<Integer> states){
+        ArrayList<Move<S>> result = new ArrayList<>();
 
         for(Move<S> move: getMoves()){
             for(Integer state : states){
                 if(move.to.contains(state))
-                    result.add((FTAMove<S>) move);
+                    result.add((Move<S>) move);
             }
+        }
+
+        if(states.isEmpty()){
+            result.addAll(this.getLeafTransitions());
         }
         return result;
     }
@@ -608,10 +672,13 @@ public class FTA<S> extends Automaton<S> {
     }
 
     public Integer getInitialState() {
-        return initialState;
+        return initialState.iterator().next();
     }
     public void setInitialState(Integer state){
-        this.initialState = state;
+        this.initialState = new HashSet<>(Arrays.asList(state));
+    }
+    public void setInitialState(Set<Integer> states){
+        this.initialState = states;
     }
 
     public String toString(){
@@ -635,7 +702,8 @@ public class FTA<S> extends Automaton<S> {
         for(Integer state:this.getStates()){
             automata += " q"+state;
         }
-        automata+= "\nFinal States q"+this.initialState+"\nTransitions";
+        // TODO
+        automata+= "\nFinal States q"+this.initialState.iterator().next()+"\nTransitions";
         for(Move move: this.getMoves()){
             automata += "\n" + move.toTimbukString();
         }

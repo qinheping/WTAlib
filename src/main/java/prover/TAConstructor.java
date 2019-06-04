@@ -40,7 +40,7 @@ public class TAConstructor {
     private Set<List<Expr>> argPatterns;
     private Map<List<Integer>,Set<Integer>> abstractInputOutputExample;
     private List<FTA<String>> ftaList;
-    private Map<String, Map<List<Integer>,Set<Integer>>> validTrans;
+    private Map<String, Map<List<Integer>,Map<List<Integer>,Set<Integer>>>> validTrans;
 
     private final static int SATISFIABILITY = 0;
     private final static int IMPLICATION = 1;
@@ -99,7 +99,7 @@ public class TAConstructor {
         System.out.println("abstract I-O: ");
         for(List<Integer> key: this.abstractInputOutputExample.keySet()){
             if(this.abstractInputOutputExample.get(key).size() != 0)
-                System.out.print(key + "->" + this.abstractInputOutputExample.get(key)+ " ");
+                System.out.println(key + "->" + this.abstractInputOutputExample.get(key)+ " ");
         }
         System.out.println();
 
@@ -113,14 +113,19 @@ public class TAConstructor {
             if(abstractInputOutputExample.get(inputAbstract).size() == 0)
                 continue;
             FTA newFTA = constructAbstractFTA(ctx,pSet,grammar.toFTA(),inputAbstract,abstractInputOutputExample.get(inputAbstract));
-            System.out.print("original fta: "+newFTA.getTransitionCount()+" "+newFTA.stateCount());
+            System.out.println("original fta: "+newFTA.getTransitionCount()+" "+newFTA.stateCount());
             FTA reducedFTA = ProverUtilities.reduceFTA(newFTA);
-            System.out.print("redu fta: "+ reducedFTA.getTransitionCount()+ " "+ reducedFTA.stateCount());
+            System.out.println("redu fta: "+ reducedFTA.getTransitionCount()+ " "+ reducedFTA.stateCount());
+            System.out.println(reducedFTA.toTimbukString());
 
-            FTA detReducedFTA = ProverUtilities.reduceFTA(reducedFTA.determinization());
-            System.out.print("det redu fta: "+ detReducedFTA.getTransitionCount()+ " "+ detReducedFTA.stateCount());
-            ftaList.add(detReducedFTA);
+            FTA detReducedFTA = reducedFTA.determinize();
+            System.out.println("det redu fta: "+ detReducedFTA.getTransitionCount()+ " "+ detReducedFTA.stateCount());
+            System.out.println(detReducedFTA);
+            ftaList.add(reducedFTA);
         }
+
+        System.out.println(this.validTrans.get("+").get(Arrays.asList(4,2)));
+        System.out.println(ftaList.get(2).intersectionWith(ftaList.get(4)));
 
         // print valid trans
         System.out.println(this.validTrans);
@@ -136,18 +141,20 @@ public class TAConstructor {
                 case VATA:
                     ftaIntersection = ProverUtilities.reduceFTA(ProverUtilities.callVata(ftaList.get(0),ftaList.get(1),"isect"));
                     break;
-                default: System.out.print("wrong mode. exit");
+                default: System.out.println("wrong mode. exit");
                     exit(1);
             }
             ftaList.remove(0);
             ftaList.remove(0);
             if(ProverUtilities.isConstantFTA(ftaIntersection)){
                 ftaList.add(0,ftaIntersection);
+                System.out.println("empty grammar found");
                 break;
             }
             ftaList.add(ftaIntersection);
             sortFTAList();
-            System.out.println(ftaIntersection.toTimbukString());
+            System.out.println("state: "+ ftaIntersection.stateCount() +" transtition " + ftaIntersection.getTransitionCount()+" \n" +ftaIntersection.toTimbukString());
+            System.out.println(ProverUtilities.isConstantFTA(ftaIntersection));
         }
 
         System.out.println(ftaList.get(0));
@@ -193,7 +200,7 @@ public class TAConstructor {
                 }
             }
         }
-        System.out.println(result);
+        //System.out.println(result);
 
         // internal nodes
         while(!toVisit_annotated.isEmpty()){
@@ -213,7 +220,7 @@ public class TAConstructor {
 
                 //System.out.println("predPatterns: "+ predPatterns);
                 for(List<Integer> predPattern: predPatterns){
-                    Set<Integer> validTo = checkTransValid(operator,predPattern);
+                    Set<Integer> validTo = checkTransValid(operator,predPattern,inputAbstract);
                     for(Integer predTo: validTo){
                         List<Integer> to_annotated = new ArrayList<>();
                         for(Integer pred: predPattern){
@@ -237,14 +244,22 @@ public class TAConstructor {
             result.addTransition(new FTAMove<String>(0,state_annotated,""));
 
         result.clean();
-        //System.out.println("fta: "+ result.toTimbukString());
+        System.out.println("fta: "+ result);
         return result;
     }
 
-    private Set<Integer> checkTransValid(String operator,List<Integer> predPattern) {
+    private Set<Integer> checkTransValid(String operator,List<Integer> predPattern, List<Integer> inputPred) {
         Set<Integer> result;
         this.validTrans.putIfAbsent(operator,new HashMap<>());
-        Map<List<Integer>,Set<Integer>> bucket = this.validTrans.get(operator);
+        this.validTrans.get(operator).putIfAbsent(inputPred,new HashMap<>());
+        Map<List<Integer>,Set<Integer>> bucket = this.validTrans.get(operator).get(inputPred);
+
+        BoolExpr inputAssetion = ctx.mkTrue();
+        for(int i = 0; i < inputPred.size(); i++){
+            Expr sub = ctx.mkConst(ctx.mkSymbol(i+1),this.sortMap.get(this.argList.get(i)));
+            Expr subed = ctx.mkConst(ctx.mkSymbol(0),this.sortMap.get(this.argList.get(i)));
+            inputAssetion = ctx.mkAnd((BoolExpr) pSet.getPredicate(inputPred.get(i)).simplify().substitute(subed,sub),inputAssetion);
+        }
 
         if(bucket.get(predPattern) != null){
             return bucket.get(predPattern);
@@ -260,6 +275,8 @@ public class TAConstructor {
             predFrom = ctx.mkAnd(predFrom,
                     (BoolExpr)pSet.getPredicate(predPattern.get(j)).simplify().substitute(ctx.mkConst(ctx.mkSymbol(0),subsSort),ctx.mkConst("T"+j,subsSort)));
         }
+
+        predFrom = ctx.mkAnd(predFrom,inputAssetion);
 
         // special case: ite
         if(operator.equals("ite")){
@@ -281,6 +298,7 @@ public class TAConstructor {
                 Sort subsSort = ProverUtilities.getSortFromExpr(predTo, ctx.mkConst(ctx.mkSymbol(0), ctx.mkIntSort()).toString());
                 subsSort = subsSort==null?ctx.mkBoolSort():subsSort;
                 predTo = (BoolExpr) predTo.simplify().substitute(ctx.mkConst(ctx.mkSymbol(0), subsSort), ctx.mkConst("T", subsSort));
+
 
                 if (ProverUtilities.IsSatisfiable(ctx,ctx.mkAnd(predFrom, predTrans)) && checkRelation(ctx.mkAnd(predFrom, predTrans), predTo))
                     result.add(i);

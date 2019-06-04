@@ -1,6 +1,7 @@
 package automata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public abstract class Move<S> {
     // Consumed symbol
     public S symbol;
 
+    public boolean isSymmetric = false;
+
     public String sort;
 
     /**
@@ -33,6 +36,11 @@ public abstract class Move<S> {
     }
     public Move(Integer from, List<Integer> to, S symbol, String sort){
         this(from, to, symbol); this.sort = sort;
+    }
+
+    public Move(Integer from, List<Integer> to, S symbol,boolean symetric){
+        this(from, to, symbol); this.sort = sort;
+        this.isSymmetric = symetric;
     }
 
     /**
@@ -89,9 +97,15 @@ public abstract class Move<S> {
         if (move.to.size() != this.to.size())
             return  false;
         // field comparison
-        for(int i = 0; i < move.to.size(); i++){
-            if(move.to.get(i) != this.to.get(i))
-                return false;
+        if(this.isSymmetric != ((Move<S>) o).isSymmetric)
+            return false;
+        if(this.isSymmetric){
+            return !new HashSet<>(this.to).equals(new HashSet<>(((Move<S>) o).to));
+        }else{
+            for(int i = 0; i < move.to.size(); i++){
+                if(move.to.get(i) != this.to.get(i))
+                    return false;
+            }
         }
         return (move.from == this.from) && (move.symbol.equals(this.symbol));
     }
