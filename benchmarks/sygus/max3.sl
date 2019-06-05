@@ -1,20 +1,16 @@
 (set-weight (w1 TROP) )
 (set-logic LIA)
 
-(synth-fun max3 ((x Int) (y Int) (z Int)) Int
+(synth-fun max3 ((x Int) (y Int) (z Int) (w1 Int)) Int
     ((Start Int (x
                  y
+		 w1
                  z
                  0
                  1
                  (+ Start Start)
-                 (- Start Start)
                  ((ite StartBool Start Start):1)))
-     (StartBool Bool ((and StartBool StartBool)
-                      (or  StartBool StartBool)
-                      (not StartBool)
-                      (<=  Start Start)
-                      (=   Start Start)
+     (StartBool Bool ((==  Start Start)
                       (>=  Start Start)))))
 
 (declare-var x Int)

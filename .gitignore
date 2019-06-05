@@ -18,3 +18,7 @@ target/classes/semirings/TropicalSemiring.class
 WTAlib.iml
 *.xml
 *.class
+*.class
+*.class
+*.class
+target/classes/semirings/TropicalSemiring.class

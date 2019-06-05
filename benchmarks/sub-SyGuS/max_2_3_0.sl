@@ -1,5 +1,3 @@
-; constraint : w1 < 3.0
-; constraint : w1 > 2.0
   ( set-logic LIA )
   ( declare-var x  Int )
   ( declare-var y  Int )
