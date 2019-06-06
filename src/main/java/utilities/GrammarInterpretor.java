@@ -69,7 +69,7 @@ public class GrammarInterpretor {
             result.right = GTermToExpression(r.getChildren().get(2));
             return result;
         }
-        if(r.getSymbol().equals("<")||r.getSymbol().equals(">")||r.getSymbol().equals("<=")||r.getSymbol().equals("<=")||r.getSymbol().equals("=")||r.getSymbol().equals("and")||r.getSymbol().equals("or")){
+        if(r.getSymbol().equals("<")||r.getSymbol().equals(">")||r.getSymbol().equals("<=")||r.getSymbol().equals(">=")||r.getSymbol().equals("=")||r.getSymbol().equals("and")||r.getSymbol().equals("or")){
             this.flag = 0;
             result.type = 5;
             result.bop = r.getSymbol();

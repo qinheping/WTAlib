@@ -14,6 +14,11 @@ public class LinearSet {
         this.base = base;
         this.period = period;
     }
+    public LinearSet( Vector<Integer> base, Set<Vector<Integer>> period) {
+        this.dimension = base.size();
+        this.base = base;
+        this.period = period;
+    }
 
     public LinearSet(Vector<Integer> base){
         this.dimension = base.size();
@@ -37,7 +42,7 @@ public class LinearSet {
             newBase.add(this.getBase().get(i)+w.getBase().get(i));
         }
         Set newPeriod = (HashSet)((HashSet)period).clone();
-        newPeriod.addAll(w.getPeriod());
+        newPeriod.addAll((HashSet)((HashSet)w.getPeriod()).clone());
         return new LinearSet(dimension,newBase,newPeriod);
     }
 
@@ -74,10 +79,26 @@ public class LinearSet {
         this.period = period;
     }
 
+    @Override
+    public boolean equals(Object o){
+        Vector<Integer> obase = ((LinearSet)o).base;
+
+        Set<Vector<Integer>> op= ((LinearSet)o).period;
+        return this.base.equals(obase) && this.period.equals(op);
+    }
+
     public String toString(){
-        String result = "";
-        result+="base: "+base+"\n";
-        result+="period: "+period+"\n";
+        String result = "(";
+        result+="base: "+base+", ";
+        result+="period: "+period+")";
+        return  result;
+    }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime*result + ((base == null) ? 0 : base.hashCode());
+        result = prime*result + ((period == null) ? 0 : period.hashCode());
         return  result;
     }
 }

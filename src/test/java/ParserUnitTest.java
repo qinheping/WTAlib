@@ -36,7 +36,7 @@ public class ParserUnitTest {
 
     @org.junit.Test
     public void testReduction() throws IOException {
-        String input = new Scanner(new File("benchmarks/sygus/max.sl")).useDelimiter("\\Z").next();
+        String input = new Scanner(new File("benchmarks/sygus/max3.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -55,13 +55,13 @@ public class ParserUnitTest {
         //System.out.println(fta_1);
         //System.out.println(fta);
         //fta.compressState();
-        System.out.println(fta_0.intersectionWith(fta_1));
+        //System.out.println(fta_0.intersectionWith(fta_1));
 
     }
 
     @org.junit.Test
     public void testReduction_hackers() throws IOException{
-        String input = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_array_sum_10_15.sl")).useDelimiter("\\Z").next();
+        String input = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane3.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -72,7 +72,7 @@ public class ParserUnitTest {
 
         //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/out"));
-        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),320.0f)));
+        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),14.0f)));
 
         writer.close();
 

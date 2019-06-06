@@ -78,6 +78,8 @@ public  class ExpressionSubstitution {
         List<Equation> result = new ArrayList<>();
         count = 0;
         for(Equation currecntEq : valEqs){
+            if(currecntEq.type == 0)
+                continue;
             Equation toAdd = new Equation(currecntEq.left,ExpressionSubstIte(currecntEq.right,dicIteSl));
             toAdd.type = currecntEq.type;
             result.add(toAdd);
