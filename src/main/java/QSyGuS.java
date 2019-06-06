@@ -1,4 +1,3 @@
-
 import automata.fta.FTA;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
@@ -7,7 +6,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
-import semirings.ProbabilitySemiring;
 import semirings.Semiring;
 
 import java.io.*;
@@ -38,7 +36,7 @@ public class QSyGuS {
     static private String benchmark;
     static private int numOfIteration = 0;
 
-    public static  void main(String[] args)throws InterruptedException, IOException{
+    public static  void main(String[] args)throws InterruptedException, IOException {
         String solverName = args[0];
         if(!(solverName.equals("ESolver")||solverName.equals("CVC4"))){
 

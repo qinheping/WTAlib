@@ -1,8 +1,8 @@
 package grammar;
 
+import automata.Move;
 import automata.fta.FTA;
 import automata.fta.FTAMove;
-import automata.Move;
 import automata.wta.WTA;
 import automata.wta.WTAMove;
 import semirings.Semiring;

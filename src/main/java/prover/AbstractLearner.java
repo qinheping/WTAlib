@@ -5,15 +5,13 @@
  */
 package prover;
 
+import com.microsoft.z3.*;
 import parser.TermNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import com.microsoft.z3.*;
 
 
 /**
@@ -49,7 +47,7 @@ public class AbstractLearner {
     public PredicateSet learn(){
         learnFromTerm(this.currentProgram);
 
-        this.predicateSet.addPredicate(ctx.mkEq((ArithExpr) ctx.mkConst(ctx.mkSymbol(0),ctx.mkIntSort()),ctx.mkInt(0)));
+        this.predicateSet.addPredicate(ctx.mkEq(ctx.mkConst(ctx.mkSymbol(0),ctx.mkIntSort()),ctx.mkInt(0)));
         return this.predicateSet.minTerminize();
     }
 

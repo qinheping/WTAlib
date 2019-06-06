@@ -184,7 +184,7 @@ public final class ProverUtilities {
     }
 
     public static void getMintermsRec(Context ctx, ArrayList<BoolExpr> predicates, int n,
-                                            BoolExpr currPred, ArrayList<Integer> setBits,
+                                      BoolExpr currPred, ArrayList<Integer> setBits,
                                       HashSet<Pair<BoolExpr,ArrayList<Integer>>> minterms){
         if (!IsSatisfiable(ctx,currPred))
             return;
@@ -228,7 +228,7 @@ public final class ProverUtilities {
             case ">=":
                 return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkGe((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
             case "=":
-                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkEq((ArithExpr) ctx.mkConst(args.get(0),ctx.mkIntSort()),(ArithExpr) ctx.mkConst(args.get(1),ctx.mkIntSort())));
+                return ctx.mkEq(ctx.mkConst(output,ctx.mkBoolSort()),ctx.mkEq(ctx.mkConst(args.get(0),ctx.mkIntSort()), ctx.mkConst(args.get(1),ctx.mkIntSort())));
             default:
                 return null;
         }
@@ -279,7 +279,7 @@ public final class ProverUtilities {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         TimbukParser parser = new TimbukParser(tokens);
         ParseTree parseTree = parser.file();
-        FTA fta = (FTA)new Timbuk2FTAVisitor().visit(parseTree);
+        FTA fta = new Timbuk2FTAVisitor().visit(parseTree);
         return fta;
     }
 

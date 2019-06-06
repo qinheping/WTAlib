@@ -1,13 +1,10 @@
 package parser;
 
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import semirings.Semiring;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.exit;
 
 public class ASTVisitor extends QSygusParserBaseVisitor<ProgramNode> {
 

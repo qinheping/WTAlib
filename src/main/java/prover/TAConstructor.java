@@ -9,13 +9,9 @@ package prover;
 import automata.fta.FTA;
 import automata.fta.FTAMove;
 import com.microsoft.z3.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import parser.GrammarNode;
 import parser.TermNode;
 
-import javax.swing.text.StyledEditorKit;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 import static java.lang.System.exit;
@@ -233,7 +229,7 @@ public class TAConstructor {
         }
         result.setInitialState(0);
         Set<Integer> newInitial_annotated = new HashSet<>();
-        for(Integer state_annotated: (Collection<Integer>)result.getStates()){
+        for(Integer state_annotated: result.getStates()){
             if(fta.getInitialState() != transBack2State(state_annotated))
                 continue;
             if(!finalAbstracts.contains(transBack2Pred(state_annotated)))
@@ -435,6 +431,7 @@ public class TAConstructor {
     private Integer transBack2State(Integer anoatedId){
         return (anoatedId-1)%this.grammarFTA.stateCount();
     }
+    
     private void sortFTAList(){
         this.ftaList.sort(Comparator.comparing(FTA::getTransitionCount));
     }

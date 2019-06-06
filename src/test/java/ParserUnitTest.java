@@ -23,7 +23,7 @@ public class ParserUnitTest {
     }
 
     @org.junit.Test
-    public void testToWTA() throws FileNotFoundException{
+    public void testToWTA() throws FileNotFoundException {
         String input = new Scanner(new File("benchmarks/sygus/max.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);

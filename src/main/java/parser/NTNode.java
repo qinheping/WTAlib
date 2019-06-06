@@ -11,6 +11,22 @@ public class NTNode extends ProgramNode{
         return ntName;
     }
 
+    public void setRules(List<RuleNode> rules) {
+        this.rules = rules;
+    }
+
+    public void setNtName(String ntName) {
+        this.ntName = ntName;
+    }
+
+    public String getNtSort() {
+        return ntSort;
+    }
+
+    public void setNtSort(String ntSort) {
+        this.ntSort = ntSort;
+    }
+
     List<RuleNode> rules;
     String ntName;
     String ntSort;

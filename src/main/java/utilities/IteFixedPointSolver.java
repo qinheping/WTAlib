@@ -15,8 +15,10 @@ public class IteFixedPointSolver {
 
         while(true){
             List<Equation> valEqsNoIte = ExpressionSubstitution.EquationSubstIte(valEqs,dicIteSl);
+
+
+            return null;
         }
-        return null;
     }
 
     // count ite only for eq with type int
