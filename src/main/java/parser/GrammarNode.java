@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class GrammarNode extends ProgramNode {
+    public List<NTNode> getNtNodes() {
+        return ntNodes;
+    }
+
     List<NTNode> ntNodes;
     private String funName;
     private String argList_string;

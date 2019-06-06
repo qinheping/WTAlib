@@ -10,7 +10,17 @@ import java.util.Map;
 
 public class RuleNode extends ProgramNode {
     List<String> weight;
+
+    public String getSymbol() {
+        return symbol;
+    }
+
     String symbol;
+
+    public List<GTermNode> getChildren() {
+        return children;
+    }
+
     List<GTermNode> children;
 
     public RuleNode(List<String> weight, GTermNode gterm){

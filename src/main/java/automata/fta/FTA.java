@@ -626,7 +626,7 @@ public class FTA<S> extends Automaton<S> {
                     found=true;
             }
             if(found)
-                result.add((Move<S>) move);
+                result.add(move);
         }
         return result;
     }
@@ -637,7 +637,7 @@ public class FTA<S> extends Automaton<S> {
         for(Move<S> move: getMoves()){
             for(Integer state : states){
                 if(move.to.contains(state))
-                    result.add((Move<S>) move);
+                    result.add(move);
             }
         }
 

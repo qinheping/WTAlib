@@ -3,6 +3,14 @@ package parser;
 import java.util.List;
 
 public class NTNode extends ProgramNode{
+    public List<RuleNode> getRules() {
+        return rules;
+    }
+
+    public String getNtName() {
+        return ntName;
+    }
+
     List<RuleNode> rules;
     String ntName;
     String ntSort;

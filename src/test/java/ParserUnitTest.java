@@ -60,7 +60,7 @@ public class ParserUnitTest {
     }
 
     @org.junit.Test
-    public void testReduction_hackers() throws FileNotFoundException, IOException{
+    public void testReduction_hackers() throws IOException{
         String input = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_array_sum_10_15.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
