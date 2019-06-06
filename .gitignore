@@ -22,3 +22,15 @@ WTAlib.iml
 *.class
 *.class
 target/classes/semirings/TropicalSemiring.class
+target/classes/automata/Automaton.class
+*.class
+target/classes/automata/wta/WTA.class
+target/classes/automata/Automaton.class
+target/classes/automata/wta/WTA.class
+target/classes/automata/wta/WTAMove.class
+target/classes/QSyGuS.class
+target/classes/parser/NTNode.class
+target/classes/parser/GTermNode.class
+target/classes/grammar/GrammarReduction.class
+target/classes/grammar/GrammarReduction$Tuple.class
+target/classes/automata/wta/WTAMove.class

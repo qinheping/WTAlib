@@ -1,6 +1,5 @@
 package utilities;
 
-import com.sun.javafx.css.Rule;
 import parser.GTermNode;
 import parser.GrammarNode;
 import parser.NTNode;
@@ -13,6 +12,8 @@ public class GrammarInterpretor {
     GrammarNode grammar;
     List<Equation> equations;
 
+    // track the type of equation
+    int flag = 1;
 
     public GrammarInterpretor(GrammarNode g){
         this.grammar = g;
@@ -22,8 +23,9 @@ public class GrammarInterpretor {
         List<Equation> result = new ArrayList<>();
         for(NTNode currentNT : grammar.getNtNodes()){
             List<RuleNode> rules = currentNT.getRules();
-
+            this.flag = 1;
             Equation currentEq = new Equation(currentNT.getNtName(), RulesToExpression(rules));
+            currentEq.type = this.flag;
             result.add(currentEq);
         }
         this.equations = result;
@@ -68,6 +70,7 @@ public class GrammarInterpretor {
             return result;
         }
         if(r.getSymbol().equals("<")||r.getSymbol().equals(">")||r.getSymbol().equals("<=")||r.getSymbol().equals("<=")||r.getSymbol().equals("=")||r.getSymbol().equals("and")||r.getSymbol().equals("or")){
+            this.flag = 0;
             result.type = 5;
             result.bop = r.getSymbol();
             result.left = GTermToExpression(r.getChildren().get(0));
@@ -75,6 +78,7 @@ public class GrammarInterpretor {
             return result;
         }
         if(r.getSymbol().equals("not")){
+            this.flag = 0;
             result.type = 6;
             result.bop = r.getSymbol();
             result.left = GTermToExpression(r.getChildren().get(0));
@@ -112,7 +116,7 @@ public class GrammarInterpretor {
             return result;
         }
         if(gt.getSymbol().equals("<")||gt.getSymbol().equals(">")||gt.getSymbol().equals("<=")||gt.getSymbol().equals("<=")||gt.getSymbol().equals("=")||gt.getSymbol().equals("and")||gt.getSymbol().equals("or")){
-
+            this.flag = 0;
             Expression result = new Expression();result.type = 5;
             result.bop = gt.getSymbol();
             result.left = GTermToExpression(gt.getChildren().get(0));
@@ -120,6 +124,7 @@ public class GrammarInterpretor {
             return result;
         }
         if(gt.getSymbol().equals("not")){
+            this.flag = 0;
             Expression result = new Expression();
             result.type = 6;
             result.bop = gt.getSymbol();

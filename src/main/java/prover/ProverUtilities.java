@@ -3,7 +3,6 @@ package prover;
 import automata.Move;
 import automata.fta.FTA;
 import com.microsoft.z3.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -13,8 +12,6 @@ import parser.TimbukParser.TimbukLexer;
 import parser.TimbukParser.TimbukParser;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 public final class ProverUtilities {

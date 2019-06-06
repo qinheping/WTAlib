@@ -16,6 +16,12 @@ public class LinearSet {
         this.period = period;
     }
 
+    public LinearSet(Vector<Integer> base){
+        this.dimension = base.size();
+        this.base = base;
+        this.period = new HashSet<>();
+    }
+
     public LinearSet clone(){
         return new LinearSet(dimension,(Vector<Integer>) base.clone(),(HashSet)((HashSet)this.period).clone());
     }

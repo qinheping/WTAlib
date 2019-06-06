@@ -1,8 +1,21 @@
 package utilities;
 
-public class Equation {
+public class Equation<E> {
     String left;
-    Expression right;
+    Expression<E> right;
+
+
+    // 0 for bool
+    // 1 for int
+    int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public Equation(String left, Expression right) {
         this.left = left;
