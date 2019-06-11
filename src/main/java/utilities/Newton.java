@@ -63,7 +63,8 @@ public class Newton {
                 result.constant = new HashSet<>();
                 return result;
             case 1:
-                result.type
+                result.type = 0;
         }
+        return null;
     }
 }
