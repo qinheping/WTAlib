@@ -3,10 +3,7 @@ package utilities;
 import semirings.LinearSet;
 
 import javax.sound.sampled.Line;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Newton {
     public static Map<String,Set<LinearSet>> SolveSlEq(List<Equation> SlEqs){
@@ -56,5 +53,17 @@ public class Newton {
         }
         System.out.println("ERROR: wrong expression type: "+exp.type.toString());
         return  null;
+    }
+
+    private static Expression<Set<LinearSet>> Differential(Expression<Set<LinearSet>> e){
+        Expression result = new Expression();
+        switch (e.type){
+            case 0:
+                result.type = 0;
+                result.constant = new HashSet<>();
+                return result;
+            case 1:
+                result.type
+        }
     }
 }

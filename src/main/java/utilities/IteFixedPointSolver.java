@@ -10,6 +10,7 @@ public class IteFixedPointSolver {
         int stage = 0;
         List<Set<LinearSet>> dicIteSl = new ArrayList<>();
         List<Equation> valEqs = ExpressionSubstitution.EquationSubst(termEqs,map);
+        // # of ite in arithmetic non-terminal
         iteCount = getIteCount(termEqs);
         List<String> boolNames = new ArrayList<>();
         for(int i = 0; i < valEqs.size(); i++){
@@ -28,13 +29,19 @@ public class IteFixedPointSolver {
         }
         bvStore.put(0,initBV);
         valEqs.forEach(System.out::println);
+
+        // start solving fixed point
         while(true){
             System.out.println("Stage: "+stage);
+            // substitute ite in eqs by previous solution
             List<Equation> valEqsNoIte = ExpressionSubstitution.EquationSubstIte(valEqs,dicIteSl);
             valEqsNoIte.forEach(System.out::println);
+
+            // solving linear eqs by newton method
             Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte);
             solutionStore.put(stage,currentSolution);
 
+            // get the new bv map with new solution
             Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(valEqs,currentSolution);
             if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
                 // fixed point reached
@@ -43,8 +50,10 @@ public class IteFixedPointSolver {
             stage++;
             bvStore.put(stage,currentBV);
 
-            // TODO
+            // TODO update ite map
             dicIteSl = null;
+
+            // TODO check if the current solution reach a fixed point
             return currentSolution;
         }
     }
