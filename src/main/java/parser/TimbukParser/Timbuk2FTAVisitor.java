@@ -5,7 +5,6 @@ import automata.fta.FTAMove;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Timbuk2FTAVisitor extends TimbukBaseVisitor<FTA<String>>{
     HashMap<String, Integer> stateMap = new HashMap<>();
