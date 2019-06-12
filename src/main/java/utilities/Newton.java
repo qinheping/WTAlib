@@ -55,7 +55,7 @@ public class Newton {
         return  null;
     }
 
-    private static Expression<Set<LinearSet>> Differential(Expression<Set<LinearSet>> e){
+    private static Expression<Set<LinearSet>> Differential(Expression<Set<LinearSet>> e, String dx, int dim){
         Expression result = new Expression();
         switch (e.type){
             case 0:
@@ -64,7 +64,35 @@ public class Newton {
                 return result;
             case 1:
                 result.type = 0;
+                HashSet constSL = new HashSet();
+                if(e.var.equals(dx)){
+                    constSL.add(new LinearSet(1,dim));
+                    result.constant = constSL;
+                    return result;
+                }
+                constSL.add(new LinearSet(0,dim));
+                result.constant = constSL;
+                return result;
+            case 2:
+                // (L*R)' = L'*R + L*R'
+                result.type = 3;
+                result.left = new Expression();
+                result.left.type = 2;
+                result.left.left = Differential(e.left,dx,dim);
+                result.left.right = e.right;
+                result.right = new Expression();
+                result.right.type = 2;
+                result.right.left = e.left;
+                result.right.right =  Differential(e.right,dx,dim);
+                return result;
+            case 3:
+                // (L+R)' = L' + R'
+                result.type = 3;
+                result.left = Differential(e.left,dx,dim);
+                result.right = Differential(e.right,dx,dim);
+                return  result;
         }
+        System.out.println("ERROR: wrong type while compute differential of "+ e.toString());
         return null;
     }
 }

@@ -20,6 +20,15 @@ public class LinearSet {
         this.period = period;
     }
 
+    public LinearSet( Integer constant, Integer dim){
+        this.dimension = dim;
+        this.base = new Vector<>();
+        for(int i = 0; i < dim; i++){
+            this.base.add(constant);
+        }
+        this.period = new HashSet<>();
+    }
+
     public LinearSet(Vector<Integer> base){
         this.dimension = base.size();
         this.base = base;
