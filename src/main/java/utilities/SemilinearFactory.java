@@ -27,4 +27,15 @@ public class SemilinearFactory {
         result.addAll(right);
         return result;
     }
+
+    public static Set<LinearSet> star(Set<LinearSet> sl, int dim) {
+        if(sl.size() == 0)
+            return new HashSet<>();
+        Vector<Integer> zeroBase = new Vector<>();
+        for(int i = 0; i < dim; i++){
+            zeroBase.add(0);
+        }
+        Set<Vector> peroid = new HashSet<>();
+        
+    }
 }

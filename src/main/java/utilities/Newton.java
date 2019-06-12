@@ -6,14 +6,67 @@ import javax.sound.sampled.Line;
 import java.util.*;
 
 public class Newton {
-    public static Map<String,Set<LinearSet>> SolveSlEq(List<Equation> SlEqs){
+
+    public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> SlEqs, int dim){
+        int varCount = SlEqs.size();
+        List<String> varList = getVarList(SlEqs);
+        List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
+
+        Map<String, Set<LinearSet>> result = new HashMap<>();
+        // initialize result
+        for(String var: varList){
+            result.put(var,new HashSet<>());
+        }
+
+        for(int i = 0; i < varCount; i++){
+            result.put(SemilinearFactory.dot(SemilinearFactory.star(diffList),SlEqs.get(i).right));
+        }
+
+    }
+
+    private static List<Expression> getDiffListFromEqs(List<Equation> SlEqs, int dim){
+        int varCount = SlEqs.size();
+        List<String> varList = getVarList(SlEqs);
+        List<Expression> result = new ArrayList<>();
+        for(int i = 0; i < varCount; i++){
+            Expression diff_i = null;
+            for(int j = 0; j < varCount; j++){
+                Expression currentExpr = SlEqs.get(i).right;
+                String currentVar = varList.get(j);
+                // currentDiff = D_{currentVar}(currentExpr)
+                Expression currentDiff = Differential(currentExpr,currentVar,dim);
+                if(diff_i == null){
+                    diff_i = currentDiff;
+                }else {
+                    Expression tempDiff = new Expression();
+                    tempDiff.type = 3;
+                    tempDiff.left = diff_i;
+                    tempDiff.right = currentDiff;
+                    diff_i = tempDiff;
+                }
+            }
+            result.add(diff_i);
+        }
+        return  result;
+
+    }
+
+    private static List<String> getVarList(List<Equation> SlEqs){
+        List<String> result = new ArrayList<>();
+        for(Equation eq : SlEqs){
+            result.add(eq.left);
+        }
+        return result;
+    }
+
+    public static Map<String,Set<LinearSet>> SolveSimpleSlEq(List<Equation> SlEqs){
         int varCount = SlEqs.size();
         Map<String,Set<LinearSet>> result = new HashMap<>();
         while(result.size() < varCount){
             for(Equation currentEq: SlEqs){
                 if(result.keySet().contains(currentEq.left))
                     continue;
-                Set<LinearSet> currentSolution = SolveEq(currentEq,result);
+                Set<LinearSet> currentSolution = SolveSimpleEq(currentEq,result);
                 if(currentSolution!= null){
                     result.put(currentEq.left,currentSolution);
                 }
@@ -23,7 +76,7 @@ public class Newton {
         return result;
     }
 
-    private static Set<LinearSet> SolveEq(Equation currentEq, Map<String, Set<LinearSet>> assignment) {
+    private static Set<LinearSet> SolveSimpleEq(Equation currentEq, Map<String, Set<LinearSet>> assignment) {
         Set<LinearSet> solution = evalExpression(currentEq.right,assignment);
         return solution;
     }

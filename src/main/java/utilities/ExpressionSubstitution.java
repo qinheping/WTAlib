@@ -7,7 +7,7 @@ import java.util.*;
 public  class ExpressionSubstitution {
 
     public static List<Equation> EquationSubst(List<Equation> Eqs, Map<String,Vector<Integer>> map){
-        List<Equation> result = new ArrayList<>();
+        List<Equation> result = new ArrayList<Equation>();
         for(Equation currecntEq : Eqs){
             Equation toAdd = new Equation(currecntEq.left,ExpressionSubst(currecntEq.right,map));
             toAdd.type = currecntEq.type;

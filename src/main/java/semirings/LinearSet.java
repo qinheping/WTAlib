@@ -39,11 +39,13 @@ public class LinearSet {
         return new LinearSet(dimension,(Vector<Integer>) base.clone(),(HashSet)((HashSet)this.period).clone());
     }
 
+    /*
     public LinearSet(Integer dimension) {
         this.dimension = dimension;
         this.base = zeorVecotr(dimension);
         this.period = new HashSet<>();
     }
+    */
 
     public LinearSet dicSum(LinearSet w){
         Vector newBase = new Vector();
