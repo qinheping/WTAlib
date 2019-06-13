@@ -44,6 +44,9 @@ public class Newton {
         if(Sls.size() *newSls.size()==0)
             return  false;
         String smtQ = SMTQGenerator.checkSLEQ(Sls,newSls);
+
+        // TODO
+        return false;
     }
 
 

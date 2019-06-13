@@ -21,6 +21,11 @@ public class Equation<E> {
         this.left = left;
         this.right = right;
     }
+    public Equation(String left, Expression right, int type) {
+        this.left = left;
+        this.right = right;
+        this.type = type;
+    }
 
     public String getLeft() {
         return left;

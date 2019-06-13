@@ -4,6 +4,7 @@ import semirings.LinearSet;
 
 import java.util.*;
 
+import com.microsoft.z3.*;
 public class SMTQGenerator {
     public static String genearteSimpleSMTQ(Set<LinearSet> sls, Vector<Integer> target){
         String result = "(assert (or ";
@@ -21,7 +22,10 @@ public class SMTQGenerator {
 
     public static String checkSLEQ(Map<String,Set<LinearSet>> sls, Map<String,Set<LinearSet>> newSls) {
 
+        // TODO
         Integer dim = ((LinearSet)sls.values().iterator().next()).getBase().size();
+        return null;
 
     }
+
 }

@@ -42,7 +42,7 @@ public class IteFixedPointSolver {
             solutionStore.put(stage,currentSolution);
 
             // get the new bv map with new solution
-            Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(valEqs,currentSolution);
+            Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(valEqs,currentSolution, bvStore.get(stage));
             if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
                 // fixed point reached
                 return currentSolution;

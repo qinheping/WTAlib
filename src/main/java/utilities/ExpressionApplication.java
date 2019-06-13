@@ -2,9 +2,11 @@ package utilities;
 
 import semirings.LinearSet;
 
+import javax.sound.sampled.Line;
 import java.util.*;
 
 public  class ExpressionApplication {
+
 
     public static Set<LinearSet> ExpresionApplication_SemilinearSet(Expression<Set<LinearSet>> exp, Map<String,Set<LinearSet>> assignment){
         switch (exp.type){
@@ -17,15 +19,15 @@ public  class ExpressionApplication {
             case 3:
                 return SemilinearFactory.union(ExpresionApplication_SemilinearSet(exp.left,assignment),ExpresionApplication_SemilinearSet(exp.right,assignment));
         }
-        System.out.println("ERROR: wrong type while ExpresionApplication_SemilinearSet "+exp.toString());
+        System.out.println("ERROR: wrong type while ExpressionApplication_SemilinearSet "+exp.toString());
         return null;
     }
 
     public static List<Equation> EquationApplication_LinearSet(List<Equation> Eqs, Map<String,Vector<Integer>> map){
         List<Equation> result = new ArrayList<Equation>();
-        for(Equation currecntEq : Eqs){
-            Equation toAdd = new Equation(currecntEq.left, ExpressionApplication_LinearSet(currecntEq.right,map));
-            toAdd.type = currecntEq.type;
+        for(Equation currentEq : Eqs){
+            Equation toAdd = new Equation(currentEq.left, ExpressionApplication_LinearSet(currentEq.right,map));
+            toAdd.type = currentEq.type;
             result.add(toAdd);
         }
         return  result;
