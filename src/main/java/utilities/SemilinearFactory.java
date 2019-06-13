@@ -31,11 +31,19 @@ public class SemilinearFactory {
     public static Set<LinearSet> star(Set<LinearSet> sl, int dim) {
         if(sl.size() == 0)
             return new HashSet<>();
-        Vector<Integer> zeroBase = new Vector<>();
+        Vector  zeroBase = new Vector<>();
         for(int i = 0; i < dim; i++){
             zeroBase.add(0);
         }
-        Set<Vector> peroid = new HashSet<>();
+        Set<Vector<Integer>> peroid = new HashSet<>();
+        for(LinearSet lset: sl){
+            peroid.add(lset.getBase());
+            peroid.addAll(lset.getPeriod());
+        }
+        LinearSet resultLS = new LinearSet(dim,zeroBase,peroid);
+        Set result = new HashSet();
+        result.add(resultLS);
+        return result;
         
     }
 }

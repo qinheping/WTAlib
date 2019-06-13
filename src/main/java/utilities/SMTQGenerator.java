@@ -1,9 +1,8 @@
+package utilities;
+
 import semirings.LinearSet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 public class SMTQGenerator {
     public static String genearteSimpleSMTQ(Set<LinearSet> sls, Vector<Integer> target){
@@ -20,4 +19,9 @@ public class SMTQGenerator {
     }
 
 
+    public static String checkSLEQ(Map<String,Set<LinearSet>> sls, Map<String,Set<LinearSet>> newSls) {
+
+        Integer dim = ((LinearSet)sls.values().iterator().next()).getBase().size();
+
+    }
 }

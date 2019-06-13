@@ -9,7 +9,7 @@ public class IteFixedPointSolver {
     public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String,Vector<Integer>> map){
         int stage = 0;
         List<Set<LinearSet>> dicIteSl = new ArrayList<>();
-        List<Equation> valEqs = ExpressionSubstitution.EquationSubst(termEqs,map);
+        List<Equation> valEqs = ExpressionApplication.EquationApplication_LinearSet(termEqs,map);
         // # of ite in arithmetic non-terminal
         iteCount = getIteCount(termEqs);
         List<String> boolNames = new ArrayList<>();
@@ -34,11 +34,11 @@ public class IteFixedPointSolver {
         while(true){
             System.out.println("Stage: "+stage);
             // substitute ite in eqs by previous solution
-            List<Equation> valEqsNoIte = ExpressionSubstitution.EquationSubstIte(valEqs,dicIteSl);
+            List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs,dicIteSl);
             valEqsNoIte.forEach(System.out::println);
 
             // solving linear eqs by newton method
-            Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte);
+            Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size());
             solutionStore.put(stage,currentSolution);
 
             // get the new bv map with new solution

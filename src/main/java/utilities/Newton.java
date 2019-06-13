@@ -18,11 +18,34 @@ public class Newton {
             result.put(var,new HashSet<>());
         }
 
-        for(int i = 0; i < varCount; i++){
-            result.put(SemilinearFactory.dot(SemilinearFactory.star(diffList),SlEqs.get(i).right));
+        for(int k = 0; k < varCount; k++){
+            Map<String,Set<LinearSet>> newResult = new HashMap<>();
+            for(int i = 0; i < varCount; i++){
+                // f'(vi)
+                Set<LinearSet> SL_diff_i = ExpressionApplication.ExpresionApplication_SemilinearSet(diffList.get(i),result);
+                Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
+                // f(vi)
+                Set<LinearSet> SL_exp_i = ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result);
+                // (f'(vi))^**f(vi)
+                newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
+            }
+            if(checkEquality_SLs(result,newResult)){
+                break;
+            }
+            result = newResult;
         }
-
+        return  result;
     }
+
+    private static boolean checkEquality_SLs(Map<String,Set<LinearSet>> Sls, Map<String,Set<LinearSet>> newSls) {
+
+        if(Sls.size() == 0 && newSls.size() == 0)
+            return  true;
+        if(Sls.size() *newSls.size()==0)
+            return  false;
+        String smtQ = SMTQGenerator.checkSLEQ(Sls,newSls);
+    }
+
 
     private static List<Expression> getDiffListFromEqs(List<Equation> SlEqs, int dim){
         int varCount = SlEqs.size();
