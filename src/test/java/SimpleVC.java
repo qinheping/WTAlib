@@ -50,6 +50,8 @@ public class SimpleVC {
 
 
         Type integer = em.integerType();
+        Type bool = em.booleanType();
+
 
         Expr x = em.mkVar("x", integer);
         Expr y = em.mkVar("y", integer);
@@ -59,6 +61,8 @@ public class SimpleVC {
         Expr y_positive = em.mkExpr(Kind.GT, y, zero);
 
         Expr two = em.mkConst(new Rational(2));
+
+        Expr four = em.mkConst(new Rational(4));
         Expr twox = em.mkExpr(Kind.MULT, two, x);
         Expr twox_plus_y = em.mkExpr(Kind.PLUS, twox, y);
 
@@ -78,6 +82,17 @@ public class SimpleVC {
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds : " +
                 timeElapsed / 1000000);
+
+        Expr bx = em.mkBoundVar("bx", integer);
+        Expr by = em.mkBoundVar("by", integer);
+        Expr z = em.mkVar("z", integer);
+        Expr var_list_forall = em.mkExpr(Kind.BOUND_VAR_LIST,bx);
+        Expr var_list_exists = em.mkExpr(Kind.BOUND_VAR_LIST,by);
+
+        Expr eq = em.mkExpr(Kind.EQUAL,em.mkExpr(Kind.MULT,four,em.mkBoundVar("bx", integer)),em.mkExpr(Kind.MULT,two,by));
+        Expr q = em.mkExpr(Kind.FORALL,var_list_forall,em.mkExpr(Kind.EXISTS,var_list_exists,eq));
+        System.out.println(smt.query(q));
+        System.out.println("here");
 
     }
 }
