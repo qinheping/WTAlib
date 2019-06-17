@@ -7,7 +7,6 @@ import java.util.*;
 import edu.nyu.acsys.CVC4.*;
 
 
-import com.microsoft.z3.*;
 public class SMTQGenerator {
     public static String genearteSimpleSMTQ(Set<LinearSet> sls, Vector<Integer> target){
         String result = "(assert (or ";
