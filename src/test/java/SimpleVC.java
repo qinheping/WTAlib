@@ -33,8 +33,12 @@
 
 import edu.nyu.acsys.CVC4.*;
 
+import java.util.Map;
+
 public class SimpleVC {
     public static void main(String[] args) {
+
+
         System.loadLibrary("cvc4jni");
 
         ExprManager em = new ExprManager();
@@ -42,6 +46,8 @@ public class SimpleVC {
 
         // Prove that for integers x and y:
         //   x > 0 AND y > 0  =>  2x + y >= 3
+
+        long startTime = System.nanoTime();
 
         Type integer = em.integerType();
 
@@ -66,5 +72,12 @@ public class SimpleVC {
         System.out.println("Checking validity of formula " + formula + " with CVC4.");
         System.out.println("CVC4 should report VALID.");
         System.out.println("Result from CVC4 is: " + smt.query(formula));
+        long endTime = System.nanoTime();
+
+        // get difference of two nanoTime values
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time in milliseconds : " +
+                timeElapsed / 1000000);
+
     }
 }
