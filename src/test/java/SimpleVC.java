@@ -38,6 +38,7 @@ import java.util.Map;
 public class SimpleVC {
     public static void main(String[] args) {
 
+        long startTime = System.nanoTime();
 
         System.loadLibrary("cvc4jni");
 
@@ -47,7 +48,6 @@ public class SimpleVC {
         // Prove that for integers x and y:
         //   x > 0 AND y > 0  =>  2x + y >= 3
 
-        long startTime = System.nanoTime();
 
         Type integer = em.integerType();
 
