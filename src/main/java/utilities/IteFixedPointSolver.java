@@ -28,14 +28,14 @@ public class IteFixedPointSolver {
             initBV.put(boolName,new HashSet<>());
         }
         bvStore.put(0,initBV);
-        valEqs.forEach(System.out::println);
+        //valEqs.forEach(System.out::println);
 
         // start solving fixed point
         while(true){
             System.out.println("Stage: "+stage);
             // substitute ite in eqs by previous solution
             List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs,dicIteSl);
-            valEqsNoIte.forEach(System.out::println);
+            //valEqsNoIte.forEach(System.out::println);
 
             // solving linear eqs by newton method
             Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size());

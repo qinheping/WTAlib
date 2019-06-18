@@ -11,27 +11,41 @@ public class Newton {
         int varCount = SlEqs.size();
         List<String> varList = getVarList(SlEqs);
         List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
+        //SlEqs.forEach(System.out::println);
+        //System.out.println("diff");
+        System.out.println(varList);        diffList.forEach(System.out::println);
 
         Map<String, Set<LinearSet>> result = new HashMap<>();
         // initialize result
         for(String var: varList){
             result.put(var,new HashSet<>());
         }
+        Map<String, Set<LinearSet>> tmp_result = new HashMap<>();
+        for(int i = 0; i < varList.size(); i++){
+            tmp_result.put(varList.get(i),ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result));
+        }
+        result = tmp_result;
+        System.out.println("result:" +result);
 
         for(int k = 0; k < varCount; k++){
             Map<String,Set<LinearSet>> newResult = new HashMap<>();
             for(int i = 0; i < varCount; i++){
                 // f'(vi)
                 Set<LinearSet> SL_diff_i = ExpressionApplication.ExpresionApplication_SemilinearSet(diffList.get(i),result);
+                //System.out.println(varList.get(i)+" diff: "+SL_diff_i);
                 Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
+                //System.out.println("star: "+SL_diff_i);
                 // f(vi)
                 Set<LinearSet> SL_exp_i = ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result);
+                //System.out.println("f: "+SL_diff_i);
                 // (f'(vi))^**f(vi)
                 newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
             }
-            if(checkEquality_SLs(result,newResult)){
-                break;
-            }
+            //if(checkEquality_SLs(result,newResult)){
+             //   System.out.println(result);
+             //   System.out.println(newResult);
+             //   break;
+           // }
             result = newResult;
         }
         return  result;
@@ -53,23 +67,13 @@ public class Newton {
         List<String> varList = getVarList(SlEqs);
         List<Expression> result = new ArrayList<>();
         for(int i = 0; i < varCount; i++){
-            Expression diff_i = null;
-            for(int j = 0; j < varCount; j++){
-                Expression currentExpr = SlEqs.get(i).right;
-                String currentVar = varList.get(j);
+            Expression currentExpr = SlEqs.get(i).right;
+            String currentVar = varList.get(i);
                 // currentDiff = D_{currentVar}(currentExpr)
-                Expression currentDiff = Differential(currentExpr,currentVar,dim);
-                if(diff_i == null){
-                    diff_i = currentDiff;
-                }else {
-                    Expression tempDiff = new Expression();
-                    tempDiff.type = 3;
-                    tempDiff.left = diff_i;
-                    tempDiff.right = currentDiff;
-                    diff_i = tempDiff;
-                }
-            }
-            result.add(diff_i);
+            Expression currentDiff = Differential(currentExpr,currentVar,dim);
+
+
+            result.add(currentDiff);
         }
         return  result;
 
@@ -143,11 +147,10 @@ public class Newton {
                 result.type = 0;
                 HashSet constSL = new HashSet();
                 if(e.var.equals(dx)){
-                    constSL.add(new LinearSet(1,dim));
+                    constSL.add(new LinearSet(0,dim));
                     result.constant = constSL;
                     return result;
                 }
-                constSL.add(new LinearSet(0,dim));
                 result.constant = constSL;
                 return result;
             case 2:

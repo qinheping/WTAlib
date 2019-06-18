@@ -17,7 +17,7 @@ import java.util.*;
 public class IteFixedPointSolverUnitTest {
     @org.junit.Test
     public void iteCountTestLess8() throws IOException {
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/less8.sl")).useDelimiter("\\Z").next();
+        String grammarString = new Scanner(new File("/home/qhu28/WTAlib/benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/less8.sl")).useDelimiter("\\Z").next();
 
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -39,7 +39,7 @@ public class IteFixedPointSolverUnitTest {
         yEx.add(21);
         inputEx.put("y",yEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/qhu28/WTAlib/benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
         writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
