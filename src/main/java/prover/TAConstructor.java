@@ -15,7 +15,6 @@ import parser.TermNode;
 import java.util.*;
 
 import static java.lang.System.exit;
-import static java.lang.System.out;
 
 public class TAConstructor {
     private GrammarNode grammar;
