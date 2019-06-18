@@ -104,8 +104,174 @@ public class SMTQGenerator {
             }
         }
         //System.out.println(q);
-        return smt.query(q).toString().equals("valid");
+        long startTime = System.nanoTime();
+        System.out.println("log: new checkSubset SMT begin");
+        String out = smt.query(q).toString();
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time in milliseconds : " +
+                timeElapsed / 1000000);
+        return out.equals("valid");
 
     }
 
+    public static Set<Vector<Boolean>> getBVSet(Set<LinearSet> left, Set<LinearSet> right, String bop) {
+        Set<Vector<Boolean>> result = new HashSet<>();
+        List<LinearSet> leftList = new ArrayList<>(left);
+        List<LinearSet> rightList = new ArrayList<>(right);
+        if(leftList.size() == 0 || rightList.size() == 0)
+            return result;
+
+        int dim = leftList.get(0).getBase().size();
+        Vector<Boolean> currentBv = new Vector();
+        return getBVSet_recursion(leftList,rightList,bop,dim,result,currentBv);
+    }
+
+    private static Set<Vector<Boolean>> getBVSet_recursion(List<LinearSet> left, List<LinearSet> right, String bop, int remain, Set<Vector<Boolean>> result, Vector<Boolean> currentBv) {
+        if(remain != 0){
+
+            Vector<Boolean> currentBv_T = new Vector(currentBv);
+            currentBv_T .add(true);
+            Vector<Boolean> currentBv_F = new Vector(currentBv);
+            currentBv_F.add(false);
+            result.addAll(getBVSet_recursion(left, right, bop, remain-1, result, currentBv_T));
+            result.addAll(getBVSet_recursion(left, right, bop, remain-1, result, currentBv_F));
+            return  result;
+        }
+        if(result.contains(currentBv))
+            return result;
+
+        int dim = currentBv.size();
+        System.loadLibrary("cvc4jni");
+
+        ExprManager em = new ExprManager();
+        SmtEngine smt = new SmtEngine(em);
+
+        Type integer = em.integerType();
+        Type bool = em.booleanType();
+        Expr body = em.mkConst(true);
+        Expr body_x = em.mkConst(false);
+        Expr body_y = em.mkConst(false);
+        // body = true /\ (z = bx1 + x*px1 \/ z = bx2 + x*px2 \/ ...) /\ (z bop by1 + y*py1 \/ ..)
+        //                        z \in left                                   z bop z' \in right
+
+        List<Expr> boundx_list = new ArrayList<>();
+        List<Expr> boundy_list = new ArrayList<>();
+
+        Expr assertx = em.mkConst(true);
+        Expr asserty = em.mkConst(true);
+        for(int ix = 0; ix < left.size(); ix++  ){
+            for(int d = 0; d < dim; d++){;
+                for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
+                    boundx_list.add(em.mkBoundVar("x_"+ix+"_"+jx+"_"+"d",integer));
+                }
+            }
+        }
+
+        for(int iy = 0; iy < right.size(); iy++  ){
+            for(int d = 0; d < dim; d++){
+                for(int jy = 0; jy < right.get(iy).getPeriod().size(); jy++){
+                    boundy_list.add(em.mkBoundVar("y_"+iy+"_"+jy+"_"+"d",integer));
+                }
+            }
+        }
+
+
+        for(int ix = 0; ix < left.size(); ix++  ){
+            Expr body_i = em.mkConst(true);
+            for(int d = 0; d < dim; d++){
+                Expr body_eqx = em.mkConst(new Rational(left.get(ix).getBase().get(d)));
+                for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
+                    assertx = em.mkExpr(Kind.AND,assertx,em.mkExpr(Kind.GEQ,access_boundVar(left,dim,ix,d,jx,boundx_list),em.mkConst(new Rational(0))));
+                    body_eqx = em.mkExpr(Kind.PLUS,body_eqx,em.mkExpr(Kind.MULT,access_boundVar(left,dim,ix,d,jx,boundx_list),em.mkConst(new Rational(((Vector<Integer>)(left.get(ix).getPeriod().toArray()[jx])).get(d)))));
+                }
+                body_eqx = em.mkExpr(Kind.EQUAL,em.mkVar("z_"+d,integer),body_eqx);
+                body_i = em.mkExpr(Kind.AND,body_i,body_eqx);
+            }
+            body_x = em.mkExpr(Kind.OR,body_x,body_i);
+        }
+
+        for(int iy = 0; iy < right.size(); iy++  ){
+            Expr body_i = em.mkConst(true);
+            for(int d = 0; d < dim; d++){
+                Expr body_eqy = em.mkConst(new Rational(right.get(iy).getBase().get(d)));
+                for(int jy = 0; jy < right.get(iy).getPeriod().size(); jy++){
+                    asserty = em.mkExpr(Kind.AND,asserty,em.mkExpr(Kind.GEQ,access_boundVar(right,dim,iy,d,jy,boundy_list),em.mkConst(new Rational(0))));
+                    body_eqy = em.mkExpr(Kind.PLUS,body_eqy,em.mkExpr(Kind.MULT,access_boundVar(right,dim,iy,d,jy,boundy_list),em.mkConst(new Rational(((Vector<Integer>)(right.get(iy).getPeriod().toArray()[jy])).get(d)))));
+                }
+                body_eqy = em.mkExpr(parse_bop(bop),em.mkVar("z_"+d,integer),body_eqy);
+                if(!currentBv.get(d))
+                    body_eqy = em.mkExpr(Kind.NOT,body_eqy);
+                body_i = em.mkExpr(Kind.AND,body_i,body_eqy);
+            }
+            body_y = em.mkExpr(Kind.OR,body_y,body_i);
+        }
+        body = em.mkExpr(Kind.AND,body_x,body_y);
+        body = em.mkExpr(Kind.AND,body,assertx);
+        body = em.mkExpr(Kind.AND,body,asserty);
+        for(int ix = 0; ix < left.size(); ix++  ){
+            for(int d = 0; d < dim; d++){;
+                for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
+                    Expr bound_var_list = em.mkExpr(Kind.BOUND_VAR_LIST,access_boundVar(left,dim,ix,d,jx,boundx_list));
+                    body =em.mkExpr(Kind.EXISTS,bound_var_list,body);
+                }
+            }
+        }
+
+        for(int iy = 0; iy < right.size(); iy++  ){
+            for(int d = 0; d < dim; d++){
+                for(int jy = 0; jy < right.get(iy).getPeriod().size(); jy++){
+                    Expr bound_var_list = em.mkExpr(Kind.BOUND_VAR_LIST,access_boundVar(right,dim,iy,d,jy,boundy_list));
+                    body = em.mkExpr(Kind.EXISTS,bound_var_list,body);
+                }
+            }
+        }
+
+        long startTime = System.nanoTime();
+        System.out.println("log: new getBv SMT begin");
+        if(smt.checkSat(body).toString().equals("sat"))
+            result.add(currentBv);
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time in milliseconds : " +
+                timeElapsed / 1000000);
+        return result;
+    }
+
+    private static Expr access_boundVar(List<LinearSet> left, int dim, int i, int d, int j, List<Expr> boundx_list) {
+        int count = 0;
+        for(int ix = 0; ix < left.size(); ix++  ){
+            if(ix != i) {
+                count += dim*left.get(ix).getPeriod().size();
+                continue;
+            }
+            for(int dx = 0; dx < dim; dx++){
+                if(dx != d){
+                    count += left.get(ix).getPeriod().size();
+                    continue;
+                }
+                for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
+                    if(jx!=j){
+                        count += 1;
+                        continue;
+                    }
+                    return boundx_list.get(count);
+                }
+            }
+        }
+        System.out.println("ERROR: index not exists");
+        return null;
+    }
+
+    private static Kind parse_bop(String bop){
+        switch (bop){
+            case "<":return Kind.LT;
+            case ">":return Kind.GT;
+            case "<=":return Kind.LEQ;
+            case ">=":return Kind.GEQ;
+            case "=":
+            case "==":return Kind.EQUAL;
+        }
+        return  null;
+    }
 }

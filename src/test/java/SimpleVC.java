@@ -44,6 +44,7 @@ public class SimpleVC {
 
         ExprManager em = new ExprManager();
         SmtEngine smt = new SmtEngine(em);
+        smt.setOption("produce-models", new SExpr(true));
 
         // Prove that for integers x and y:
         //   x > 0 AND y > 0  =>  2x + y >= 3
@@ -89,9 +90,15 @@ public class SimpleVC {
         Expr var_list_forall = em.mkExpr(Kind.BOUND_VAR_LIST,bx);
         Expr var_list_exists = em.mkExpr(Kind.BOUND_VAR_LIST,by);
 
-        Expr eq = em.mkExpr(Kind.EQUAL,em.mkExpr(Kind.MULT,four,em.mkBoundVar("bx", integer)),em.mkExpr(Kind.MULT,two,by));
+        Expr eq = em.mkExpr(Kind.EQUAL,em.mkExpr(Kind.MULT,four,em.mkBoundVar("bx", integer)),em.mkExpr(Kind.MULT,two,em.mkBoundVar("by", integer)));
         Expr q = em.mkExpr(Kind.FORALL,var_list_forall,em.mkExpr(Kind.EXISTS,var_list_exists,eq));
+        Expr eq2 = em.mkExpr(Kind.EQUAL,em.mkExpr(Kind.MULT,four,bx),em.mkExpr(Kind.MULT,two,by));
+        Expr q2 = em.mkExpr(Kind.FORALL,var_list_forall,em.mkExpr(Kind.EXISTS,var_list_exists,eq2));
+        System.out.println(q);
         System.out.println(smt.query(q));
+        System.out.println(q2);
+        System.out.println(smt.query(q2));
+        //System.out.println(smt.checkSat(eq));
         System.out.println("here");
 
     }

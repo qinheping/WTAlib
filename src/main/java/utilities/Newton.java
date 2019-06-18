@@ -13,7 +13,7 @@ public class Newton {
         List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
         //SlEqs.forEach(System.out::println);
         //System.out.println("diff");
-        System.out.println(varList);        diffList.forEach(System.out::println);
+        //System.out.println(varList);        diffList.forEach(System.out::println);
 
         Map<String, Set<LinearSet>> result = new HashMap<>();
         // initialize result
@@ -25,9 +25,10 @@ public class Newton {
             tmp_result.put(varList.get(i),ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result));
         }
         result = tmp_result;
-        System.out.println("result:" +result);
+        System.out.println("result:" +result.size());
 
         for(int k = 0; k < varCount; k++){
+            System.out.println("\t\tnewton iteration: "+k);
             Map<String,Set<LinearSet>> newResult = new HashMap<>();
             for(int i = 0; i < varCount; i++){
                 // f'(vi)
@@ -36,7 +37,28 @@ public class Newton {
                 Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
                 //System.out.println("star: "+SL_diff_i);
                 // f(vi)
+
+
                 Set<LinearSet> SL_exp_i = ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result);
+
+                if(varList.get(i).equals("Start")){
+                    int highx = 0;
+                    int highy = 0;
+                    for(LinearSet ls:SL_exp_i){
+                        if(ls.getBase().get(0)>highx)
+                            highx = ls.getBase().get(0);
+                        if(ls.getBase().get(1)>highy)
+                            highy = ls.getBase().get(1);
+                        for(Vector<Integer> v:ls.getPeriod()){
+                            if(v.get(0) > highx)
+                                highx = v.get(0);
+                            if(v.get(1) > highy)
+                                highy = v.get(1);
+                        }
+
+                    }
+                    System.out.println(highx+" "+highy);
+                }
                 //System.out.println("f: "+SL_diff_i);
                 // (f'(vi))^**f(vi)
                 newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
@@ -47,6 +69,7 @@ public class Newton {
              //   break;
            // }
             result = newResult;
+            System.out.println("\t\t\tresult size " + result.get("NT4").size());
         }
         return  result;
     }

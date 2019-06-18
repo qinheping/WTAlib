@@ -8,6 +8,7 @@ public class IteFixedPointSolver {
     public static int  iteCount = 0;
     public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String,Vector<Integer>> map){
         int stage = 0;
+        int dim = map.values().iterator().next().size();
         List<Set<LinearSet>> dicIteSl = new ArrayList<>();
         List<Equation> valEqs = ExpressionApplication.EquationApplication_LinearSet(termEqs,map);
         // # of ite in arithmetic non-terminal
@@ -35,31 +36,77 @@ public class IteFixedPointSolver {
             System.out.println("Stage: "+stage);
             // substitute ite in eqs by previous solution
             List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs,dicIteSl);
+            System.out.println("\tIte substituted");
             //valEqsNoIte.forEach(System.out::println);
 
             // solving linear eqs by newton method
             Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size());
+            System.out.println("\tnew solution got");
             solutionStore.put(stage,currentSolution);
 
             // get the new bv map with new solution
-            Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(valEqs,currentSolution, bvStore.get(stage));
+            Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim,valEqs,currentSolution, bvStore.get(stage));
+            System.out.println(currentBV); System.out.println(bvStore.get(stage));
             if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
                 // fixed point reached
                 return currentSolution;
             }
             stage++;
             bvStore.put(stage,currentBV);
+            dicIteSl = EvalIte(valEqs,currentBV,currentSolution);
+            for(String var: currentSolution.keySet()){
+                System.out.println(var+" "+currentSolution.get(var).size());
+            }
+            for(int i = 0; i < dicIteSl.size(); i++){
+                System.out.println(dicIteSl.get(i).size());
+            }
 
-            // TODO update ite map
-            dicIteSl = null;
 
             // TODO check if the current solution reach a fixed point
-            return currentSolution;
         }
+    }
+    private static int count = 0;
+
+    public static List<Set<LinearSet>>  EvalIte(List<Equation> valEqs, Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment) {
+        List<Set<LinearSet>> result = new ArrayList<>();
+        count = 0;
+        for(Equation currecntEq : valEqs){
+            if(currecntEq.type == 0)
+                continue;
+            result.addAll(ExpressionEvalIte(currecntEq.right,bvSet,assignment));
+        }
+        return  result;
+    }
+
+    public static List<Set<LinearSet>> ExpressionEvalIte(Expression exp,  Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment){
+
+        List<Set<LinearSet>> result = new ArrayList<>();
+        switch (exp.type){
+            case 0:
+            case 5:
+            case 6:
+            case 1:
+                return result;
+            case 2:
+            case 3:
+                result.addAll(ExpressionEvalIte(exp.left,bvSet,assignment));
+                result.addAll(ExpressionEvalIte(exp.right,bvSet,assignment));
+                return result;
+            case 4:
+                result.add(projection_sls_vs(assignment.get(exp.left.var),assignment.get(exp.right.var),bvSet.get(exp.condition.var)));
+                count ++;
+                return result;
+
+        }
+        return  null;
     }
 
     private static boolean checkBVFixedPoint(Map<String, Set<Vector<Boolean>>> currentBV, Map<String, Set<Vector<Boolean>>> previousBV) {
-        return false;
+        for(String bvar:currentBV.keySet()){
+            if(!currentBV.get(bvar).equals(previousBV.get(bvar)))
+                return false;
+        }
+        return true;
     }
 
     // count ite only for eq with type int

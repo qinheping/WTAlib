@@ -106,8 +106,8 @@ public  class ExpressionApplication {
         return  result;
     }
 
-    public static Expression ExpressionSubstIte(Expression exp, List<Set<LinearSet>> dicIteSl){
-        Expression result = new Expression();
+    public static Expression ExpressionSubstIte(Expression<Set<LinearSet>> exp, List<Set<LinearSet>> dicIteSl){
+        Expression<Set<LinearSet>> result = new Expression();
         switch (exp.type){
             case 0:
             case 5:

@@ -54,7 +54,7 @@
 		(ite NT3 NT1 NT2)
 		(ite NT6 NT1 NT1)
 ))
-	(NT3  Bool (		(>= NT1 NT1)
+	(NT3  Bool (		(>= NT1 NT1) (and NT3 NT3)
 ))
 	(NT4  Int (		(+ NT2 NT1)
 		(ite NT3 NT2 NT2)
