@@ -8,10 +8,15 @@ public class BVSolver {
     public static Map<String,Set<Vector<Boolean>>> SolveBV(Integer dim, List<Equation> eqs, Map<String,Set<LinearSet>> assignment, Map<String,Set<Vector<Boolean>>> preBVMap){
         Map<String,Set<Vector<Boolean>>> result = new HashMap<>();
         List<String> bvars = getBVars(eqs);
+
+        boolean allfull = true;
         for(String bvar:bvars){
             result.putIfAbsent(bvar,preBVMap.get(bvar));
+            if(preBVMap.get(bvar).size() != Math.pow(2,dim))
+                allfull = false;
         }
-
+        if(allfull)
+            return preBVMap;
 
         List<Expression> beqs = new ArrayList<>();
         for(Equation eq: eqs){
@@ -37,6 +42,7 @@ public class BVSolver {
                 if(!id_modified_expr(beqs.get(i),modfied_var)) {
                     continue;
                 }
+                System.out.println(dim +" "+result.get(bvars.get(i)).size());
                 if(result.get(bvars.get(i)).size() == Math.pow(2,dim))
                     continue;
                 Set<Vector<Boolean>> newBVSet = evl(beqs.get(i).right,result);

@@ -11,6 +11,15 @@ public class IteFixedPointSolver {
         int dim = map.values().iterator().next().size();
         List<Set<LinearSet>> dicIteSl = new ArrayList<>();
         List<Equation> valEqs = ExpressionApplication.EquationApplication_LinearSet(termEqs,map);
+
+        // map from eq to var set appearing in the rhs
+        Map<String,Set<String>> rhs_var_set = new HashMap<>();
+        for(Equation eq: valEqs){
+            if(eq.type == 1)
+                rhs_var_set.put(eq.left,find_expr_vars(eq.right));
+        }
+        System.out.println(rhs_var_set);
+
         // # of ite in arithmetic non-terminal
         iteCount = getIteCount(termEqs);
         List<String> boolNames = new ArrayList<>();
@@ -40,7 +49,7 @@ public class IteFixedPointSolver {
             //valEqsNoIte.forEach(System.out::println);
 
             // solving linear eqs by newton method
-            Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size());
+            Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size(),rhs_var_set);
             System.out.println("\tnew solution got");
             solutionStore.put(stage,currentSolution);
 
@@ -48,6 +57,7 @@ public class IteFixedPointSolver {
             Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim,valEqs,currentSolution, bvStore.get(stage));
             System.out.println(currentBV); System.out.println(bvStore.get(stage));
             if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
+                System.out.println("BV fixedpoint reached, return current solution");
                 // fixed point reached
                 return currentSolution;
             }
@@ -65,6 +75,25 @@ public class IteFixedPointSolver {
             // TODO check if the current solution reach a fixed point
         }
     }
+
+    private static Set<String> find_expr_vars(Expression expr) {
+        Set<String> result = new HashSet<>();
+        switch (expr.type){
+            case 0:
+                return result;
+            case 1:
+                result.add(expr.var);
+                return result;
+            case 2:
+            case 3:
+                result.addAll(find_expr_vars(expr.left));
+                result.addAll(find_expr_vars(expr.right));
+
+        }
+        return result;
+
+    }
+
     private static int count = 0;
 
     public static List<Set<LinearSet>>  EvalIte(List<Equation> valEqs, Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment) {
@@ -102,9 +131,9 @@ public class IteFixedPointSolver {
     }
 
     private static boolean checkBVFixedPoint(Map<String, Set<Vector<Boolean>>> currentBV, Map<String, Set<Vector<Boolean>>> previousBV) {
-        for(String bvar:currentBV.keySet()){
-            if(!currentBV.get(bvar).equals(previousBV.get(bvar)))
-                return false;
+        for(String var:currentBV.keySet()){
+            if(!currentBV.get(var).equals(previousBV.get(var)))
+                return  false;
         }
         return true;
     }

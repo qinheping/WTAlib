@@ -7,18 +7,18 @@ import java.util.*;
 
 public class Newton {
 
-    public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> SlEqs, int dim){
+    public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> SlEqs, int dim, Map<String,Set<String>> rhs_vars){
         int varCount = SlEqs.size();
         List<String> varList = getVarList(SlEqs);
         List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
-        //SlEqs.forEach(System.out::println);
-        //System.out.println("diff");
-        //System.out.println(varList);        diffList.forEach(System.out::println);
+
+        Set<String> changed_var = new HashSet<>();
 
         Map<String, Set<LinearSet>> result = new HashMap<>();
         // initialize result
         for(String var: varList){
             result.put(var,new HashSet<>());
+            changed_var.add(var);
         }
         Map<String, Set<LinearSet>> tmp_result = new HashMap<>();
         for(int i = 0; i < varList.size(); i++){
@@ -31,6 +31,13 @@ public class Newton {
             System.out.println("\t\tnewton iteration: "+k);
             Map<String,Set<LinearSet>> newResult = new HashMap<>();
             for(int i = 0; i < varCount; i++){
+                Set<String> intersection = new HashSet<String>(rhs_vars.get(varList.get(i)));
+                intersection.retainAll(changed_var);
+                if(intersection.isEmpty()&&k!=0) {
+                    newResult.put(varList.get(i),result.get(varList.get(i)));
+                    continue;
+                }
+
                 // f'(vi)
                 Set<LinearSet> SL_diff_i = ExpressionApplication.ExpresionApplication_SemilinearSet(diffList.get(i),result);
                 //System.out.println(varList.get(i)+" diff: "+SL_diff_i);
@@ -41,35 +48,21 @@ public class Newton {
 
                 Set<LinearSet> SL_exp_i = ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result);
 
-                if(varList.get(i).equals("Start")){
-                    int highx = 0;
-                    int highy = 0;
-                    for(LinearSet ls:SL_exp_i){
-                        if(ls.getBase().get(0)>highx)
-                            highx = ls.getBase().get(0);
-                        if(ls.getBase().get(1)>highy)
-                            highy = ls.getBase().get(1);
-                        for(Vector<Integer> v:ls.getPeriod()){
-                            if(v.get(0) > highx)
-                                highx = v.get(0);
-                            if(v.get(1) > highy)
-                                highy = v.get(1);
-                        }
-
-                    }
-                    System.out.println(highx+" "+highy);
-                }
                 //System.out.println("f: "+SL_diff_i);
                 // (f'(vi))^**f(vi)
                 newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
             }
-            //if(checkEquality_SLs(result,newResult)){
-             //   System.out.println(result);
-             //   System.out.println(newResult);
-             //   break;
-           // }
+
+            Set<String> tmp_changed_var =new HashSet<>();
+            for(int i = 0; i < varCount; i++){
+                if( result.get(varList.get(i)).size() != newResult.get(varList.get(i)).size()) {
+                    tmp_changed_var.add(varList.get(i));
+                }
+            }
+            changed_var = tmp_changed_var;
             result = newResult;
-            System.out.println("\t\t\tresult size " + result.get("NT4").size());
+            if (changed_var.size() == 0)
+                break;
         }
         return  result;
     }

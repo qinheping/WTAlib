@@ -41,11 +41,11 @@ public class IteFixedPointSolverUnitTest {
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
-        writer.write(solution.get("Start").toString());
+        //writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
         spec.add(84);
         spec.add(126);
-        System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        //writer.write(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;

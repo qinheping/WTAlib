@@ -83,6 +83,7 @@ public class SimpleVC {
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds : " +
                 timeElapsed / 1000000);
+        
 
         Expr bx = em.mkBoundVar("bx", integer);
         Expr by = em.mkBoundVar("by", integer);
