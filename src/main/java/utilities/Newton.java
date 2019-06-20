@@ -27,6 +27,7 @@ public class Newton {
         result = tmp_result;
         System.out.println("result:" +result.size());
 
+        System.out.println(SlEqs);
         for(int k = 0; k < varCount; k++){
             System.out.println("\t\tnewton iteration: "+k);
             Map<String,Set<LinearSet>> newResult = new HashMap<>();

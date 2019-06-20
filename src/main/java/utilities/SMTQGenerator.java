@@ -176,6 +176,11 @@ public class SMTQGenerator {
             }
         }
 
+        List<Expr> varz_list = new ArrayList<>();
+        for(int i = 0; i <dim; i++){
+            varz_list.add(em.mkVar("z_"+i,integer));
+        }
+
 
         for(int ix = 0; ix < left.size(); ix++  ){
             Expr body_i = em.mkConst(true);
@@ -185,7 +190,7 @@ public class SMTQGenerator {
                     assertx = em.mkExpr(Kind.AND,assertx,em.mkExpr(Kind.GEQ,access_boundVar(left,dim,ix,d,jx,boundx_list),em.mkConst(new Rational(0))));
                     body_eqx = em.mkExpr(Kind.PLUS,body_eqx,em.mkExpr(Kind.MULT,access_boundVar(left,dim,ix,d,jx,boundx_list),em.mkConst(new Rational(((Vector<Integer>)(left.get(ix).getPeriod().toArray()[jx])).get(d)))));
                 }
-                body_eqx = em.mkExpr(Kind.EQUAL,em.mkVar("z_"+d,integer),body_eqx);
+                body_eqx = em.mkExpr(Kind.EQUAL,varz_list.get(d),body_eqx);
                 body_i = em.mkExpr(Kind.AND,body_i,body_eqx);
             }
             body_x = em.mkExpr(Kind.OR,body_x,body_i);
@@ -199,7 +204,7 @@ public class SMTQGenerator {
                     asserty = em.mkExpr(Kind.AND,asserty,em.mkExpr(Kind.GEQ,access_boundVar(right,dim,iy,d,jy,boundy_list),em.mkConst(new Rational(0))));
                     body_eqy = em.mkExpr(Kind.PLUS,body_eqy,em.mkExpr(Kind.MULT,access_boundVar(right,dim,iy,d,jy,boundy_list),em.mkConst(new Rational(((Vector<Integer>)(right.get(iy).getPeriod().toArray()[jy])).get(d)))));
                 }
-                body_eqy = em.mkExpr(parse_bop(bop),em.mkVar("z_"+d,integer),body_eqy);
+                body_eqy = em.mkExpr(parse_bop(bop),varz_list.get(d),body_eqy);
                 if(!currentBv.get(d))
                     body_eqy = em.mkExpr(Kind.NOT,body_eqy);
                 body_i = em.mkExpr(Kind.AND,body_i,body_eqy);
@@ -228,9 +233,11 @@ public class SMTQGenerator {
         }
 
         long startTime = System.nanoTime();
-        System.out.println("log: new getBv SMT begin");
-        if(smt.checkSat(body).toString().equals("sat"))
+        System.out.println("log: new getBv SMT begin: ");
+        if(smt.checkSat(body).toString().equals("sat")) {
+           // System.out.println("SAT: "+currentBv+" "+body);
             result.add(currentBv);
+        }
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         System.out.println("Execution time in milliseconds : " +

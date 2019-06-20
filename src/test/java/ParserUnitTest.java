@@ -69,12 +69,9 @@ public class ParserUnitTest {
         ParseTree parseTree = parser.prog();
         QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
-
         //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/out"));
-        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),14.0f)));
-
+        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
         writer.close();
-
     }
 }

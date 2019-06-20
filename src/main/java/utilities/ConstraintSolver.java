@@ -21,10 +21,7 @@ public class ConstraintSolver {
 
         // main query
         Expr q = em.mkConst(true);
-        
 
-
+        return false;
     }
-
-    public static
 }

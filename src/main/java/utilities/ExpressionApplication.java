@@ -48,6 +48,19 @@ public  class ExpressionApplication {
             return result;
         }
         if(exp.type == 1){
+            if(exp.var.substring(0,1).equals("-")){
+                String var = exp.var.substring(1,exp.var.length());
+                if(map.containsKey(var)){
+                    result.type = 0;
+                    result.constant = new HashSet<>();
+                    Vector<Integer> toAdd = new Vector<>();
+                    for(int i = 0; i < map.get(var).size(); i++){
+                        toAdd.add(-map.get(var).get(i));
+                    }
+                    result.constant.add(new LinearSet(toAdd));
+                    return  result;
+                }
+            }
             if(map.containsKey(exp.var)){
                 result.type = 0;
                 result.constant = new HashSet<>();

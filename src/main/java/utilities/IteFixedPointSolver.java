@@ -52,10 +52,11 @@ public class IteFixedPointSolver {
             Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size(),rhs_var_set);
             System.out.println("\tnew solution got");
             solutionStore.put(stage,currentSolution);
+            //System.out.println(currentSolution);
 
             // get the new bv map with new solution
             Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim,valEqs,currentSolution, bvStore.get(stage));
-            System.out.println(currentBV); System.out.println(bvStore.get(stage));
+            System.out.println(currentBV);
             if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
                 System.out.println("BV fixedpoint reached, return current solution");
                 // fixed point reached
@@ -64,12 +65,10 @@ public class IteFixedPointSolver {
             stage++;
             bvStore.put(stage,currentBV);
             dicIteSl = EvalIte(valEqs,currentBV,currentSolution);
-            for(String var: currentSolution.keySet()){
-                System.out.println(var+" "+currentSolution.get(var).size());
+            for(Set<LinearSet> list: dicIteSl){
+                System.out.println(list.size());
             }
-            for(int i = 0; i < dicIteSl.size(); i++){
-                System.out.println(dicIteSl.get(i).size());
-            }
+            System.out.println();
 
 
             // TODO check if the current solution reach a fixed point
@@ -149,23 +148,23 @@ public class IteFixedPointSolver {
 
 
     private static Set<LinearSet> projection_sls_vs (Set<LinearSet> sl_T,Set<LinearSet> sl_F, Set<Vector<Boolean>> bvSet){
-        Set<LinearSet> result_T = projection_sl_vs(sl_T,bvSet);
-        Set<LinearSet> result_F = projection_sl_vs(sl_F,flip(bvSet));
-        return  SemilinearFactory.dot(result_T,result_F);
+        Set<LinearSet> result = new HashSet<>();
+        for(Vector<Boolean> bv: bvSet) {
+            Set<LinearSet> result_T = projection_sl_vector(sl_T, bv);
+            Set<LinearSet> result_F = projection_sl_vector(sl_F, flip(bv));
+            result.addAll(SemilinearFactory.dot(result_T, result_F));
+        }
+        return  result;
     }
 
-    private static Set<Vector<Boolean>> flip(Set<Vector<Boolean>> bvSet) {
-        Set<Vector<Boolean>> result = new HashSet<>();
-        int dim;
-        for(Vector<Boolean> bv: bvSet){
-            dim = bv.size();
+    private static Vector<Boolean> flip(Vector<Boolean> bv) {
+
+        int dim = bv.size();
             Vector<Boolean> newBv = new Vector<>();
             for(int i = 0; i < dim; i++){
                 newBv.add(!bv.get(i));
             }
-            result.add(newBv);
-        }
-        return result;
+        return newBv;
     }
 
     private static Set<LinearSet> projection_sl_vs(Set<LinearSet> sl_f, Set<Vector<Boolean>> bvSet) {
