@@ -220,9 +220,9 @@ public class IteFixedPointSolverUnitTest {
         yEx.add(15);
         inputEx.put("y",yEx);
         Vector<Integer> zEx = new Vector<>();
-        yEx.add(10);
-        yEx.add(15);
-        inputEx.put("y",yEx);
+        zEx.add(10);
+        zEx.add(15);
+        inputEx.put("z",zEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
