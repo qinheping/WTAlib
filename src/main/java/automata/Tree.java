@@ -1,4 +1,4 @@
-package utilities;
+package automata;
 
 import java.util.ArrayList;
 import java.util.List;
