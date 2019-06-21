@@ -1,8 +1,6 @@
 package automata;
 
 
-import utilities.Tree;
-
 import java.util.*;
 
 /**
