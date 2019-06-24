@@ -21,8 +21,27 @@ public class DAG {
 
     public class DAGNode{
         private List<DAGNode> successors;
-        private Set<Set<String>> reched_str;
+        private Set<String> rechead_strs;
         private Set<String> value;
+        // 0 = bool
+        // 1 = int
+        private int type;
+
+        public DAGNode(Set<String> rechead, Set<String> val,int type){
+            this.rechead_strs = rechead;
+            this.value = val;
+            this.type = type;
+            this.successors = null;
+        }
+
+        public DAGNode(Set<String> rechead, String val, int type){
+            Set<String> valSet = new HashSet<>();
+            valSet.add(val);
+            this.rechead_strs = rechead;
+            this.value = valSet;
+            this.type = type;
+            this.successors = null;
+        }
     }
 
     // -------------------------------
@@ -37,14 +56,23 @@ public class DAG {
             return;
         }
 
-        // check if
+        // not empty
+        for(DAGNode curNnode : this.roots){
+            Boolean curToNew = intersetionEmpty(curNnode.rechead_strs,newNode.value);
+            Boolean newToCur = intersetionEmpty(newNode.rechead_strs,curNnode.value);
+            if()
+        }
     }
 
+    public boolean intersetionEmpty(Set s1, Set s2){
+        Set<String> intersection = new HashSet<String>(s1); // use the copy constructor
+        intersection.retainAll(s2);
+        return intersection.isEmpty();
+    }
     public DAG(List<Equation> eqs){
-        DAGNode newRoot = new DAGNode();
         this.roots = new HashSet<>();
         for(Equation eq: eqs){
-            new
+            addNode(new DAGNode(getReachedInExpression(eq.right),eq.left,eq.type));
         }
     }
 
