@@ -1,6 +1,5 @@
 package utilities;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,58 +15,7 @@ public class DAG {
         this.roots = roots;
     }
 
-    // -------------------------------
-    // -------------------------------
-    // -------------------------------
 
-    public class DAGNode{
-        private Set<DAGNode> successors;
-        private Set<String> rechead_strs;
-        private Set<String> value;
-        // 0 = bool
-        // 1 = int
-        private int type;
-
-        public void addSuccessor(DAGNode node){
-            this.successors.add(node);
-        }
-        public void addSuccessors(Set<DAGNode> nodes){
-            this.successors.addAll(nodes);
-        }
-        public DAGNode(Set<String> rechead, Set<String> val,int type){
-            this.rechead_strs = rechead;
-            this.addReached(val);
-            this.value = val;
-            this.type = type;
-            this.successors = new HashSet<>();
-        }
-
-        public DAGNode(Set<String> rechead, String val, int type){
-            Set<String> valSet = new HashSet<>();
-            valSet.add(val);
-            this.addReached(valSet);
-            this.rechead_strs = rechead;
-            this.value = valSet;
-            this.type = type;
-            this.successors = new HashSet<>();
-        }
-        public void addValues(Set<String> strs){
-            this.value.addAll(strs);
-        }
-        public void addReached(Set<String> strs){
-            this.rechead_strs.addAll(strs);
-        }
-
-        public void combineNode(DAGNode node){
-            addValues(node.value);
-            addReached(node.rechead_strs);
-            addSuccessors(node.successors);
-        }
-    }
-
-    // -------------------------------
-    // -------------------------------
-    // -------------------------------
 
 
     public void addNode(DAGNode newNode){
@@ -76,37 +24,39 @@ public class DAG {
             this.roots.add(newNode);
             return;
         }
+        for(DAGNode root: roots) {
+            propagateNewRoot(newNode,root);
+        }
 
-        // not empty
-        for(DAGNode curNode : this.roots){
-            Boolean curToNew = intersetionEmpty(curNode.rechead_strs,newNode.value);
-            Boolean newToCur = intersetionEmpty(newNode.rechead_strs,curNode.value);
+    }
+
+    // return true if curNode = root
+    private boolean propagateNewRoot(DAGNode newNode, DAGNode curNode) {
+            Boolean curToNew = intersetionEmpty(curNode.reached_strs,newNode.value);
+            Boolean newToCur = intersetionEmpty(newNode.reached_strs,curNode.value);
             if(newToCur&&!curToNew){
                 this.roots.remove(curNode);
                 this.roots.add(newNode);
                 newNode.addSuccessor(curNode);
-                newNode.addReached(curNode.rechead_strs);
+                newNode.addReached(curNode.reached_strs);
                 newNode.addReached(curNode.value);
+                curNode.predecessor.add(newNode);
                 continue;
             }
             if(newToCur&&curToNew){
-                curNode.addReached(newNode.rechead_strs);
+                curNode.addReached(newNode.reached_strs);
                 curNode.addValues(newNode.value);
                 newNode = curNode;
-                propogateNewRoot(newNode,curNode);
+                propagateNewRoot(newNode,curNode);
             }
             if(!newToCur&&curToNew){
                 curNode.addSuccessor(newNode);
                 findPath()
             }
-        }
-    }
 
-    // return true if curNode = root
-    private boolean propogateNewRoot(DAGNode root, DAGNode curNnode) {
         boolean childToRoot = false;
         for(DAGNode child:curNnode.successors){
-            if(propogateNewRoot(root, child)) {
+            if(propagateNewRoot(root, child)) {
                 curNnode.successors.remove(child);
                 childToRoot = true;
             }
@@ -116,7 +66,7 @@ public class DAG {
         return true;}
 
 
-        Boolean curToRoot = intersetionEmpty(curNnode.rechead_strs,root.value);
+        Boolean curToRoot = intersetionEmpty(curNnode.reached_strs,root.value);
         if(curToRoot) {
             root.combineNode(curNnode);
             return true;
@@ -158,5 +108,54 @@ public class DAG {
                 return result;
         }
         System.out.println("ERROR: wrong type getReachedInExpression: "+exp.toString());
+        return null;
     }
+
+    // -------------------------------
+    // -------------------------------
+    // -------------------------------
+
+    public class DAGNode{
+        private Set<DAGNode> successors;
+        private Set<DAGNode> predecessor;
+        private Set<String> reached_strs;
+        private Set<String> value;
+        // 0 = bool
+        // 1 = int
+        private int type;
+
+        public void addSuccessor(DAGNode node){
+            this.successors.add(node);
+        }
+        public void addSuccessors(Set<DAGNode> nodes){
+            this.successors.addAll(nodes);
+        }
+
+        public DAGNode(Set<String> reached, String val, int type){
+            Set<String> valSet = new HashSet<>();
+            valSet.add(val);
+            this.addReached(valSet);
+            this.reached_strs = reached;
+            this.value = valSet;
+            this.type = type;
+            this.successors = new HashSet<>();
+            this.predecessor = new HashSet<>();
+        }
+        public void addValues(Set<String> strs){
+            this.value.addAll(strs);
+        }
+        public void addReached(Set<String> strs){
+            this.reached_strs.addAll(strs);
+        }
+
+        public void combineNode(DAGNode node){
+            addValues(node.value);
+            addReached(node.reached_strs);
+            addSuccessors(node.successors);
+        }
+    }
+
+    // -------------------------------
+    // -------------------------------
+    // -------------------------------
 }
