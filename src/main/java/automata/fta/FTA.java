@@ -469,7 +469,8 @@ public class FTA<S> extends Automaton<S> {
             isEmpty = 1;
         }
 
-        removeEpsilon();
+        // CVC4
+        //removeEpsilon();
 
         // check reachable
         Stack<Integer> toCheck = new Stack<Integer>();

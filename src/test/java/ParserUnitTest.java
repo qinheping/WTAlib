@@ -72,6 +72,7 @@ public class ParserUnitTest {
         //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/out"));
         writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
+        System.out.println(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
         writer.close();
     }
     @org.junit.Test
