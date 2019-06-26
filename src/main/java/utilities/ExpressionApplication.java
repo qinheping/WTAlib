@@ -2,28 +2,72 @@ package utilities;
 
 import semirings.LinearSet;
 
-import javax.sound.sampled.Line;
 import java.util.*;
 
 public  class ExpressionApplication {
 
 
-    public static Set<LinearSet> ExpresionApplication_SemilinearSet(Expression<Set<LinearSet>> exp, Map<String,Set<LinearSet>> assignment){
+    public static Set<LinearSet> ExpressionEval_SemilinearSet(Expression<Set<LinearSet>> exp, Map<String,Set<LinearSet>> assignment){
         switch (exp.type){
             case 0:
                 return  exp.constant;
             case 1:
                 return assignment.get(exp.var);
+
             case 2:
-                return SemilinearFactory.dot(ExpresionApplication_SemilinearSet(exp.left,assignment),ExpresionApplication_SemilinearSet(exp.right,assignment));
+                return SemilinearFactory.dot(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
             case 3:
-                return SemilinearFactory.union(ExpresionApplication_SemilinearSet(exp.left,assignment),ExpresionApplication_SemilinearSet(exp.right,assignment));
+                return SemilinearFactory.union(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
         }
         System.out.println("ERROR: wrong type while ExpressionApplication_SemilinearSet "+exp.toString());
         return null;
     }
 
-    public static List<Equation> EquationApplication_LinearSet(List<Equation> Eqs, Map<String,Vector<Integer>> map){
+    public static Expression ExpressionApplication_SemilinearSet(Expression exp,  Map<String,Set<LinearSet>> assignment){
+        Expression result = new Expression();
+        switch (exp.type){
+            case 0:
+                return  exp;
+            case 1:
+                if(assignment.keySet().contains(exp.var)){
+
+                    result.type = 0;
+                    result.constant = assignment.get(exp.var);
+                    return result;
+                }
+                return exp;
+            case 2:
+                result.type = 2;
+                result.left = ExpressionApplication_SemilinearSet(exp.left,assignment);
+                result.right = ExpressionApplication_SemilinearSet(exp.right,assignment);
+                return result;
+            case 3:
+                result.type = 3;
+                result.left = ExpressionApplication_SemilinearSet(exp.left,assignment);
+                result.right = ExpressionApplication_SemilinearSet(exp.right,assignment);
+                return result;
+            case 4:
+                result.type = 4;
+                result.left = ExpressionApplication_SemilinearSet(exp.left,assignment);
+                result.right = ExpressionApplication_SemilinearSet(exp.right,assignment);
+                result.condition = ExpressionApplication_SemilinearSet(exp.condition,assignment);
+                return result;
+            case 5:
+                result.type = 5;
+                result.bop = exp.bop;
+                result.left = ExpressionApplication_SemilinearSet(exp.left,assignment);
+                result.right = ExpressionApplication_SemilinearSet(exp.right,assignment);
+                return result;
+            case 6:
+                result.type = 6;
+                result.bop = exp.bop;
+                result.left = ExpressionApplication_SemilinearSet(exp.left,assignment);
+                return result;
+        }
+        return null;
+    }
+
+    public static List<Equation> EquationEval_LinearSet(List<Equation> Eqs, Map<String,Vector<Integer>> map){
         List<Equation> result = new ArrayList<Equation>();
         for(Equation currentEq : Eqs){
             Equation toAdd = new Equation(currentEq.left, ExpressionApplication_LinearSet(currentEq.right,map));
@@ -140,5 +184,49 @@ public  class ExpressionApplication {
 
         }
         return  null;
+    }
+
+    public static Expression ExpressionApplication_BVSet(Expression exp, Map<String, Set<Vector<Boolean>>> currentBV) {
+        Expression result = new Expression();
+        switch (exp.type){
+            case 0:
+                return  exp;
+            case 1:
+                if(currentBV.keySet().contains(exp.var)){
+
+                    result.type = 0;
+                    result.constant = currentBV.get(exp.var);
+                    return result;
+                }
+                return exp;
+            case 2:
+                result.type = 2;
+                result.left = ExpressionApplication_BVSet(exp.left,currentBV);
+                result.right = ExpressionApplication_BVSet(exp.right,currentBV);
+                return result;
+            case 3:
+                result.type = 3;
+                result.left = ExpressionApplication_BVSet(exp.left,currentBV);
+                result.right = ExpressionApplication_BVSet(exp.right,currentBV);
+                return result;
+            case 4:
+                result.type = 4;
+                result.left = ExpressionApplication_BVSet(exp.left,currentBV);
+                result.right = ExpressionApplication_BVSet(exp.right,currentBV);
+                result.condition = ExpressionApplication_BVSet(exp.condition,currentBV);
+                return result;
+            case 5:
+                result.type = 5;
+                result.bop = exp.bop;
+                result.left = ExpressionApplication_BVSet(exp.left,currentBV);
+                result.right = ExpressionApplication_BVSet(exp.right,currentBV);
+                return result;
+            case 6:
+                result.type = 6;
+                result.bop = exp.bop;
+                result.left = ExpressionApplication_BVSet(exp.left,currentBV);
+                return result;
+        }
+        return null;
     }
 }

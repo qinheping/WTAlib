@@ -24,8 +24,6 @@ public class SMTQGenerator {
 
 
     public static Boolean checkSLEQ(Map<String,Set<LinearSet>> sls, Map<String,Set<LinearSet>> newSls) {
-        System.out.println(sls);
-        System.out.println(newSls);
         for(String key:sls.keySet()){
             if(sls.get(key).size() == 0 && newSls.get(key).size() == 0)
                 continue;
@@ -103,7 +101,6 @@ public class SMTQGenerator {
                 q = em.mkExpr(Kind.FORALL, em.mkExpr(Kind.BOUND_VAR_LIST, em.mkBoundVar("x_" + i + "_" + j, integer)), q);
             }
         }
-        //System.out.println(q);
         long startTime = System.nanoTime();
         System.out.println("log: new checkSubset SMT begin");
         String out = smt.query(q).toString();
@@ -233,7 +230,7 @@ public class SMTQGenerator {
         }
 
         long startTime = System.nanoTime();
-        System.out.println("log: new getBv SMT begin: ");
+        System.out.println("log: new getBv SMT begin: "+currentBv);
         if(smt.checkSat(body).toString().equals("sat")) {
            // System.out.println("SAT: "+currentBv+" "+body);
             result.add(currentBv);

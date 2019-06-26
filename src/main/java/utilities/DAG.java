@@ -1,89 +1,97 @@
 package utilities;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DAG {
 
-    private Set<DAGNode> roots;
-    public Set<DAGNode> getRoots() {
-        return roots;
+    private Set<DAGNode> root = new HashSet<>();
+    public Set<DAGNode> nodes = new HashSet<>();
+    public Set<DAGNode> getRoot() {
+        return root;
     }
-
-    public void setRoots(Set<DAGNode> roots) {
-        this.roots = roots;
-    }
-
-
-
-
-    public void addNode(DAGNode newNode){
-        // check if dag is empty
-        if(this.roots.size() == 0){
-            this.roots.add(newNode);
-            return;
+    public Set<String> popRoot() {
+        Set<DAGNode> candidate = new HashSet<>(nodes);
+        Set<DAGNode> invalid= new HashSet<>();
+        for(DAGNode node: nodes){
+            invalid.addAll(node.successors);
         }
-        for(DAGNode root: roots) {
-            propagateNewRoot(newNode,root);
-        }
-
+        candidate.removeAll(invalid);
+        if(candidate.isEmpty())
+            return null;
+        DAGNode pop = candidate.iterator().next();
+        nodes.remove(pop);
+        return pop.getValue();
     }
 
-    // return true if curNode = root
-    private boolean propagateNewRoot(DAGNode newNode, DAGNode curNode) {
-            Boolean curToNew = intersetionEmpty(curNode.reached_strs,newNode.value);
-            Boolean newToCur = intersetionEmpty(newNode.reached_strs,curNode.value);
-            if(newToCur&&!curToNew){
-                this.roots.remove(curNode);
-                this.roots.add(newNode);
-                newNode.addSuccessor(curNode);
-                newNode.addReached(curNode.reached_strs);
-                newNode.addReached(curNode.value);
-                curNode.predecessor.add(newNode);
-                continue;
-            }
-            if(newToCur&&curToNew){
-                curNode.addReached(newNode.reached_strs);
-                curNode.addValues(newNode.value);
-                newNode = curNode;
-                propagateNewRoot(newNode,curNode);
-            }
-            if(!newToCur&&curToNew){
-                curNode.addSuccessor(newNode);
-                findPath()
-            }
-
-        boolean childToRoot = false;
-        for(DAGNode child:curNnode.successors){
-            if(propagateNewRoot(root, child)) {
-                curNnode.successors.remove(child);
-                childToRoot = true;
-            }
-        }
-        if(childToRoot){
-            root.combineNode(curNnode);
-        return true;}
-
-
-        Boolean curToRoot = intersetionEmpty(curNnode.reached_strs,root.value);
-        if(curToRoot) {
-            root.combineNode(curNnode);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean intersetionEmpty(Set s1, Set s2){
-        Set<String> intersection = new HashSet<String>(s1); // use the copy constructor
-        intersection.retainAll(s2);
-        return intersection.isEmpty();
-    }
     public DAG(List<Equation> eqs){
-        this.roots = new HashSet<>();
+
+        Map<String,Set<String>> reached_list = new HashMap<>();
         for(Equation eq: eqs){
-            addNode(new DAGNode(getReachedInExpression(eq.right),eq.left,eq.type));
+            reached_list.put(eq.left,getReachedInExpression(eq.right));
         }
+        for(int j = 0; j < eqs.size();j++){
+            Set<String> reached_from_current = new HashSet<>();
+            Set<String> new_reached = new HashSet<>();
+            new_reached.addAll(reached_list.get(eqs.get(j).left));
+            for(int i = 0; i < eqs.size(); i++){
+                Set<String> tmp_new_reached = new HashSet<>();
+                if(new_reached.isEmpty())
+                    break;
+                for(String newStr:new_reached){
+                    tmp_new_reached.addAll(setDiff(reached_list.get(newStr),reached_from_current));
+                    reached_from_current.addAll(reached_list.get(newStr));
+                }
+                new_reached = tmp_new_reached;
+            }
+            reached_list.put(eqs.get(j).left,reached_from_current);
+        }
+        Set<String> covered = new HashSet<>();
+        Set<Set<String>> eqclasses = new HashSet<>();
+        for(int j = 0; j < eqs.size();j++){
+            if(covered.contains(eqs.get(j).left))
+                continue;
+            Set<String> newEqClass = new HashSet<>();
+            newEqClass.add(eqs.get(j).left);
+            for(String right: reached_list.get(eqs.get(j).left)){
+                if(reached_list.get(right).contains(eqs.get(j).left)) {
+                    newEqClass.add(right);
+                    covered.add(right);
+                }
+            }
+            eqclasses.add(newEqClass);
+        }
+        for(Set<String> eqc: eqclasses){
+            this.nodes.add( new DAGNode(eqc));
+        }
+        for(DAGNode nodeFrom:this.nodes){
+            for(DAGNode nodeTo:this.nodes){
+                if(nodeFrom==nodeTo)
+                    continue;
+                for(String strFrom: nodeFrom.getValue()){
+                    for(String strTo: nodeTo.getValue()){
+                        if(reached_list.get(strFrom).contains(strTo)){
+                            nodeTo.addSuccessor(nodeFrom);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    public Set<String> setDiff(Set<String> set1, Set<String> set2){
+        Set<String> tmp1 = new HashSet<>(set1);
+        tmp1.removeAll(set2);
+        return tmp1;
+    }
+
+
+    @Override
+    public String toString(){
+        String result = this.root.toString();
+
+        return result;
     }
 
     Set<String> getReachedInExpression(Expression exp){
@@ -116,13 +124,25 @@ public class DAG {
     // -------------------------------
 
     public class DAGNode{
+        public Set<DAGNode> getSuccessors() {
+            return successors;
+        }
+
         private Set<DAGNode> successors;
-        private Set<DAGNode> predecessor;
-        private Set<String> reached_strs;
+
+        public Set<String> getValue() {
+            return value;
+        }
+
+        public void setValue(Set<String> value) {
+            this.value = value;
+        }
+
         private Set<String> value;
         // 0 = bool
         // 1 = int
         private int type;
+
 
         public void addSuccessor(DAGNode node){
             this.successors.add(node);
@@ -131,27 +151,9 @@ public class DAG {
             this.successors.addAll(nodes);
         }
 
-        public DAGNode(Set<String> reached, String val, int type){
-            Set<String> valSet = new HashSet<>();
-            valSet.add(val);
-            this.addReached(valSet);
-            this.reached_strs = reached;
-            this.value = valSet;
-            this.type = type;
+        public DAGNode( Set<String> val){
+            this.value = val;
             this.successors = new HashSet<>();
-            this.predecessor = new HashSet<>();
-        }
-        public void addValues(Set<String> strs){
-            this.value.addAll(strs);
-        }
-        public void addReached(Set<String> strs){
-            this.reached_strs.addAll(strs);
-        }
-
-        public void combineNode(DAGNode node){
-            addValues(node.value);
-            addReached(node.reached_strs);
-            addSuccessors(node.successors);
         }
     }
 

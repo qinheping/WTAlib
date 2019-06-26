@@ -45,7 +45,7 @@ public class IteFixedPointSolverUnitTest {
         Vector<Integer> spec = new Vector<>();
         spec.add(84);
         spec.add(126);
-        System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        //System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;
@@ -81,7 +81,7 @@ public class IteFixedPointSolverUnitTest {
         Vector<Integer> spec = new Vector<>();
         spec.add(140);
         spec.add(210);
-        System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        //System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;

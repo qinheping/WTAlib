@@ -74,4 +74,19 @@ public class ParserUnitTest {
         writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
         writer.close();
     }
+    @org.junit.Test
+    public void testReduction_hackers_if() throws IOException{
+        String input = new Scanner(new File("benchmarks/CLIA_Track_IF/fg_mpg_plane3.sl")).useDelimiter("\\Z").next();
+        ANTLRInputStream inputStream = new ANTLRInputStream(input);
+        QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        QSygusParserParser parser = new QSygusParserParser(tokens);
+        ParseTree parseTree = parser.prog();
+        QSygusNode prog = (QSygusNode)new ASTVisitor().visit(parseTree);
+        GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
+        //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_IF/out"));
+        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),1.0f)));
+        writer.close();
+    }
 }

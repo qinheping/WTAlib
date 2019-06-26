@@ -2,7 +2,6 @@ package utilities;
 
 import semirings.LinearSet;
 
-import javax.sound.sampled.Line;
 import java.util.*;
 
 public class Newton {
@@ -22,12 +21,12 @@ public class Newton {
         }
         Map<String, Set<LinearSet>> tmp_result = new HashMap<>();
         for(int i = 0; i < varList.size(); i++){
-            tmp_result.put(varList.get(i),ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result));
+            tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
         }
         result = tmp_result;
         System.out.println("result:" +result.size());
 
-        System.out.println(SlEqs);
+        //System.out.println(SlEqs);
         for(int k = 0; k < varCount; k++){
             System.out.println("\t\tnewton iteration: "+k);
             Map<String,Set<LinearSet>> newResult = new HashMap<>();
@@ -40,14 +39,14 @@ public class Newton {
                 }
 
                 // f'(vi)
-                Set<LinearSet> SL_diff_i = ExpressionApplication.ExpresionApplication_SemilinearSet(diffList.get(i),result);
+                Set<LinearSet> SL_diff_i = ExpressionApplication.ExpressionEval_SemilinearSet(diffList.get(i),result);
                 //System.out.println(varList.get(i)+" diff: "+SL_diff_i);
                 Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
                 //System.out.println("star: "+SL_diff_i);
                 // f(vi)
 
 
-                Set<LinearSet> SL_exp_i = ExpressionApplication.ExpresionApplication_SemilinearSet(SlEqs.get(i).right,result);
+                Set<LinearSet> SL_exp_i = ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result);
 
                 //System.out.println("f: "+SL_diff_i);
                 // (f'(vi))^**f(vi)

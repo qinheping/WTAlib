@@ -25,10 +25,7 @@ public class BVSolver {
             beqs.add(EqToBEq(eq.right,assignment));
             //Equation valEq = new Equation();
         }
-        //System.out.println(assignment);
-        //System.out.println(bvars);
-        //System.out.println("beq: "+beqs);
-
+        //System.out.println(eqs);
         Set<String> modfied_var = new HashSet<>();
         for(int i = 0; i < bvars.size(); i++){
             modfied_var.add(bvars.get(i));
@@ -152,7 +149,7 @@ public class BVSolver {
                 if(eq.bop.equals("and") || eq.bop.equals("or"))
                     return eq;
                 result.type = 0;
-                result.constant = SMTQGenerator.getBVSet(ExpressionApplication.ExpresionApplication_SemilinearSet(eq.left,assignment),ExpressionApplication.ExpresionApplication_SemilinearSet(eq.right,assignment),eq.bop);
+                result.constant = SMTQGenerator.getBVSet(ExpressionApplication.ExpressionEval_SemilinearSet(eq.left,assignment),ExpressionApplication.ExpressionEval_SemilinearSet(eq.right,assignment),eq.bop);
                 return result;
         }
         System.out.println("ERROR: wrong type in EqToBEq");

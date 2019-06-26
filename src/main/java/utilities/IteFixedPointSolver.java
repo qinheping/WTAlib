@@ -3,76 +3,95 @@ package utilities;
 import semirings.LinearSet;
 
 import java.util.*;
+import java.util.List;
 
 public class IteFixedPointSolver {
     public static int  iteCount = 0;
     public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String,Vector<Integer>> map){
-        int stage = 0;
+        Map<String,Set<LinearSet>> finalSolution = new HashMap<>();
         int dim = map.values().iterator().next().size();
-        List<Set<LinearSet>> dicIteSl = new ArrayList<>();
-        List<Equation> valEqs = ExpressionApplication.EquationApplication_LinearSet(termEqs,map);
+        List<Equation> oriValEqs = ExpressionApplication.EquationEval_LinearSet(termEqs,map);
+        DAG dag = new DAG(oriValEqs);
+        Set<String> currentEq = dag.popRoot();
+        while(currentEq!=null) {
 
-        // map from eq to var set appearing in the rhs
-        Map<String,Set<String>> rhs_var_set = new HashMap<>();
-        for(Equation eq: valEqs){
-            if(eq.type == 1)
-                rhs_var_set.put(eq.left,find_expr_vars(eq.right));
-        }
-        System.out.println(rhs_var_set);
-
-        // # of ite in arithmetic non-terminal
-        iteCount = getIteCount(termEqs);
-        List<String> boolNames = new ArrayList<>();
-        for(int i = 0; i < valEqs.size(); i++){
-            if(valEqs.get(i).type == 0)
-                boolNames.add(valEqs.get(i).left);
-        }
-        for(int i = 0; i <iteCount; i++){
-            dicIteSl.add(SemilinearFactory.getEmpty());
-        }
-
-        Map<Integer, Map<String,Set<LinearSet>>> solutionStore = new HashMap<>();
-        Map<Integer, Map<String,Set<Vector<Boolean>>>> bvStore = new HashMap<>();
-        Map<String,Set<Vector<Boolean>>> initBV = new HashMap<>();
-        for(String boolName: boolNames){
-            initBV.put(boolName,new HashSet<>());
-        }
-        bvStore.put(0,initBV);
-        //valEqs.forEach(System.out::println);
-
-        // start solving fixed point
-        while(true){
-            System.out.println("Stage: "+stage);
-            // substitute ite in eqs by previous solution
-            List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs,dicIteSl);
-            System.out.println("\tIte substituted");
-            //valEqsNoIte.forEach(System.out::println);
-
-            // solving linear eqs by newton method
-            Map<String,Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte,(map.values().iterator().next()).size(),rhs_var_set);
-            System.out.println("\tnew solution got");
-            solutionStore.put(stage,currentSolution);
-            //System.out.println(currentSolution);
-
-            // get the new bv map with new solution
-            Map<String,Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim,valEqs,currentSolution, bvStore.get(stage));
-            System.out.println(currentBV);
-            if(checkBVFixedPoint(currentBV,bvStore.get(stage))){
-                System.out.println("BV fixedpoint reached, return current solution");
-                // fixed point reached
-                return currentSolution;
+            List<Equation> valEqs = new ArrayList<>();
+            // map from eq to var set appearing in the rhs
+            Map<String, Set<String>> rhs_var_set = new HashMap<>();
+            int stage = 0;
+            for (Equation oriEq : oriValEqs) {
+                if (currentEq.contains(oriEq.left))
+                    valEqs.add(oriEq);
             }
-            stage++;
-            bvStore.put(stage,currentBV);
-            dicIteSl = EvalIte(valEqs,currentBV,currentSolution);
-            for(Set<LinearSet> list: dicIteSl){
-                System.out.println(list.size());
+
+            List<Set<LinearSet>> dicIteSl = new ArrayList<>();
+            for (Equation eq : valEqs) {
+                if (eq.type == 1)
+                    rhs_var_set.put(eq.left, find_expr_vars(eq.right));
             }
-            System.out.println();
+            //System.out.println(rhs_var_set);
+
+            // # of ite in arithmetic non-terminal
+            iteCount = getIteCount(termEqs);
+            List<String> boolNames = new ArrayList<>();
+            for (int i = 0; i < valEqs.size(); i++) {
+                if (valEqs.get(i).type == 0)
+                    boolNames.add(valEqs.get(i).left);
+            }
+            for (int i = 0; i < iteCount; i++) {
+                dicIteSl.add(SemilinearFactory.getEmpty());
+            }
+
+            Map<Integer, Map<String, Set<LinearSet>>> solutionStore = new HashMap<>();
+            Map<Integer, Map<String, Set<Vector<Boolean>>>> bvStore = new HashMap<>();
+            Map<String, Set<Vector<Boolean>>> initBV = new HashMap<>();
+            for (String boolName : boolNames) {
+                initBV.put(boolName, new HashSet<>());
+            }
+            bvStore.put(0, initBV);
+            //valEqs.forEach(System.out::println);
+
+            // start solving fixed point
+            while (true) {
+                System.out.println("Stage: " + stage);
+                // substitute ite in eqs by previous solution
+                List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs, dicIteSl);
+                System.out.println("\tIte substituted");
+                //valEqsNoIte.forEach(System.out::println);
+
+                // solving linear eqs by newton method
+                Map<String, Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte, (map.values().iterator().next()).size(), rhs_var_set);
+                System.out.println("\tnew solution got");
+                solutionStore.put(stage, currentSolution);
+                //System.out.println(currentSolution);
+
+                // get the new bv map with new solution
+                Map<String, Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim, valEqs, currentSolution, bvStore.get(stage));
+                System.out.println(currentBV);
+                if (checkBVFixedPoint(currentBV, bvStore.get(stage))) {
+                    System.out.println("BV fixedpoint reached, return current solution");
+                    // fixed point reached
+                    for (Equation oriEq : oriValEqs) {
+                        oriEq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(oriEq.right, currentSolution);
+                        oriEq.right = ExpressionApplication.ExpressionApplication_BVSet(oriEq.right, currentBV);
+                    }
+                    finalSolution = currentSolution;
+                    break;
+                }
+                stage++;
+                bvStore.put(stage, currentBV);
+                dicIteSl = EvalIte(valEqs, currentBV, currentSolution);
+                for (Set<LinearSet> list : dicIteSl) {
+                    System.out.println(list.size());
+                }
 
 
-            // TODO check if the current solution reach a fixed point
+                // TODO check if the current solution reach a fixed point
+            }
+
+            currentEq = dag.popRoot();
         }
+        return finalSolution;
     }
 
     private static Set<String> find_expr_vars(Expression expr) {
@@ -121,7 +140,11 @@ public class IteFixedPointSolver {
                 result.addAll(ExpressionEvalIte(exp.right,bvSet,assignment));
                 return result;
             case 4:
-                result.add(projection_sls_vs(assignment.get(exp.left.var),assignment.get(exp.right.var),bvSet.get(exp.condition.var)));
+                if(exp.condition.type == 1)
+                    result.add(projection_sls_vs(ExpressionApplication.ExpressionEval_SemilinearSet(exp.left,assignment),ExpressionApplication.ExpressionEval_SemilinearSet(exp.right,assignment),bvSet.get(exp.condition.var)));
+                else
+                    result.add(projection_sls_vs(ExpressionApplication.ExpressionEval_SemilinearSet(exp.left,assignment),ExpressionApplication.ExpressionEval_SemilinearSet(exp.right,assignment),(Set<Vector<Boolean>>)exp.condition.constant));
+
                 count ++;
                 return result;
 
