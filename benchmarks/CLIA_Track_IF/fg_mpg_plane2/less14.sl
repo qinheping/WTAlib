@@ -1,5 +1,5 @@
 ( synth-fun eq1  (     ( x  Int )  ( y  Int ) )  Int (
-	(Start  Int (		NT1 NT2  NT3 NT5 NT6 NT9 NT10 NT11 NT12 NT16 NT17 NT18 NT19 NT20 NT21
+	(Start  Int (		NT1  NT3 NT5 NT6 NT9 NT10 NT11 NT12 NT16 NT17 NT18 NT19 NT20 NT21
 ))
 	(NT1  Int (		x
 		y

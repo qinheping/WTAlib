@@ -1,6 +1,6 @@
 
 ( synth-fun eq1  (     ( x  Int )  ( y  Int ) )  Int (
-	(Start  Int (		NT1 NT2 NT3 NT5
+	(Start  Int (		NT1 NT3 NT5 
 ))
 	(NT1  Int (		x
 		y
@@ -10,7 +10,7 @@
 ))
 	(NT2  Int (		-x
 		-y
-		-2
+		-1
 ))
 	(NT3  Int (		(+ NT1 NT1)
 		(+ NT1 NT2)
