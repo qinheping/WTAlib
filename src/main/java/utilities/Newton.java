@@ -24,7 +24,7 @@ public class Newton {
             tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
         }
         result = tmp_result;
-        System.out.println("result:" +result.size());
+        System.out.println("\t\tresult size in newton:" +result.size());
 
         //System.out.println(SlEqs);
         for(int k = 0; k < varCount; k++){
@@ -33,7 +33,7 @@ public class Newton {
             for(int i = 0; i < varCount; i++){
                 Set<String> intersection = new HashSet<String>(rhs_vars.get(varList.get(i)));
                 intersection.retainAll(changed_var);
-                if(intersection.isEmpty()&&k!=0) {
+                if(intersection.isEmpty()) {
                     newResult.put(varList.get(i),result.get(varList.get(i)));
                     continue;
                 }

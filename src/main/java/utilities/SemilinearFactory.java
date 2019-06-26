@@ -7,18 +7,50 @@ import java.util.Set;
 import java.util.Vector;
 
 public class SemilinearFactory {
+    static int dotCount = 0;
     public static Set<LinearSet> getEmpty(){
         return new HashSet<>();
     }
 
     public static Set<LinearSet> dot(Set<LinearSet> left, Set<LinearSet> right) {
+        boolean isZero = false;
+        if(left.size()==1&&left.iterator().next().getPeriod().size() ==0){
+            for(Integer component: left.iterator().next().getBase()){
+                if (component==0){
+                    isZero = true;
+                    break;
+                }
+            }
+        }
+        if(isZero)
+            return right;
+
+        if(right.size()==1&&right.iterator().next().getPeriod().size() ==0){
+            for(Integer component: right.iterator().next().getBase()){
+                if (component==0){
+                    isZero = true;
+                    break;
+                }
+            }
+        }
+        if(isZero)
+            return left;
 
 
         Set<LinearSet> result = new HashSet<>();
+
+        long startTime = System.nanoTime();
         for(LinearSet lsLeft: left){
             for(LinearSet lsRight: right){
                 result.add(lsLeft.dicSum(lsRight));
             }
+        }
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        dotCount++;
+        if(timeElapsed / 1000000>1000){
+            System.out.println("Dot Size: "+left.size()+" "+right.size()+" "+result.size()+" dot count: "+dotCount+" Execution time in milliseconds : " +
+                timeElapsed / 1000000);
         }
 
         return result;

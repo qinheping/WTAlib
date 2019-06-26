@@ -15,6 +15,7 @@ public class IteFixedPointSolver {
         Set<String> currentEq = dag.popRoot();
         while(currentEq!=null) {
 
+            System.out.println("current EQ: "+ currentEq);
             List<Equation> valEqs = new ArrayList<>();
             // map from eq to var set appearing in the rhs
             Map<String, Set<String>> rhs_var_set = new HashMap<>();
@@ -69,7 +70,12 @@ public class IteFixedPointSolver {
                 Map<String, Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim, valEqs, currentSolution, bvStore.get(stage));
                 System.out.println(currentBV);
                 if (checkBVFixedPoint(currentBV, bvStore.get(stage))) {
-                    System.out.println("BV fixedpoint reached, return current solution");
+                    System.out.print("BV fixedpoint reached, return current solution: ");
+                    for(String nt:currentSolution.keySet()){
+                        System.out.print(nt+" "+currentSolution.get(nt).size()+" ");
+
+                    }
+                    System.out.println("\nDot count in this eq iteration: "+SemilinearFactory.dotCount);
                     // fixed point reached
                     for (Equation oriEq : oriValEqs) {
                         oriEq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(oriEq.right, currentSolution);
@@ -80,9 +86,17 @@ public class IteFixedPointSolver {
                 }
                 stage++;
                 bvStore.put(stage, currentBV);
+
+
+                long startTime = System.nanoTime();
                 dicIteSl = EvalIte(valEqs, currentBV, currentSolution);
+
+                long endTime = System.nanoTime();
+                long timeElapsed = endTime - startTime;
+
+                System.out.println("dicITESl: Execution time in milliseconds: "+            timeElapsed / 1000000);
                 for (Set<LinearSet> list : dicIteSl) {
-                    System.out.println(list.size());
+                    System.out.print(list.size() +"  ");
                 }
 
 
