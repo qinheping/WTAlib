@@ -9,7 +9,7 @@
 ))
 	(NT2  Int (		-x
 		-y
-		-2
+		-1
 ))
 	(NT3  Int (		(+ NT1 NT1)
 		(+ NT1 NT2)
@@ -25,7 +25,7 @@
 		(ite NT8 NT1 NT1)
 		(ite NT4 NT5 NT1)
 ))
-	(NT6  Int (		(+ NT3 NT3)
+	(NT6  Int (		
 		(+ NT5 NT1)
 		(+ NT5 NT2)
 		(ite NT4 NT6 NT1)
@@ -43,7 +43,7 @@
 		(ite NT4 NT9 NT1)
 		(ite NT13 NT1 NT1)
 ))
-	(NT10  Int (		(+ NT5 NT5)
+	(NT10  Int (		
 		(+ NT9 NT1)
 		(+ NT9 NT2)
 		(ite NT8 NT6 NT1)
@@ -53,7 +53,7 @@
 		(ite NT7 NT9 NT1)
 		(ite NT16 NT1 NT1)
 ))
-	(NT11  Int (		(+ NT6 NT6)
+	(NT11  Int (		
 		(ite NT4 NT11 NT1)
 		(+ NT15 NT1)
 		(+ NT15 NT2)
@@ -77,6 +77,8 @@
 		(ite NT8 NT9 NT1)
 		(ite NT7 NT10 NT1)
 		(ite NT4 NT15 NT1)
+		(ite NT4 NT6 NT6)
+		(ite NT4 NT5 NT9)
 ))
 	(NT16  Bool (		(>= NT10 NT1)
 ))

@@ -20,7 +20,7 @@
 		(ite NT3 NT4 NT1)
 		(ite NT7 NT1 NT1)
 ))
-	(NT5  Int (		(+ NT2 NT2)
+	(NT5  Int (		
 		(+ NT4 NT1)
 		(ite NT3 NT5 NT1)
 		(ite NT6 NT4 NT1)
@@ -36,7 +36,7 @@
 		(ite NT3 NT8 NT1)
 		(ite NT13 NT1 NT1)
 ))
-	(NT9  Int (		(+ NT4 NT4)
+	(NT9  Int (		
 		(+ NT8 NT1)
 		(ite NT7 NT5 NT1)
 		(ite NT7 NT1 NT5)
@@ -45,7 +45,7 @@
 		(ite NT6 NT8 NT1)
 		(ite NT18 NT1 NT1)
 ))
-	(NT10  Int (		(+ NT5 NT5)
+	(NT10  Int (		
 		(ite NT3 NT10 NT1)
 		(+ NT15 NT1)
 		(ite NT7 NT9 NT1)
@@ -80,7 +80,7 @@
 		(ite NT3 NT15 NT1)
 ))
 	(NT16  Int (		(+ NT11 NT1)
-		(+ NT8 NT8)
+		
 		(ite NT7 NT10 NT1)
 		(ite NT6 NT11 NT1)
 		(ite NT3 NT16 NT1)
