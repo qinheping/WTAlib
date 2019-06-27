@@ -1,5 +1,5 @@
 ( synth-fun eq1  (     ( x  Int )  ( y  Int ) )  Int (
-	(Start  Int (		NT1 NT2  NT3 NT5 NT6 NT9 NT10 NT11 NT12 NT16 NT17 NT18 NT19 NT20 NT21
+	(Start  Int (		NT1 NT2  NT3 NT5 NT6 NT9 NT10 NT11 NT12 NT16 NT17 NT18 NT19 NT21
 ))
 	(NT1  Int (		x
 		y
@@ -25,7 +25,7 @@
 		(ite NT8 NT1 NT1)
 		(ite NT4 NT5 NT1)
 ))
-	(NT6  Int (		(+ NT3 NT3)
+	(NT6  Int (		
 		(+ NT5 NT1)
 		(+ NT5 NT2)
 		(ite NT4 NT6 NT1)
@@ -53,7 +53,7 @@
 		(ite NT7 NT9 NT1)
 		(ite NT22 NT1 NT1)
 ))
-	(NT11  Int (		(+ NT6 NT6)
+	(NT11  Int (		
 		(ite NT4 NT11 NT1)
 		(+ NT16 NT1)
 		(+ NT16 NT2)
@@ -92,7 +92,6 @@
 ))
 	(NT17  Int (		(+ NT12 NT1)
 		(+ NT12 NT2)
-		(+ NT9 NT9)
 		(ite NT8 NT11 NT1)
 		(ite NT7 NT12 NT1)
 		(ite NT4 NT17 NT1)
@@ -101,7 +100,7 @@
 		(ite NT26 NT1 NT1)
 		(ite NT13 NT16 NT1)
 ))
-	(NT18  Int (		(+ NT10 NT10)
+	(NT18  Int (		
 		(+ NT19 NT1)
 		(+ NT19 NT2)
 		(ite NT4 NT18 NT1)
@@ -138,7 +137,6 @@
 		(ite NT8 NT18 NT1)
 		(ite NT7 NT21 NT1)
 		(ite NT28 NT1 NT1)
-		(+ NT16 NT16)
 		(ite NT14 NT17 NT1)
 		(ite NT13 NT10 NT10)
 		(ite NT13 NT19 NT1)
