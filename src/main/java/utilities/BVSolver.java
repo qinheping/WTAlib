@@ -39,7 +39,7 @@ public class BVSolver {
                 if(!id_modified_expr(beqs.get(i),modfied_var)) {
                     continue;
                 }
-                System.out.println(dim +" "+result.get(bvars.get(i)).size());
+                //System.out.println(dim +" "+result.get(bvars.get(i)).size());
                 if(result.get(bvars.get(i)).size() == Math.pow(2,dim))
                     continue;
                 Set<Vector<Boolean>> newBVSet = evl(beqs.get(i).right,result);

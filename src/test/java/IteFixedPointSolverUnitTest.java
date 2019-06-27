@@ -17,8 +17,9 @@ import java.util.*;
 public class IteFixedPointSolverUnitTest {
     @org.junit.Test
     public void fg_mpg_plane1_2examples() throws IOException {
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/less8.sl")).useDelimiter("\\Z").next();
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/grammar.sl")).useDelimiter("\\Z").next();
 
+        System.loadLibrary("cvc4jni");
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -45,7 +46,7 @@ public class IteFixedPointSolverUnitTest {
         Vector<Integer> spec = new Vector<>();
         spec.add(84);
         spec.add(126);
-        //System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;
@@ -53,7 +54,8 @@ public class IteFixedPointSolverUnitTest {
 
     @org.junit.Test
     public void fg_mpg_plane3_2examples() throws IOException {
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/less14.sl")).useDelimiter("\\Z").next();
+        System.loadLibrary("cvc4jni");
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/2var/less14.sl")).useDelimiter("\\Z").next();
 
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -67,22 +69,22 @@ public class IteFixedPointSolverUnitTest {
         List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
         Map<String,Vector<Integer>> inputEx = new HashMap<>();
         Vector<Integer> xEx = new Vector<>();
-        xEx.add(10);
-        xEx.add(20);
+        xEx.add(9);
+        xEx.add(15);
+        xEx.add(3);
         inputEx.put("x",xEx);
         Vector<Integer> yEx = new Vector<>();
         yEx.add(17);
         yEx.add(21);
+        yEx.add(10);
         inputEx.put("y",yEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
-        writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
-        spec.add(140);
-        spec.add(210);
-        //System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
-        writer.close();
+        spec.add(135);
+        spec.add(185);
+        spec.add(70);
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
 
         //assert IteFixedPointSolver.iteCount == 1;
     }
@@ -125,6 +127,7 @@ public class IteFixedPointSolverUnitTest {
     public void fg_mpg_sum_2_5_2examples() throws IOException {
         String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/less11.sl")).useDelimiter("\\Z").next();
 
+        System.loadLibrary("cvc4jni");
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -154,7 +157,7 @@ public class IteFixedPointSolverUnitTest {
         spec.add(6);
         spec.add(243);
         spec.add(0);
-        System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;

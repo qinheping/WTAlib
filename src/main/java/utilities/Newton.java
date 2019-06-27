@@ -24,11 +24,11 @@ public class Newton {
             tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
         }
         result = tmp_result;
-        System.out.println("\t\tresult size in newton:" +result.size());
+        //System.out.println("\t\tresult size in newton:" +result.size());
 
         //System.out.println(SlEqs);
         for(int k = 0; k < varCount; k++){
-            System.out.println("\t\tnewton iteration: "+k);
+            //System.out.println("\t\tnewton iteration: "+k);
             Map<String,Set<LinearSet>> newResult = new HashMap<>();
             for(int i = 0; i < varCount; i++){
                 Set<String> intersection = new HashSet<String>(rhs_vars.get(varList.get(i)));

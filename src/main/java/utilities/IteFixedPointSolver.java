@@ -15,7 +15,7 @@ public class IteFixedPointSolver {
         Set<String> currentEq = dag.popRoot();
         while(currentEq!=null) {
 
-            System.out.println("current EQ: "+ currentEq);
+            //System.out.println("current EQ: "+ currentEq);
             List<Equation> valEqs = new ArrayList<>();
             // map from eq to var set appearing in the rhs
             Map<String, Set<String>> rhs_var_set = new HashMap<>();
@@ -54,28 +54,30 @@ public class IteFixedPointSolver {
 
             // start solving fixed point
             while (true) {
-                System.out.println("Stage: " + stage);
+                //System.out.println("Stage: " + stage);
                 // substitute ite in eqs by previous solution
                 List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs, dicIteSl);
-                System.out.println("\tIte substituted");
+                //System.out.println("\tIte substituted");
                 //valEqsNoIte.forEach(System.out::println);
 
                 // solving linear eqs by newton method
                 Map<String, Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte, (map.values().iterator().next()).size(), rhs_var_set);
-                System.out.println("\tnew solution got");
+                //System.out.print("\tnew solution got: ");
+
+                for(String nt:currentSolution.keySet()){
+                    //System.out.print(nt+" "+currentSolution.get(nt).size()+" ");
+
+                }
+                //System.out.print("\n");
                 solutionStore.put(stage, currentSolution);
                 //System.out.println(currentSolution);
 
                 // get the new bv map with new solution
                 Map<String, Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim, valEqs, currentSolution, bvStore.get(stage));
-                System.out.println(currentBV);
+                //System.out.println(currentBV);
                 if (checkBVFixedPoint(currentBV, bvStore.get(stage))) {
-                    System.out.print("BV fixedpoint reached, return current solution: ");
-                    for(String nt:currentSolution.keySet()){
-                        System.out.print(nt+" "+currentSolution.get(nt).size()+" ");
-
-                    }
-                    System.out.println("\nDot count in this eq iteration: "+SemilinearFactory.dotCount);
+                    //System.out.print("BV fixedpoint reached, return current solution: ");
+                    //System.out.println("\nDot count in this eq iteration: "+SemilinearFactory.dotCount);
                     // fixed point reached
                     for (Equation oriEq : oriValEqs) {
                         oriEq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(oriEq.right, currentSolution);
@@ -94,10 +96,10 @@ public class IteFixedPointSolver {
                 long endTime = System.nanoTime();
                 long timeElapsed = endTime - startTime;
 
-                System.out.println("dicITESl: Execution time in milliseconds: "+            timeElapsed / 1000000);
-                for (Set<LinearSet> list : dicIteSl) {
-                    System.out.print(list.size() +"  ");
-                }
+                //System.out.println("dicITESl: Execution time in milliseconds: "+            timeElapsed / 1000000);
+                //for (Set<LinearSet> list : dicIteSl) {
+                 //   System.out.print(list.size() +"  ");
+                //}
 
 
                 // TODO check if the current solution reach a fixed point
