@@ -27,32 +27,41 @@ public class SMTQGenerator {
         return  result;
     }
 
+    static int count = 0;
     public static boolean checkSat(Vector<Integer> spec, Set<LinearSet> start) {
-        for(LinearSet ls: start){
-            if(checkInLinearSet(spec,ls)) {
+        count = 0;
+        Iterator<LinearSet> iterator = start.iterator();
+        while(iterator.hasNext()){
+            if(checkInLinearSet(spec,iterator.next())) {
                 //System.out.print(spec+" "+ls);
                 return true;
             }
+            iterator.remove();
+            //System.out.println(" start next Q");
         }
         return false;
     }
     public static Boolean checkInLinearSet(Vector<Integer> target, LinearSet ls){
+        count++;
+        if(count%10000 ==0 ){
+            System.out.print(count+" :");
+            System.loadLibrary("cvc4jni");
+            em = new ExprManager();
+            System.out.print( em.getResourceManager().getResourceUsage()+" :");
+            System.out.println( em.getResourceManager().getTimeUsage()+" :");
 
-
+        }
         int dim = target.size();
-
         Expr body = em.mkConst(true);
         Expr zero = em.mkConst(new Rational(0));
         Expr assert_nature = em.mkConst(true);
         List<Vector<Integer>> peroid_list = new ArrayList<>(ls.getPeriod());
 
-        List<List<Expr>> bound_vars = new ArrayList<>();
+        List<Expr> bound_vars = new ArrayList<>();
         for(int i = 0; i < ls.getPeriod().size();i++){
-            bound_vars.add(new ArrayList<>());
-            for(int j = 0; j < dim; j++){
-                bound_vars.get(i).add(em.mkBoundVar("z"+"_"+i+"_"+j,integer));
-                assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,bound_vars.get(i).get(j),zero));
-            }
+                bound_vars.add(em.mkVar("z"+"_"+i,integer));
+                assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,bound_vars.get(i),zero));
+
         }
 
         body = assert_nature;
@@ -60,16 +69,18 @@ public class SMTQGenerator {
         for(int j = 0; j < dim; j++){
             Expr body_j = em.mkConst(new Rational(ls.getBase().get(j)));
             for(int i = 0; i < ls.getPeriod().size(); i++){
-                body_j = em.mkExpr(Kind.PLUS,body_j,em.mkExpr(Kind.MULT,bound_vars.get(i).get(j),em.mkConst(new Rational(peroid_list.get(i).get(j)))));
+                body_j = em.mkExpr(Kind.PLUS,body_j,em.mkExpr(Kind.MULT,bound_vars.get(i),em.mkConst(new Rational(peroid_list.get(i).get(j)))));
             }
             body_j = em.mkExpr(Kind.EQUAL,body_j,em.mkConst(new Rational(target.get(j))));
             body = em.mkExpr(Kind.AND, body,body_j);
         }
-
+        //System.runFinalization();
+        //System.out.print("body got: ");
+        //System.out.println(body);
         return smt.checkSat(body).toString().equals("sat");
     }
 
-
+/*
     public static Boolean checkSLEQ(Map<String,Set<LinearSet>> sls, Map<String,Set<LinearSet>> newSls) {
         for(String key:sls.keySet()){
             if(sls.get(key).size() == 0 && newSls.get(key).size() == 0)
@@ -86,7 +97,7 @@ public class SMTQGenerator {
     }
 
     // check if sl_this is subset of sl_that
-    private static boolean checkSubset(Set<LinearSet> sl_this,  Set<LinearSet> sl_that) {
+   /* private static boolean checkSubset(Set<LinearSet> sl_this,  Set<LinearSet> sl_that) {
 
         for(LinearSet ls: sl_this){
             if(checkSubset_ls(ls,sl_that))
@@ -95,11 +106,8 @@ public class SMTQGenerator {
         }
         return true;
     }
-
+/*
     private static boolean checkSubset_ls(LinearSet ls, Set<LinearSet> sl_that) {
-        System.loadLibrary("cvc4jni");
-        ExprManager em = new ExprManager();
-        SmtEngine smt = new SmtEngine(em);
 
         Type integer = em.integerType();
 
@@ -118,14 +126,14 @@ public class SMTQGenerator {
                 Expr body_i_right = em.mkConst(new Rational(sl_that_list.get(k).getBase().get(i)));
                 for(int jx = 0; jx < ls.getPeriod().size(); jx++){
                     // + x_i_j * p_j_i
-                    body_i_left = em.mkExpr(Kind.PLUS,body_i_left, em.mkExpr(Kind.MULT,em.mkBoundVar("x_"+i+"_"+jx,integer), em.mkConst(new Rational(((Vector<Integer>)ls.getPeriod().toArray()[jx]).get(i)) )));
+                    body_i_left = em.mkExpr(Kind.PLUS,body_i_left, em.mkExpr(Kind.MULT,em.mkVar("x_"+i+"_"+jx,integer), em.mkConst(new Rational(((Vector<Integer>)ls.getPeriod().toArray()[jx]).get(i)) )));
                     if(k == 0)
-                        assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,em.mkBoundVar("x_"+i+"_"+jx,integer),zero));
+                        assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,em.mkVar("x_"+i+"_"+jx,integer),zero));
                 }
                 for(int jy = 0; jy < sl_that_list.get(k).getPeriod().size(); jy++){
                     // + y_i_j_k * p_k_j_i
-                    body_i_right = em.mkExpr(Kind.PLUS,body_i_right, em.mkExpr(Kind.MULT,em.mkBoundVar("y_"+k+"_"+i+"_"+jy,integer),em.mkConst(new Rational(((Vector<Integer>)sl_that_list.get(k).getPeriod().toArray()[jy]).get(i)) )));
-                    assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,em.mkBoundVar("y_"+k+"_"+i+"_"+jy,integer),zero));
+                    body_i_right = em.mkExpr(Kind.PLUS,body_i_right, em.mkExpr(Kind.MULT,em.mkVar("y_"+k+"_"+i+"_"+jy,integer),em.mkConst(new Rational(((Vector<Integer>)sl_that_list.get(k).getPeriod().toArray()[jy]).get(i)) )));
+                    assert_nature = em.mkExpr(Kind.AND,assert_nature,em.mkExpr(Kind.GEQ,em.mkVar("y_"+k+"_"+i+"_"+jy,integer),zero));
                 }
                 body_k = em.mkExpr(Kind.AND,body_k,em.mkExpr(Kind.EQUAL,body_i_left,body_i_right));
             }
@@ -138,14 +146,14 @@ public class SMTQGenerator {
         for(int k = 0; k < sl_that_list.size();k++){
             for(int i = 0; i < dim; i++){
                 for(int j = 0; j < sl_that_list.get(k).getPeriod().size();j++){
-                    q = em.mkExpr(Kind.EXISTS,em.mkExpr(Kind.BOUND_VAR_LIST,em.mkBoundVar("y_"+k+"_"+i+"_"+j,integer)),q);
+                    q = em.mkExpr(Kind.EXISTS,em.mkExpr(Kind.BOUND_VAR_LIST,em.mkVar("y_"+k+"_"+i+"_"+j,integer)),q);
                 }
             }
         }
 
         for(int i = 0; i < dim; i++) {
             for (int j = 0; j < ls.getPeriod().size(); j++) {
-                q = em.mkExpr(Kind.FORALL, em.mkExpr(Kind.BOUND_VAR_LIST, em.mkBoundVar("x_" + i + "_" + j, integer)), q);
+                q = em.mkExpr(Kind.FORALL, em.mkExpr(Kind.BOUND_VAR_LIST, em.mkVar("x_" + i + "_" + j, integer)), q);
             }
         }
         long startTime = System.nanoTime();
@@ -158,7 +166,7 @@ public class SMTQGenerator {
         return out.equals("valid");
 
     }
-
+    */
     public static Set<Vector<Boolean>> getBVSet(Set<LinearSet> left, Set<LinearSet> right, String bop) {
         Set<Vector<Boolean>> result = new HashSet<>();
         List<LinearSet> leftList = new ArrayList<>(left);
@@ -209,7 +217,7 @@ public class SMTQGenerator {
         for(int ix = 0; ix < left.size(); ix++  ){
             for(int d = 0; d < dim; d++){;
                 for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
-                    boundx_list.add(em.mkBoundVar("x_"+ix+"_"+jx+"_"+"d",integer));
+                    boundx_list.add(em.mkVar("x_"+ix+"_"+jx+"_"+"d",integer));
                 }
             }
         }
@@ -217,7 +225,7 @@ public class SMTQGenerator {
         for(int iy = 0; iy < right.size(); iy++  ){
             for(int d = 0; d < dim; d++){
                 for(int jy = 0; jy < right.get(iy).getPeriod().size(); jy++){
-                    boundy_list.add(em.mkBoundVar("y_"+iy+"_"+jy+"_"+"d",integer));
+                    boundy_list.add(em.mkVar("y_"+iy+"_"+jy+"_"+"d",integer));
                 }
             }
         }
@@ -264,7 +272,6 @@ public class SMTQGenerator {
             for(int d = 0; d < dim; d++){;
                 for(int jx = 0; jx < left.get(ix).getPeriod().size(); jx++){
                     Expr bound_var_list = em.mkExpr(Kind.BOUND_VAR_LIST,access_boundVar(left,dim,ix,d,jx,boundx_list));
-                    body =em.mkExpr(Kind.EXISTS,bound_var_list,body);
                 }
             }
         }
@@ -273,7 +280,6 @@ public class SMTQGenerator {
             for(int d = 0; d < dim; d++){
                 for(int jy = 0; jy < right.get(iy).getPeriod().size(); jy++){
                     Expr bound_var_list = em.mkExpr(Kind.BOUND_VAR_LIST,access_boundVar(right,dim,iy,d,jy,boundy_list));
-                    body = em.mkExpr(Kind.EXISTS,bound_var_list,body);
                 }
             }
         }
@@ -326,7 +332,7 @@ public class SMTQGenerator {
             boundx_list.add(new ArrayList<>());
 
             for(int d = 0; d < dim; d++){;
-                    boundx_list.get(ix).add(em.mkBoundVar("x_"+ix+"_"+"d",integer));
+                    boundx_list.get(ix).add(em.mkVar("x_"+ix+"_"+"d",integer));
                     assertx = em.mkExpr(Kind.AND,assertx,em.mkExpr(Kind.GEQ,boundx_list.get(ix).get(d),zero));
             }
         }
@@ -335,7 +341,7 @@ public class SMTQGenerator {
             boundy_list.add(new ArrayList<>());
 
             for(int d = 0; d < dim; d++){;
-                boundy_list.get(iy).add(em.mkBoundVar("y_"+iy+"_"+"d",integer));
+                boundy_list.get(iy).add(em.mkVar("y_"+iy+"_"+"d",integer));
                 asserty = em.mkExpr(Kind.AND,asserty,em.mkExpr(Kind.GEQ,boundy_list.get(iy).get(d),zero));
             }
         }

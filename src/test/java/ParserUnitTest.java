@@ -50,7 +50,7 @@ public class ParserUnitTest {
         //System.out.println(QSyGuS.callSolver(prog.toString(gr.mkFTAInRange(prog.toWTA(),2.0f, true,3.0f,true)),"",prog.toWTA(),gr.sr));
         //System.out.println(prog.getSynthFun().toFTA());
         FTA fta_0 = gr.mkFTALessThanC(prog.toWTA(), 2.0f);
-        FTA fta_1 = gr.mkFTALessThanC(prog.toWTA(), 4.0f);
+        FTA fta_1 = gr.mkFTALessThanC(prog.toWTA(), 25f);
         System.out.println(fta_0);
         //System.out.println(fta_1);
         //System.out.println(fta);
@@ -72,12 +72,12 @@ public class ParserUnitTest {
         //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/out"));
         writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
-        System.out.println(prog.toString(gr.mkFTALessThanC(prog.toWTA(),4.0f)));
+        System.out.println(prog.toString(gr.mkFTALessThanC(prog.toWTA(),5.0f)));
         writer.close();
     }
     @org.junit.Test
     public void testReduction_hackers_if() throws IOException{
-        String input = new Scanner(new File("benchmarks/CLIA_Track_IF/fg_mpg_plane3.sl")).useDelimiter("\\Z").next();
+        String input = new Scanner(new File("benchmarks/CLIA_Track_IF/fg_mpg_plane2.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -87,7 +87,7 @@ public class ParserUnitTest {
         GrammarReduction<String, Float> gr = new GrammarReduction<String, Float>(new TropicalSemiring());
         //System.out.println("GR: "+ gr.mkFTALessThanC(prog.toWTA(),4.0f));
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_IF/out"));
-        writer.write(prog.toString(gr.mkFTALessThanC(prog.toWTA(),1.0f)));
+        System.out.println(prog.toString(gr.mkFTALessThanC(prog.toWTA(),2.0f)));
         writer.close();
     }
 }

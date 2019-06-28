@@ -55,14 +55,20 @@ public class IteFixedPointSolver {
             // start solving fixed point
             while (true) {
                 //System.out.println("Stage: " + stage);
+
+                for(Equation eq:valEqs){
+                    eq.right = ExpressionEvalIte(eq.right);
+                }
                 // substitute ite in eqs by previous solution
                 List<Equation> valEqsNoIte = ExpressionApplication.EquationSubstIte(valEqs, dicIteSl);
+
                 //System.out.println("\tIte substituted");
                 //valEqsNoIte.forEach(System.out::println);
 
                 // solving linear eqs by newton method
                 Map<String, Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte, (map.values().iterator().next()).size(), rhs_var_set);
                 //System.out.print("\tnew solution got: ");
+
 
                 for(String nt:currentSolution.keySet()){
                     //System.out.print(nt+" "+currentSolution.get(nt).size()+" ");
@@ -139,6 +145,30 @@ public class IteFixedPointSolver {
             result.addAll(ExpressionEvalIte(currecntEq.right,bvSet,assignment));
         }
         return  result;
+    }
+    public static Expression ExpressionEvalIte(Expression exp){
+
+        Expression result = new Expression();
+        switch (exp.type){
+            case 0:
+            case 5:
+            case 6:
+            case 1:
+                return exp;
+            case 2:
+            case 3:
+                result.type = exp.type;
+                result.left = (ExpressionEvalIte(exp.left));
+                result.right = (ExpressionEvalIte(exp.right));
+                return result;
+            case 4:
+                if(exp.condition.type != 0 || exp.left.type!=0 || exp.right.type!=0)return exp;
+                result.type = 0;
+                result.constant = projection_sls_vs((Set<LinearSet>)exp.left.constant,(Set<LinearSet>)exp.right.constant,(Set<Vector<Boolean>>)exp.condition.constant);
+                return result;
+
+        }
+        return  null;
     }
 
     public static List<Set<LinearSet>> ExpressionEvalIte(Expression exp,  Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment){

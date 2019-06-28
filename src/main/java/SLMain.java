@@ -13,14 +13,11 @@ import utilities.GrammarInterpretor;
 import utilities.IteFixedPointSolver;
 import utilities.SMTQGenerator;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
 public class SLMain {
-    public static void main(String args[]) throws FileNotFoundException {
+    public static void main(String args[]) throws IOException {
         String path = args[0];
 
         int numEx = Integer.parseInt(args[1]);
@@ -48,7 +45,7 @@ public class SLMain {
         Map<String,Vector<Integer>> inputExMap = new HashMap<>();
 
         for(int i = 0; i < numEx; i++){
-            String[] line = scanner.nextLine().split(" ");
+            String[] line = scanner.nextLine().replace("\t"," ").split(" ");
             for(int j = 0; j < line.length-1; j++){
                 if(!inputExMap.keySet().contains(var_array[j]))
                     inputExMap.put(var_array[j],new Vector<Integer>());
@@ -58,6 +55,13 @@ public class SLMain {
         }
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputExMap);
         System.out.println(solution.get("Start").size());
-        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path+"out.txt"));
+        writer.write(solution.get("Start").toString());
+        writer.close();
+        File file = new File(path+"out.txt");
+        file.delete();
+        //System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
     }
 }

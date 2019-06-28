@@ -40,7 +40,7 @@ public class Newton {
 
                 // f'(vi)
                 Set<LinearSet> SL_diff_i = ExpressionApplication.ExpressionEval_SemilinearSet(diffList.get(i),result);
-                //System.out.println(varList.get(i)+" diff: "+SL_diff_i);
+               // System.out.println(varList.get(i)+" diff: "+SL_diff_i);
                 Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
                 //System.out.println("star: "+SL_diff_i);
                 // f(vi)
@@ -48,7 +48,7 @@ public class Newton {
 
                 Set<LinearSet> SL_exp_i = ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result);
 
-                //System.out.println("f: "+SL_diff_i);
+               // System.out.println("f': "+SL_diff_i);
                 // (f'(vi))^**f(vi)
                 newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
             }
@@ -67,6 +67,7 @@ public class Newton {
         return  result;
     }
 
+    /*
     private static boolean checkEquality_SLs(Map<String,Set<LinearSet>> Sls, Map<String,Set<LinearSet>> newSls) {
 
         if(Sls.size() == 0 && newSls.size() == 0)
@@ -76,7 +77,7 @@ public class Newton {
         return SMTQGenerator.checkSLEQ(Sls,newSls);
 
     }
-
+    */
 
     private static List<Expression> getDiffListFromEqs(List<Equation> SlEqs, int dim){
         int varCount = SlEqs.size();

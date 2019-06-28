@@ -71,19 +71,16 @@ public class IteFixedPointSolverUnitTest {
         Vector<Integer> xEx = new Vector<>();
         xEx.add(9);
         xEx.add(15);
-        xEx.add(3);
         inputEx.put("x",xEx);
         Vector<Integer> yEx = new Vector<>();
         yEx.add(17);
         yEx.add(21);
-        yEx.add(10);
         inputEx.put("y",yEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
         System.out.println(solution.get("Start").size());
         Vector<Integer> spec = new Vector<>();
         spec.add(135);
         spec.add(185);
-        spec.add(70);
         System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
 
         //assert IteFixedPointSolver.iteCount == 1;
