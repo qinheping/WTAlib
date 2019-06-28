@@ -7,7 +7,7 @@
              ((+ Start Start):1)
              (ite StartBool Start Start)))
 (D Int (-x -y -1 -z))
- (StartBool Bool (                  (>= Start Start) ))
+ (StartBool Bool (                  (>= Start Start) (and StartBool StartBool) ))
 ))
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )
