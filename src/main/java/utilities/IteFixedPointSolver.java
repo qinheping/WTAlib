@@ -1,5 +1,6 @@
 package utilities;
 
+import prover.Pair;
 import semirings.LinearSet;
 
 import java.util.*;
@@ -116,6 +117,83 @@ public class IteFixedPointSolver {
         return finalSolution;
     }
 
+    private static List<Equation> expandIte(List<Equation> oriEqs){
+        for(Equation eq: oriEqs){
+
+        }
+    }
+    private static Pair<Set<Pair<String,Vector<Boolean>>>,Expression> expandIte(Expression exp){
+        Expression resultExpr = new Expression();
+        Set<Pair<String,Vector<Boolean>>> resultSet = new HashSet<>();
+        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> tmpLeft;
+        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> tmpRight;
+        switch (exp.type){
+            case 0:
+            case 1:
+                resultExpr = exp;
+                break;
+            case 2:
+            case 3:
+                resultExpr.type = exp.type;
+                tmpLeft = expandIte(exp.left);
+                tmpRight = expandIte(exp.right);
+                resultExpr.left = tmpLeft.second;
+                resultExpr.right = tmpRight.second;
+                resultSet.addAll(tmpLeft.first);
+                resultSet.addAll(tmpRight.first);
+                break;
+            case 4:
+                resultSet.add(new Pair(exp.left.var,exp.condition.constant));
+                resultSet.add(new Pair(exp.right.var,flip((Set<Vector<Boolean>>)exp.condition.constant)));
+                resultExpr = constructSum(exp.left.var,exp.right.var,(Set<Vector<Boolean>>)exp.condition.constant);
+
+        }
+        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> result = new Pair(resultSet,resultExpr);
+        return result;
+    }
+
+    private static Expression constructSum(String left, String right, Set<Vector<Boolean>> bvSet) {
+        Expression result = new Expression();
+        if(bvSet.size() == 1){
+            result.type = 2;
+            result.left = new Expression();
+            result.left.type = 1;
+            result.left.var = left + toBitString(bvSet.iterator().next());
+            result.right = new Expression();
+            result.right.type = 1;
+            result.right.var = right + toBitString(bvSet.iterator().next());
+            return  result;
+        }
+
+        result.type = 3;
+        Iterator<Vector<Boolean>> iterator = bvSet.iterator();
+        Vector<Boolean> bv = iterator.next();
+        iterator.remove();
+        result.right = constructSum(left, right, bvSet);
+
+        Expression leftExpr = new Expression();
+        leftExpr.type = 2;
+        leftExpr.left = new Expression();
+        leftExpr.left.type = 1;
+        leftExpr.left.var = left + toBitString(bv);
+        leftExpr.right = new Expression();
+        leftExpr.right.type = 1;
+        leftExpr.right.var = right + toBitString(bv);
+        result.left = leftExpr;
+        return result;
+    }
+
+    private static String toBitString(Vector<Boolean> bv){
+        String result = "";
+        for(Boolean b:bv){
+            if (b)
+                result += "1";
+            else
+                result += "0";
+        }
+        return result;
+    }
+
     private static Set<String> find_expr_vars(Expression expr) {
         Set<String> result = new HashSet<>();
         switch (expr.type){
@@ -224,6 +302,15 @@ public class IteFixedPointSolver {
             result.addAll(SemilinearFactory.dot(result_T, result_F));
         }
         return  result;
+    }
+
+
+    private static Set<Vector<Boolean>> flip(Set<Vector<Boolean>> bvSet) {
+        Set<Vector<Boolean>> result = new HashSet<>();
+        for(Vector<Boolean> bv: bvSet){
+            result.add(flip(bv));
+        }
+        return result;
     }
 
     private static Vector<Boolean> flip(Vector<Boolean> bv) {
