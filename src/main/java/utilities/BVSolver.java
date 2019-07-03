@@ -27,12 +27,8 @@ public class BVSolver {
         }
         //System.out.println(eqs);
         Set<String> modfied_var = new HashSet<>();
-        for(int i = 0; i < bvars.size(); i++){
-            modfied_var.add(bvars.get(i));
-        }
-        for(int i = 0; i < bvars.size(); i++){
-            result.put(bvars.get(i),evl(beqs.get(i),preBVMap));
-        }
+        for(int i = 0; i < bvars.size(); i++) modfied_var.add(bvars.get(i));
+        for(int i = 0; i < bvars.size(); i++) result.put(bvars.get(i), evl(beqs.get(i), preBVMap));
         while(modfied_var.size()!=0){
             Set<String> current_modfied_var = new HashSet<>();
             for(int i = 0; i < bvars.size(); i++){
@@ -43,6 +39,7 @@ public class BVSolver {
                 if(result.get(bvars.get(i)).size() == Math.pow(2,dim))
                     continue;
                 Set<Vector<Boolean>> newBVSet = evl(beqs.get(i).right,result);
+                assert newBVSet != null;
                 if(!newBVSet.equals(result.get(bvars.get(i)))){
                     result.put(bvars.get(i),newBVSet);
                     current_modfied_var.add(bvars.get(i));

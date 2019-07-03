@@ -49,8 +49,8 @@ public class SemilinearFactory {
         long timeElapsed = endTime - startTime;
         dotCount++;
         if(timeElapsed / 1000000>1000){
-            //System.out.println("Dot Size: "+left.size()+" "+right.size()+" "+result.size()+" dot count: "+dotCount+" Execution time in milliseconds : " +
-           //     timeElapsed / 1000000);
+            System.out.println("Dot Size: "+left.size()+" "+right.size()+" "+result.size()+" dot count: "+dotCount+" Execution time in milliseconds : " +
+                timeElapsed / 1000000);
         }
 
         return result;

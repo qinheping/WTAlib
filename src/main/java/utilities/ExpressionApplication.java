@@ -195,7 +195,14 @@ public  class ExpressionApplication {
                 if(currentBV.keySet().contains(exp.var)){
 
                     result.type = 0;
-                    result.constant = currentBV.get(exp.var);
+                    Set<Vector<Boolean>> newBVSet = new HashSet<>();
+                    for(Vector<Boolean> bv:  currentBV.get(exp.var)){
+                        Vector<Boolean> newBv = new Vector<>();
+                        for(Boolean b: bv)
+                            newBv.add(b);
+                        newBVSet.add(newBv);
+                    }
+                    result.constant = newBVSet;
                     return result;
                 }
                 return exp;

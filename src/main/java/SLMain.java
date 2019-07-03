@@ -11,6 +11,7 @@ import semirings.LinearSet;
 import utilities.Equation;
 import utilities.GrammarInterpretor;
 import utilities.IteFixedPointSolver;
+import utilities.SMTQGenerator;
 
 import java.io.*;
 import java.util.*;
@@ -56,11 +57,11 @@ public class SLMain {
         System.out.println(solution.get("Start").size());
 
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path+"out.txt"));
-        writer.write(solution.get("Start").toString());
-        writer.close();
-        File file = new File(path+"out.txt");
-        file.delete();
-        //System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+        //BufferedWriter writer = new BufferedWriter(new FileWriter(path+"out.txt"));
+        //writer.write(solution.get("Start").toString());
+        //writer.close();
+        //File file = new File(path+"out.txt");
+        //file.delete();
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
     }
 }
