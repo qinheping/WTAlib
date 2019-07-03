@@ -3,12 +3,14 @@ package utilities;
 import prover.Pair;
 import semirings.LinearSet;
 
+import javax.sound.sampled.Line;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class IteFixedPointSolver {
-    public static int  iteCount = 0;
-    public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String,Vector<Integer>> map){
+    public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String, Vector<Integer>> map){
         Map<String,Set<LinearSet>> finalSolution = new HashMap<>();
         int dim = map.values().iterator().next().size();
         List<Equation> oriValEqs = ExpressionApplication.EquationEval_LinearSet(termEqs,map);
@@ -34,17 +36,13 @@ public class IteFixedPointSolver {
             //System.out.println(rhs_var_set);
 
             // # of ite in arithmetic non-terminal
-            iteCount = getIteCount(termEqs);
-            List<String> boolNames = new ArrayList<>();
-            for (int i = 0; i < valEqs.size(); i++) {
-                if (valEqs.get(i).type == 0)
-                    boolNames.add(valEqs.get(i).left);
-            }
+            int iteCount = getIteCount(termEqs);
+            List<String> boolNames = IntStream.range(0, valEqs.size()).filter(i -> valEqs.get(i).type == 0).mapToObj(i -> valEqs.get(i).left).collect(Collectors.toList());
             for (int i = 0; i < iteCount; i++) {
                 dicIteSl.add(SemilinearFactory.getEmpty());
             }
 
-            Map<Integer, Map<String, Set<LinearSet>>> solutionStore = new HashMap<>();
+            //Map<Integer, Map<String, Set<LinearSet>>> solutionStore = new HashMap<>();
             Map<Integer, Map<String, Set<Vector<Boolean>>>> bvStore = new HashMap<>();
             Map<String, Set<Vector<Boolean>>> initBV = new HashMap<>();
             for (String boolName : boolNames) {
@@ -70,14 +68,7 @@ public class IteFixedPointSolver {
                 Map<String, Set<LinearSet>> currentSolution = Newton.SolveSlEq(valEqsNoIte, (map.values().iterator().next()).size(), rhs_var_set);
                 //System.out.print("\tnew solution got: ");
 
-
-                for(String nt:currentSolution.keySet()){
-                    //System.out.print(nt+" "+currentSolution.get(nt).size()+" ");
-
-                }
-                //System.out.print("\n");
-                solutionStore.put(stage, currentSolution);
-                //System.out.println(currentSolution);
+                //solutionStore.put(stage, currentSolution);
 
                 // get the new bv map with new solution
                 Map<String, Set<Vector<Boolean>>> currentBV = BVSolver.SolveBV(dim, valEqs, currentSolution, bvStore.get(stage));
@@ -97,17 +88,12 @@ public class IteFixedPointSolver {
                 bvStore.put(stage, currentBV);
 
 
-                long startTime = System.nanoTime();
+                //long startTime = System.nanoTime();
                 dicIteSl = EvalIte(valEqs, currentBV, currentSolution);
 
-                long endTime = System.nanoTime();
-                long timeElapsed = endTime - startTime;
-
+                //long endTime = System.nanoTime();
+                //long timeElapsed = endTime - startTime;
                 //System.out.println("dicITESl: Execution time in milliseconds: "+            timeElapsed / 1000000);
-                //for (Set<LinearSet> list : dicIteSl) {
-                 //   System.out.print(list.size() +"  ");
-                //}
-
 
                 // TODO check if the current solution reach a fixed point
             }
@@ -118,10 +104,117 @@ public class IteFixedPointSolver {
     }
 
     private static List<Equation> expandIte(List<Equation> oriEqs){
+        Set<Pair<String,Vector<Boolean>>> newNTs = new HashSet<>();
+        List<Equation> result = new ArrayList<>();
         for(Equation eq: oriEqs){
+            Pair<Set<Pair<String,Vector<Boolean>>>,Expression> expandResult = expandIte(eq.right);
+            Equation newEq = new Equation(eq.left,expandResult.second);
+            newEq.type = eq.type;
+            result.add(newEq);
+            newNTs.addAll(expandResult.first);
+        }
+
+        while(newNTs.size() != 0) {
+            Set<Pair<String,Vector<Boolean>>> visited = new HashSet<>(newNTs);
+            Set<Pair<String,Vector<Boolean>>> toVisit = new HashSet<>();
+            for (Pair<String, Vector<Boolean>> newNT : newNTs) {
+                Pair<Set<Pair<String, Vector<Boolean>>>, Expression> projresult = projection_Expression(lookupNT(newNT.first, oriEqs).right, newNT.second);
+                Equation newEq = new Equation(newNT.first + toBitString(newNT.second), projresult.second);
+                for (Pair<String, Vector<Boolean>> candidate : projresult.first) {
+                    if (!visited.contains(candidate))
+                        toVisit.add(candidate);
+                }
+                newEq.type = lookupNT(newNT.first,oriEqs).type;
+                result.add(newEq);
+            }
+            newNTs = toVisit;
+        }
+        return result;
+    }
+
+    private static Equation lookupNT(String nt, List<Equation>eqs){
+        for(Equation eq:eqs){
+            if(eq.left.equals(nt))
+                return eq;
+        }
+        return null;
+    }
+
+
+    private static Pair<Set<Pair<String,Vector<Boolean>>>,Expression> projection_Expression(Expression exp, Vector<Boolean> bv){
+        Expression resultExpr = new Expression();
+        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> tmpRight;
+        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> tmpLeft;
+        Set<Pair<String,Vector<Boolean>>> resultSet = new HashSet<>();
+        switch (exp.type){
+            case 0:
+                resultExpr.type = 0;
+                resultExpr.constant = projection_SL((Set<LinearSet> )exp.constant,bv);
+                break;
+            case 1:
+                resultExpr.type = 1;
+                resultExpr.var = exp.var+toBitString(bv);
+                resultSet.add(new Pair<>(exp.var,bv));
+                break;
+            case 2:
+            case 3:
+                resultExpr.type = exp.type;
+                tmpLeft = projection_Expression(exp.left,bv);
+                tmpRight = projection_Expression(exp.right,bv);
+                resultExpr.left = tmpLeft.second;
+                resultExpr.right = tmpRight.second;
+                resultSet.addAll(tmpLeft.first);
+                resultSet.addAll(tmpRight.first);
+                break;
+            case 4:
+                for(Vector<Boolean> newBv: bvand(bv,(Set<Vector<Boolean>>)exp.condition.constant))
+                    resultSet.add(new Pair(exp.left.var,newBv));
+                for(Vector<Boolean> newBv: bvand(bv,flip((Set<Vector<Boolean>>)exp.condition.constant)))
+                    resultSet.add(new Pair(exp.right.var,newBv));
+                resultExpr = constructSum(exp.left.var,exp.right.var,bvand(bv,(Set<Vector<Boolean>>)exp.condition.constant));
 
         }
+        return (Pair<Set<Pair<String, Vector<Boolean>>>, Expression>) new Pair(resultSet,resultExpr);
     }
+
+    private static Set<Vector<Boolean>>  bvand(Vector<Boolean> bv, Set<Vector<Boolean>> BVSet){
+        Set<Vector<Boolean>> result = new HashSet<>();
+        for(Vector<Boolean> bvthat: BVSet){
+            Vector<Boolean> newBv = new Vector<>();
+            for(int i =0; i < bv.size(); i++){
+                newBv.add(bv.get(i)&&bvthat.get(i));
+            }
+            result.add(newBv);
+        }
+        return result;
+    }
+
+    private static Set<LinearSet> projection_SL(Set<LinearSet> sl,Vector<Boolean> bv){
+        Set<LinearSet> result = new HashSet<>();
+        for(LinearSet ls: sl){
+            Vector<Integer> newBase = new Vector<>();
+            Set<Vector<Integer>> newPeriod = new HashSet<>();
+            for(int i = 0; i < bv.size(); i++){
+                if (bv.get(i))
+                    newBase.add(ls.getBase().get(i));
+                else
+                    newBase.add(0);
+            }
+            for(Vector<Integer> pv: ls.getPeriod()){
+                Vector<Integer> newPv = new Vector<>();
+                for(int i = 0; i < bv.size(); i++){
+                    if (bv.get(i))
+                        newPv.add(pv.get(i));
+                    else
+                        newPv.add(0);
+                }
+                newPeriod.add(newPv);
+            }
+            result.add(new LinearSet(newBase,newPeriod));
+        }
+        return  result;
+    }
+
     private static Pair<Set<Pair<String,Vector<Boolean>>>,Expression> expandIte(Expression exp){
         Expression resultExpr = new Expression();
         Set<Pair<String,Vector<Boolean>>> resultSet = new HashSet<>();
@@ -143,13 +236,14 @@ public class IteFixedPointSolver {
                 resultSet.addAll(tmpRight.first);
                 break;
             case 4:
-                resultSet.add(new Pair(exp.left.var,exp.condition.constant));
-                resultSet.add(new Pair(exp.right.var,flip((Set<Vector<Boolean>>)exp.condition.constant)));
+                for(Vector<Boolean> bv: (Set<Vector<Boolean>>)exp.condition.constant)
+                    resultSet.add(new Pair(exp.left.var,bv));
+                for(Vector<Boolean> bv: flip((Set<Vector<Boolean>>)exp.condition.constant))
+                    resultSet.add(new Pair(exp.right.var,bv));
                 resultExpr = constructSum(exp.left.var,exp.right.var,(Set<Vector<Boolean>>)exp.condition.constant);
 
         }
-        Pair<Set<Pair<String,Vector<Boolean>>>,Expression> result = new Pair(resultSet,resultExpr);
-        return result;
+        return (Pair<Set<Pair<String, Vector<Boolean>>>, Expression>) new Pair(resultSet,resultExpr);
     }
 
     private static Expression constructSum(String left, String right, Set<Vector<Boolean>> bvSet) {
@@ -212,11 +306,10 @@ public class IteFixedPointSolver {
 
     }
 
-    private static int count = 0;
 
-    public static List<Set<LinearSet>>  EvalIte(List<Equation> valEqs, Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment) {
+    private static List<Set<LinearSet>>  EvalIte(List<Equation> valEqs, Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment) {
         List<Set<LinearSet>> result = new ArrayList<>();
-        count = 0;
+
         for(Equation currecntEq : valEqs){
             if(currecntEq.type == 0)
                 continue;
@@ -224,7 +317,7 @@ public class IteFixedPointSolver {
         }
         return  result;
     }
-    public static Expression ExpressionEvalIte(Expression exp){
+    private static Expression ExpressionEvalIte(Expression exp){
 
         Expression result = new Expression();
         switch (exp.type){
@@ -249,7 +342,7 @@ public class IteFixedPointSolver {
         return  null;
     }
 
-    public static List<Set<LinearSet>> ExpressionEvalIte(Expression exp,  Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment){
+    private static List<Set<LinearSet>> ExpressionEvalIte(Expression exp,  Map<String,Set<Vector<Boolean>>> bvSet, Map<String,Set<LinearSet>> assignment){
 
         List<Set<LinearSet>> result = new ArrayList<>();
         switch (exp.type){
@@ -269,7 +362,6 @@ public class IteFixedPointSolver {
                 else
                     result.add(projection_sls_vs(ExpressionApplication.ExpressionEval_SemilinearSet(exp.left,assignment),ExpressionApplication.ExpressionEval_SemilinearSet(exp.right,assignment),(Set<Vector<Boolean>>)exp.condition.constant));
 
-                count ++;
                 return result;
 
         }
@@ -314,21 +406,11 @@ public class IteFixedPointSolver {
     }
 
     private static Vector<Boolean> flip(Vector<Boolean> bv) {
-
-        int dim = bv.size();
             Vector<Boolean> newBv = new Vector<>();
-            for(int i = 0; i < dim; i++){
-                newBv.add(!bv.get(i));
-            }
-        return newBv;
-    }
-
-    private static Set<LinearSet> projection_sl_vs(Set<LinearSet> sl_f, Set<Vector<Boolean>> bvSet) {
-        Set<LinearSet> result = new HashSet<>();
-        for(Vector bv: bvSet){
-            result = SemilinearFactory.union(result,projection_sl_vector(sl_f,bv));
+        for (Boolean aBoolean : bv) {
+            newBv.add(!aBoolean);
         }
-        return result;
+        return newBv;
     }
 
     private static Set<LinearSet> projection_sl_vector (Set<LinearSet> sl, Vector<Boolean> bv){
@@ -356,17 +438,16 @@ public class IteFixedPointSolver {
                     newPv.add(pv.get(i));
                 else
                     newPv.add(0);
+                peroid.add(newPv);
             }
         }
-        LinearSet result = new LinearSet(base,peroid);
-        return  result;
+        return new LinearSet(base,peroid);
 
     }
 
     private static int getIteCountInExp(Expression exp) {
         switch (exp.type) {
             case 0:
-                return 0;
             case 1:
                 return 0;
             case 2:
@@ -375,9 +456,7 @@ public class IteFixedPointSolver {
             case 4:
                 return 1;
             case 5:
-                return 0;
             case 6:
-                return 0;
         }
         return 0;
     }
