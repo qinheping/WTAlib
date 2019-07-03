@@ -7,6 +7,8 @@ import java.util.*;
 public class Newton {
 
     public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> SlEqs, int dim, Map<String,Set<String>> rhs_vars){
+
+        //System.out.println(SlEqs);
         int varCount = SlEqs.size();
         List<String> varList = getVarList(SlEqs);
         List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
