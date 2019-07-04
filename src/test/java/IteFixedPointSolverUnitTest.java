@@ -46,7 +46,8 @@ public class IteFixedPointSolverUnitTest {
         Vector<Integer> spec = new Vector<>();
         spec.add(84);
         spec.add(126);
-        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+        //System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+        SMTQGenerator.checkSat_cmd(spec,solution.get("Start"));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;

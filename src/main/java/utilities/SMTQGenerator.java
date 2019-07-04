@@ -3,7 +3,9 @@ package utilities;
 import edu.nyu.acsys.CVC4.Expr;
 import semirings.LinearSet;
 
+import java.io.*;
 import java.lang.Integer;
+import java.nio.file.Files;
 import java.util.*;
 import edu.nyu.acsys.CVC4.*;
 
@@ -14,6 +16,7 @@ public class SMTQGenerator {
     static SmtEngine smt = new SmtEngine(em);
     static Type integer = em.integerType();
     static Type bool = em.booleanType();
+
     public static String genearteSimpleSMTQ(Set<LinearSet> sls, Vector<Integer> target){
         String result = "(assert (or ";
         for(LinearSet sl : sls){
@@ -41,6 +44,82 @@ public class SMTQGenerator {
         }
         return false;
     }
+
+    public static boolean checkSat_cmd(Vector<Integer> spec, Set<LinearSet> start) throws IOException {
+        Iterator<LinearSet> iterator = start.iterator();
+        while(iterator.hasNext()){
+            if(checkInLinearSet_cmd(spec,iterator.next())) {
+                //System.out.print(spec+" "+ls);
+                return true;
+            }
+            iterator.remove();
+            //System.out.println(" start next Q");
+        }
+        return false;
+    }
+
+    private static boolean checkInLinearSet_cmd(Vector<Integer> target, LinearSet ls) throws IOException {
+
+        int dim = target.size();
+        String decl = "";
+        String body = "true";
+        String zero = "0";
+        String assert_nature = "";
+        List<Vector<Integer>> peroid_list = new ArrayList<>(ls.getPeriod());
+
+        for(int i = 0; i < ls.getPeriod().size();i++){
+            decl+=      "(declare-const z"+"_"+i+" Int)\n";
+            assert_nature += "(assert "+mkExpr_cmd(">=","z"+"_"+i,zero)+")\n";
+        }
+
+
+        for(int j = 0; j < dim; j++){
+            String body_j = unaryMinus(ls.getBase().get(j));
+            for(int i = 0; i < ls.getPeriod().size(); i++){
+                body_j = mkExpr_cmd("+",body_j,mkExpr_cmd("*","z"+"_"+i,unaryMinus(peroid_list.get(i).get(j))));
+            }
+            body_j = mkExpr_cmd("=",body_j,unaryMinus(target.get(j)));
+            body = mkExpr_cmd("and", body,body_j);
+        }
+        //System.runFinalization();
+        //System.out.print("body got: ");
+        //System.out.println(body);
+        //System.out.println(decl+assert_nature+"(assert "+body+")\n(check-sat)");
+
+        PrintWriter writer = new PrintWriter("tmp.smt", "UTF-8");
+        writer.write(decl+assert_nature+"(assert "+body+")\n(check-sat)");
+        writer.close();
+        Process proc = Runtime.getRuntime().exec("./lib/cvc4 --lang=smt tmp.smt");
+        BufferedReader stdInput = new BufferedReader(new
+                InputStreamReader(proc.getInputStream()));
+
+        BufferedReader stdError = new BufferedReader(new
+                InputStreamReader(proc.getErrorStream()));
+
+// Read the output from the command
+        String s = null;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(body);
+            System.out.println(s);
+            if(s.equals("sat")) {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+    private static String mkExpr_cmd(String op, String first, String second){
+        return "(" +op+" "+first +" "+second+")";
+    }
+
+    static String unaryMinus(Integer i){
+        if(i < 0)
+            return "(- "+(-i);
+        return i.toString();
+    }
+
+
     public static Boolean checkInLinearSet(Vector<Integer> target, LinearSet ls){
         count++;
         if(count%10000 ==0 ){
@@ -166,7 +245,7 @@ public class SMTQGenerator {
 
         body = em.mkExpr(Kind.AND,body,assertx);
         body = em.mkExpr(Kind.AND,body,asserty);
-        body.
+
 
         if(smt.checkSat(body).toString().equals("sat")) {
             // System.out.println("SAT: "+currentBv+" "+body);

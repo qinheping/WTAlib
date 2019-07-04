@@ -27,23 +27,26 @@ public class DAG {
 
         Map<String,Set<String>> reached_list = new HashMap<>();
         for(Equation eq: eqs){
-            reached_list.put(eq.left,getReachedInExpression(eq.right));
+            Set<String> tmp_list = getReachedInExpression(eq.right);
+            reached_list.put(eq.left,tmp_list);
         }
-        for(int j = 0; j < eqs.size();j++){
-            Set<String> reached_from_current = new HashSet<>();
-            Set<String> new_reached = new HashSet<>();
-            new_reached.addAll(reached_list.get(eqs.get(j).left));
-            for(int i = 0; i < eqs.size(); i++){
-                Set<String> tmp_new_reached = new HashSet<>();
-                if(new_reached.isEmpty())
-                    break;
-                for(String newStr:new_reached){
-                    tmp_new_reached.addAll(setDiff(reached_list.get(newStr),reached_from_current));
-                    reached_from_current.addAll(reached_list.get(newStr));
-                }
-                new_reached = tmp_new_reached;
+
+        int totalReached = 0;
+        while (true){
+            int currentTotal = 0;
+            for(String key:reached_list.keySet()){
+                currentTotal+= reached_list.get(key).size();
             }
-            reached_list.put(eqs.get(j).left,reached_from_current);
+            if(totalReached==currentTotal)
+                break;
+            totalReached = currentTotal;
+            for(int j = 0; j < eqs.size();j++){
+                Set<String> toAdd = new HashSet<>();
+                    for(String currentStr:reached_list.get(eqs.get(j).left)){
+                        toAdd.addAll(reached_list.get(currentStr));
+                    }
+                reached_list.get(eqs.get(j).left).addAll(toAdd);
+            }
         }
         Set<String> covered = new HashSet<>();
         Set<Set<String>> eqclasses = new HashSet<>();

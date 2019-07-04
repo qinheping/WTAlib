@@ -154,6 +154,15 @@ public class IteFixedPointSolver {
                 resultExpr.constant = projection_SL((Set<LinearSet> )exp.constant,bv);
                 break;
             case 1:
+                if(isFalse(bv)){
+                    resultExpr.type = 0;
+                    Vector<Integer> zero = new Vector<>();
+                    for(Boolean b:bv){
+                        zero.add(0);
+                    }
+                    resultExpr.constant = zero;
+                    break;
+                }
                 resultExpr.type = 1;
                 resultExpr.var = exp.var+toBitString(bv);
                 resultSet.add(new Pair<>(exp.var,bv));

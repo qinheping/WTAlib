@@ -59,7 +59,6 @@
 		(+ NT15 NT2)
 		(ite NT8 NT10 NT1)
 		(ite NT17 NT1 NT1)
-		(ite NT12 NT9 NT1)
 		(ite NT12 NT1 NT9)
 		(ite NT7 NT15 NT1)
 ))

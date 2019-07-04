@@ -6,67 +6,81 @@ import java.util.*;
 
 public class Newton {
 
-    public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> SlEqs, int dim, Map<String,Set<String>> rhs_vars){
-
-        //System.out.println(SlEqs);
-        int varCount = SlEqs.size();
-        List<String> varList = getVarList(SlEqs);
-        List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
-
-        Set<String> changed_var = new HashSet<>();
-
-        Map<String, Set<LinearSet>> result = new HashMap<>();
-        // initialize result
-        for(String var: varList){
-            result.put(var,new HashSet<>());
-            changed_var.add(var);
-        }
-        Map<String, Set<LinearSet>> tmp_result = new HashMap<>();
-        for(int i = 0; i < varList.size(); i++){
-            tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
-        }
-        result = tmp_result;
-        //System.out.println("\t\tresult size in newton:" +result.size());
-
-        //System.out.println(SlEqs);
-        for(int k = 0; k < varCount; k++){
-            //System.out.println("\t\tnewton iteration: "+k);
-            Map<String,Set<LinearSet>> newResult = new HashMap<>();
-            for(int i = 0; i < varCount; i++){
-                Set<String> intersection = new HashSet<String>(rhs_vars.get(varList.get(i)));
-                intersection.retainAll(changed_var);
-                if(intersection.isEmpty()) {
-                    newResult.put(varList.get(i),result.get(varList.get(i)));
-                    continue;
-                }
-
-                // f'(vi)
-                Set<LinearSet> SL_diff_i = ExpressionApplication.ExpressionEval_SemilinearSet(diffList.get(i),result);
-               // System.out.println(varList.get(i)+" diff: "+SL_diff_i);
-                Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
-                //System.out.println("star: "+SL_diff_i);
-                // f(vi)
-
-
-                Set<LinearSet> SL_exp_i = ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result);
-
-               // System.out.println("f': "+SL_diff_i);
-                // (f'(vi))^**f(vi)
-                newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
+    public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> oriEqs, int dim, Map<String,Set<String>> rhs_vars){
+        System.out.println(oriEqs);
+        DAG dag = new DAG(oriEqs);
+        Set<String> currentEq = dag.popRoot();
+        Map<String, Set<LinearSet>> finalResult = new HashMap<>();
+        while (currentEq!=null){
+            System.out.println("\t\tcurrentEq in Newton: "+currentEq);
+            List<Equation> SlEqs = new ArrayList<>();
+            for (Equation oriEq : oriEqs) {
+                if (currentEq.contains(oriEq.left))
+                    SlEqs.add(oriEq);
             }
 
-            Set<String> tmp_changed_var =new HashSet<>();
-            for(int i = 0; i < varCount; i++){
-                if( result.get(varList.get(i)).size() != newResult.get(varList.get(i)).size()) {
-                    tmp_changed_var.add(varList.get(i));
-                }
+            currentEq = dag.popRoot();
+
+            int varCount = SlEqs.size();
+            List<String> varList = getVarList(SlEqs);
+            List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
+
+            Set<String> changed_var = new HashSet<>();
+
+            Map<String, Set<LinearSet>> result = new HashMap<>();
+            // initialize result
+            for(String var: varList){
+                result.put(var,new HashSet<>());
+                changed_var.add(var);
             }
-            changed_var = tmp_changed_var;
-            result = newResult;
-            if (changed_var.size() == 0)
-                break;
+            Map<String, Set<LinearSet>> tmp_result = new HashMap<>();
+            for(int i = 0; i < varList.size(); i++){
+                tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
+            }
+            result = tmp_result;
+            //System.out.println("\t\tresult size in newton:" +result.size());
+
+            //System.out.println(SlEqs);
+            for(int k = 0; k < varCount; k++){
+                System.out.println("\t\tnewton iteration: "+k);
+                Map<String,Set<LinearSet>> newResult = new HashMap<>();
+                for(int i = 0; i < varCount; i++){
+                    Set<String> intersection = new HashSet<String>(rhs_vars.get(varList.get(i)));
+                    intersection.retainAll(changed_var);
+                    if(intersection.isEmpty()) {
+                        newResult.put(varList.get(i),result.get(varList.get(i)));
+                        continue;
+                    }
+
+                    // f'(vi)
+                    Set<LinearSet> SL_diff_i = ExpressionApplication.ExpressionEval_SemilinearSet(diffList.get(i),result);
+                    Set<LinearSet> Sl_diff_i_star = SemilinearFactory.star(SL_diff_i,dim);
+                    // f(vi)
+                    Set<LinearSet> SL_exp_i = ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result);
+
+                    // System.out.println("f': "+SL_diff_i);
+                    // (f'(vi))^**f(vi)
+                    newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
+                }
+
+                Set<String> tmp_changed_var =new HashSet<>();
+                for(int i = 0; i < varCount; i++){
+                    if( result.get(varList.get(i)).size() != newResult.get(varList.get(i)).size()) {
+                        tmp_changed_var.add(varList.get(i));
+                    }
+                }
+                changed_var = tmp_changed_var;
+                result = newResult;
+                if (changed_var.size() == 0)
+                    break;
+            }
+            for(Equation eq: oriEqs){
+                eq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(eq.right,result);
+            }
+            finalResult.putAll(result);
         }
-        return  result;
+
+        return  finalResult;
     }
 
     /*
