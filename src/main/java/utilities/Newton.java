@@ -7,7 +7,7 @@ import java.util.*;
 public class Newton {
 
     public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> oriEqs, int dim, Map<String,Set<String>> rhs_vars){
-        System.out.println(oriEqs);
+        //System.out.println(oriEqs);
         DAG dag = new DAG(oriEqs);
         Set<String> currentEq = dag.popRoot();
         Map<String, Set<LinearSet>> finalResult = new HashMap<>();
@@ -78,6 +78,7 @@ public class Newton {
                 eq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(eq.right,result);
             }
             finalResult.putAll(result);
+            //System.out.println(result);
         }
 
         return  finalResult;
