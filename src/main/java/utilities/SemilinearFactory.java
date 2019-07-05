@@ -14,6 +14,8 @@ public class SemilinearFactory {
 
     public static Set<LinearSet> dot(Set<LinearSet> left, Set<LinearSet> right) {
         boolean isZero = false;
+        if(left.size() == 0 || right.size() == 0)
+            return new HashSet<>();
         if(left.size()==1&&left.iterator().next().getPeriod().size() ==0){
             for(Integer component: left.iterator().next().getBase()){
                 if (component==0){
@@ -76,6 +78,8 @@ public class SemilinearFactory {
             return result;
         }
         for(LinearSet lset: sl){
+            if (lset.getPeriod().size() == 0 && isZero(lset.getBase()))
+                continue;
             peroid.add(lset.getBase());
             peroid.addAll(lset.getPeriod());
         }
@@ -83,5 +87,12 @@ public class SemilinearFactory {
         result.add(resultLS);
         return result;
         
+    }
+
+    private static  Boolean isZero(Vector<Integer> bv){
+        for(Integer b : bv)
+            if(b != 0)
+                return false;
+        return true;
     }
 }

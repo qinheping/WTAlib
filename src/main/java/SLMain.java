@@ -3,10 +3,7 @@ import edu.nyu.acsys.CVC4.SmtEngine;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import parser.ASTVisitor;
-import parser.GrammarNode;
-import parser.QSygusParserLexer;
-import parser.QSygusParserParser;
+import parser.*;
 import semirings.LinearSet;
 import utilities.Equation;
 import utilities.GrammarInterpretor;
@@ -28,7 +25,6 @@ public class SLMain {
 
 
         String grammarString = new Scanner(new File(path+"/grammar.sl")).useDelimiter("\\Z").next();
-        System.out.println(grammarString);
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -53,15 +49,51 @@ public class SLMain {
             }
             spec.add(Integer.parseInt(line[line.length-1]));
         }
-        Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputExMap);
-        System.out.println(solution.get("Start").size());
 
+
+        PrintStream original = System.out;
+
+        int totalTrans = 0;
+        for (NTNode nt:grammarNode.getNtNodes()){
+            totalTrans+=nt.getRules().size();
+        }
+        System.out.print(grammarNode.getNtNodes().size()+" & "+totalTrans+ " & "+inputExMap.keySet().size()+" & "+numEx+" & ");
+        System.setOut(new PrintStream(new OutputStream() {            public void write(int b) {                          }        }));
+        float startTime_sl = System.nanoTime();
+        Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputExMap);
+        float endTime_sl = System.nanoTime();
+        float timeElapsed_sl = endTime_sl - startTime_sl;
+
+        System.out.println(solution);
+        System.out.println("hi");
+        int solutionSize = solution.get("Start").size();
+
+        float avgPeriod = 0;
+        int periodCount = 0;
+        for(LinearSet ls:solution.get("Start")){
+            if(avgPeriod == 0)
+                avgPeriod = ls.getPeriod().size();
+            avgPeriod = avgPeriod*periodCount+ls.getPeriod().size();
+            periodCount++;
+            avgPeriod = ls.getPeriod().size();
+        }
+
+
+        System.setOut(original);
+        System.out.println(IteFixedPointSolver.totalStage+" & "+ IteFixedPointSolver.bvSize+
+                        " & "+solutionSize+ " & "+avgPeriod + " & "+String.format ("%.2f",(timeElapsed_sl/1000000000))+ " & ");
 
         //BufferedWriter writer = new BufferedWriter(new FileWriter(path+"out.txt"));
         //writer.write(solution.get("Start").toString());
         //writer.close();
         //File file = new File(path+"out.txt");
         //file.delete();
-        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+
+        float startTime_smt = System.nanoTime();
+        Boolean result = SMTQGenerator.checkSat(spec,solution.get("Start"));
+        float endTime_smt = System.nanoTime();
+        float timeElapsed_smt = endTime_smt - startTime_smt;
+        System.out.print(String.format ("%.2f",(timeElapsed_smt/1000000000))
+        + " & "+String.format ("%.2f",((timeElapsed_sl+timeElapsed_smt)/1000000000))+" & "+result+"\\\\");
     }
 }

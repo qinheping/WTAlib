@@ -96,11 +96,11 @@ public class SMTQGenerator {
         BufferedReader stdError = new BufferedReader(new
                 InputStreamReader(proc.getErrorStream()));
 
-// Read the output from the command
+        // Read the output from the command
         String s = null;
         while ((s = stdInput.readLine()) != null) {
-            System.out.println(body);
-            System.out.println(s);
+            //System.out.println(body);
+            //System.out.println(s);
             if(s.equals("sat")) {
                 return true;
             }
@@ -122,10 +122,7 @@ public class SMTQGenerator {
 
     public static Boolean checkInLinearSet(Vector<Integer> target, LinearSet ls){
         count++;
-        if(count%10000 ==0 ){
-            System.out.print(count+" :");
 
-        }
         int dim = target.size();
         Expr body = em.mkConst(true);
         Expr zero = em.mkConst(new Rational(0));
@@ -149,10 +146,8 @@ public class SMTQGenerator {
             body_j = em.mkExpr(Kind.EQUAL,body_j,em.mkConst(new Rational(target.get(j))));
             body = em.mkExpr(Kind.AND, body,body_j);
         }
-        //System.runFinalization();
-        //System.out.print("body got: ");
-        //System.out.println(body);
-        return smt.checkSat(body).toString().equals("sat");
+        Boolean result =  smt.checkSat(body).toString().equals("sat");
+        return result;
     }
 
     public static Set<Vector<Boolean>> getBVSet(Set<LinearSet> left, Set<LinearSet> right, String bop) {
