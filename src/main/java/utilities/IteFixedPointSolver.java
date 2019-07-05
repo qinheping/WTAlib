@@ -10,6 +10,9 @@ import java.util.stream.IntStream;
 
 public class IteFixedPointSolver {
     private  static int dim = 0;
+    public static int totalStage = 0;
+    public static float bvSize = 0;
+    public static int bvCount = 0;
     public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String, Vector<Integer>> map){
         Map<String,Set<LinearSet>> finalSolution = new HashMap<>();
         dim = map.values().iterator().next().size();
@@ -74,10 +77,22 @@ public class IteFixedPointSolver {
                         oriEq.right = ExpressionApplication.ExpressionApplication_SemilinearSet(oriEq.right, currentSolution);
                         oriEq.right = ExpressionApplication.ExpressionApplication_BVSet(oriEq.right, currentBV);
                     }
+
+                    for(String key:currentBV.keySet()){
+                        bvSize = bvSize*bvCount+currentBV.get(key).size();
+                        bvCount++;
+                        bvSize = bvSize/bvCount;
+                    }
+
+                    for(String key:currentSolution.keySet()){
+                        System.out.println(key+" : "+currentSolution.get(key).size());
+                    }
+                    //System.out.println(currentSolution);
                     finalSolution = currentSolution;
                     break;
                 }
                 stage++;
+                totalStage++;
                 bvStore.put(stage, currentBV);
 
                 // TODO check if the current solution reach a fixed point
@@ -319,7 +334,7 @@ public class IteFixedPointSolver {
             result.left.constant = projection_SL(left,bvand(mask,bvSet.iterator().next()));
             result.right = new Expression();
             result.right.type = 1;
-            result.right.var = right + toBitString(flip(bvand(mask,bvSet.iterator().next())));
+            result.right.var = right + toBitString(bvand(mask,flip(bvSet.iterator().next())));
             return  result;
         }
 

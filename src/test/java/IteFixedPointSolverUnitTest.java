@@ -17,7 +17,7 @@ import java.util.*;
 public class IteFixedPointSolverUnitTest {
     @org.junit.Test
     public void fg_mpg_plane1_2examples() throws IOException {
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/grammar.sl")).useDelimiter("\\Z").next();
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/mpg_plane3/grammar.sl")).useDelimiter("\\Z").next();
 
         System.loadLibrary("cvc4jni");
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
@@ -32,29 +32,29 @@ public class IteFixedPointSolverUnitTest {
         List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
         Map<String,Vector<Integer>> inputEx = new HashMap<>();
         Vector<Integer> xEx = new Vector<>();
-        xEx.add(10);
-        xEx.add(20);
+        xEx.add(9);
+        xEx.add(25);
         inputEx.put("x",xEx);
         Vector<Integer> yEx = new Vector<>();
         yEx.add(17);
-        yEx.add(21);
+        yEx.add(25);
         inputEx.put("y",yEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
         //writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
-        spec.add(84);
-        spec.add(126);
-        //System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
-        SMTQGenerator.checkSat_cmd(spec,solution.get("Start"));
+        spec.add(135);
+        spec.add(255);
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+        //SMTQGenerator.checkSat_cmd(spec,solution.get("Start"));
         writer.close();
 
         //assert IteFixedPointSolver.iteCount == 1;
     }
     @org.junit.Test
     public void fg_mpg_plane1_2examples_1() throws IOException {
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/grammar.sl")).useDelimiter("\\Z").next();
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/mpg_plane3/grammar.sl")).useDelimiter("\\Z").next();
 
         System.loadLibrary("cvc4jni");
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
@@ -69,20 +69,20 @@ public class IteFixedPointSolverUnitTest {
         List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
         Map<String,Vector<Integer>> inputEx = new HashMap<>();
         Vector<Integer> xEx = new Vector<>();
-        xEx.add(43);
-        xEx.add(39);
+        xEx.add(19);
+        //xEx.add(33);
         inputEx.put("x",xEx);
         Vector<Integer> yEx = new Vector<>();
-        yEx.add(4);
-        yEx.add(-45);
+        yEx.add(50);
+        //yEx.add(26);
         inputEx.put("y",yEx);
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
-        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
-        //writer.write(solution.get("Start").toString());
+        writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
-        spec.add(144);
-        spec.add(-15);
+        spec.add(210);
+        //spec.add(180);
         System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
         writer.close();
 
@@ -92,7 +92,7 @@ public class IteFixedPointSolverUnitTest {
     @org.junit.Test
     public void fg_mpg_plane3_2examples() throws IOException {
         //System.loadLibrary("cvc4jni");
-        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/2var/less14.sl")).useDelimiter("\\Z").next();
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/mpg_plane3/grammar.sl")).useDelimiter("\\Z").next();
 
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
