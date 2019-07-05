@@ -8,6 +8,7 @@ public  class ExpressionApplication {
 
 
     public static Set<LinearSet> ExpressionEval_SemilinearSet(Expression<Set<LinearSet>> exp, Map<String,Set<LinearSet>> assignment){
+        Set<LinearSet> result;
         switch (exp.type){
             case 0:
                 return  exp.constant;
@@ -15,9 +16,11 @@ public  class ExpressionApplication {
                 return assignment.get(exp.var);
 
             case 2:
-                return SemilinearFactory.dot(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
+                result = SemilinearFactory.dot(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
+                return result;
             case 3:
-                return SemilinearFactory.union(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
+                result = SemilinearFactory.union(ExpressionEval_SemilinearSet(exp.left,assignment), ExpressionEval_SemilinearSet(exp.right,assignment));
+                return result;
         }
         System.out.println("ERROR: wrong type while ExpressionApplication_SemilinearSet "+exp.toString());
         return null;
