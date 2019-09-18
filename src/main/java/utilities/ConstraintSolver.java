@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+// ignore
 public class ConstraintSolver {
     public static boolean solveConstraint(Set<LinearSet> solution, TermNode constraint, Map<String, Vector<Integer>> examples, Map<String, TermNode> auxFuncs, String synthName){
         System.loadLibrary("cvc4jni");
