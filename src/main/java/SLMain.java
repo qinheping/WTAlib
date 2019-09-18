@@ -20,10 +20,11 @@ public class SLMain {
         int numEx = Integer.parseInt(args[1]);
 
         System.loadLibrary("cvc4jni");
-         ExprManager em = new ExprManager();
+         ExprManager em = new ExprManager(); \\ CVC4 component
          SmtEngine smt = new SmtEngine(em);
 
 
+        
         String grammarString = new Scanner(new File(path+"/grammar.sl")).useDelimiter("\\Z").next();
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
@@ -32,7 +33,7 @@ public class SLMain {
         ParseTree parseTree = parser.synthFunCmd();
         GrammarNode grammarNode = (GrammarNode)new ASTVisitor().visit(parseTree);
         GrammarInterpretor ginterpreter = new GrammarInterpretor(grammarNode);
-        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
+        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode); \\ target
 
         Scanner scanner = new Scanner(new File(path+"/example"+args[2]+".txt"));
 
