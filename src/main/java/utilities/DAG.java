@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.*;
 
+// for stratification
 public class DAG {
 
     private Set<DAGNode> root = new HashSet<>();
