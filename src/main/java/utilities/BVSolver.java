@@ -4,6 +4,9 @@ import semirings.LinearSet;
 
 import java.util.*;
 
+
+\\ solve BV query like SL1<SL2
+
 public class BVSolver {
     public static Map<String,Set<Vector<Boolean>>> SolveBV(Integer dim, List<Equation> eqs, Map<String,Set<LinearSet>> assignment, Map<String,Set<Vector<Boolean>>> preBVMap){
         Map<String,Set<Vector<Boolean>>> result = new HashMap<>();
