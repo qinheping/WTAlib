@@ -129,6 +129,9 @@ public class GrammarReduction<S,R>{
         }
         fta.setInitialState(this.maxNewId);
         fta.clean();
+        // TODO print statement here
+        // QSygusNode qnode = new QSygusNode();
+        // System.out.println(qnode.toString_Grammar(fta));
         return fta;
     }
 
