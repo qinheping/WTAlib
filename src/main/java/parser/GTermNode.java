@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GTermNode extends ProgramNode{
@@ -18,6 +19,9 @@ public class GTermNode extends ProgramNode{
     public GTermNode (String symbol, List<GTermNode> children){
         this.symbol = symbol;
         this.children = children;
+    }
+    public GTermNode (String symbol){
+        this(symbol,new ArrayList<>());
     }
 
     @Override

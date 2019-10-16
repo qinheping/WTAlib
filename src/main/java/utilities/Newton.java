@@ -5,11 +5,19 @@ import semirings.LinearSet;
 import java.util.*;
 
 public class Newton {
-
+    public static Boolean opt = true;
     public static Map<String, Set<LinearSet>> SolveSlEq(List<Equation> oriEqs, int dim, Map<String,Set<String>> rhs_vars){
         //System.out.println(oriEqs);
         DAG dag = new DAG(oriEqs);
-        Set<String> currentEq = dag.popRoot();
+        Set<String> currentEq = new HashSet<>();
+
+        if (opt)
+         currentEq = dag.popRoot();
+        else {
+            for(Equation eq: oriEqs)
+                currentEq.add(eq.left);
+        }
+
         Map<String, Set<LinearSet>> finalResult = new HashMap<>();
         while (currentEq!=null){
             System.out.println("\t\tcurrentEq in Newton: "+currentEq);
@@ -24,6 +32,8 @@ public class Newton {
             int varCount = SlEqs.size();
             List<String> varList = getVarList(SlEqs);
             List<Expression> diffList = getDiffListFromEqs(SlEqs, dim);
+            //System.out.println(SlEqs);
+            //System.out.println(diffList);
 
             Set<String> changed_var = new HashSet<>();
 
@@ -38,6 +48,7 @@ public class Newton {
                 tmp_result.put(varList.get(i),ExpressionApplication.ExpressionEval_SemilinearSet(SlEqs.get(i).right,result));
             }
             result = tmp_result;
+            //System.out.println(result);
             //System.out.println("\t\tresult size in newton:" +result.size());
 
             //System.out.println(SlEqs);
@@ -60,7 +71,8 @@ public class Newton {
 
                     // System.out.println("f': "+SL_diff_i);
                     // (f'(vi))^**f(vi)
-                    newResult.put(varList.get(i),SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i));
+                    Set<LinearSet> toAdd = SemilinearFactory.dot(Sl_diff_i_star,SL_exp_i);
+                    newResult.put(varList.get(i),toAdd);
                 }
 
                 Set<String> tmp_changed_var =new HashSet<>();
@@ -79,6 +91,8 @@ public class Newton {
             }
             finalResult.putAll(result);
             //System.out.println(result);
+            if (!opt)
+                break;
         }
 
         return  finalResult;

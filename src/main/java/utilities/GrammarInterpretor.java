@@ -1,12 +1,15 @@
 package utilities;
 
+import com.sun.javafx.css.Rule;
 import parser.GTermNode;
 import parser.GrammarNode;
 import parser.NTNode;
 import parser.RuleNode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GrammarInterpretor {
     GrammarNode grammar;
@@ -32,6 +35,66 @@ public class GrammarInterpretor {
         return  result;
 
     }
+
+    public GrammarNode mkCommutativeGrammar(GrammarNode grammar){
+        List<NTNode> newNts = new ArrayList<>();
+        Set<String> toAdd_newNegNT = new HashSet<>();
+        Set<String> added_newNegNT = new HashSet<>();
+        for(NTNode currNT: grammar.getNtNodes()){
+            List<RuleNode> newRules = new ArrayList<>();
+            for(RuleNode currRule: currNT.getRules()){
+                List<GTermNode> newChildren = new ArrayList<>();
+                if (currRule.getContent().symbol.equals("-")){
+                    newChildren.add(currRule.getContent().children.get(0));
+                    newChildren.add(new GTermNode(currRule.getContent().getChildren().get(1).getSymbol()+"_minus",currRule.getContent().children.get(1).children));
+                    newRules.add(new RuleNode(new ArrayList<>(),new GTermNode("-",newChildren)));
+                    toAdd_newNegNT.add(currRule.getContent().getChildren().get(1).getSymbol());
+                    continue;
+                }
+                newRules.add(currRule);
+            }
+            newNts.add(new NTNode(currNT.getNtName(),currNT.getNtSort(),newRules));
+        }
+
+        while (!toAdd_newNegNT.isEmpty()){
+            String currNT_name = toAdd_newNegNT.iterator().next();
+            toAdd_newNegNT.remove(currNT_name);
+            added_newNegNT.add(currNT_name);
+            NTNode currNT = null;
+            for(NTNode nt: newNts){
+                if(nt.getNtName().equals(currNT_name))
+                    currNT = nt;
+            }
+
+            // mkNegNT
+            List<RuleNode> newRules = new ArrayList<>();
+            for(RuleNode currRule: currNT.getRules()){
+
+                if (isInteger(currRule.getContent().symbol)){
+                    if(currRule.getContent().symbol.charAt(0)=='-'){
+                        newRules.add(new RuleNode(new GTermNode(currRule.getContent().symbol.substring(1,currRule.getContent().symbol.length()))));
+                    }else
+                        newRules.add(new RuleNode(new GTermNode("-"+currRule.getContent().symbol)));
+                    continue;
+                }
+                if (currRule.getChildren().size()==0){
+                    newRules.add(new RuleNode(new GTermNode(currRule.getSymbol()+"_minus")));
+                    if(!added_newNegNT.contains(currRule.getSymbol())){
+                        toAdd_newNegNT.add(currRule.getSymbol());
+                    }
+                    continue;
+                }
+                if (currRule.getSymbol().equals("+")){
+                    newRules.add(currRule);
+                }
+                //TODO
+            }
+
+        }
+        return null;
+    }
+
+
 
     public Expression RulesToExpression(List<RuleNode> rules){
         Expression result = new Expression();

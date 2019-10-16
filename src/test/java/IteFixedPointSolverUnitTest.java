@@ -1,3 +1,7 @@
+import com.microsoft.z3.Log;
+import com.microsoft.z3.Version;
+import edu.nyu.acsys.CVC4.ExprManager;
+import edu.nyu.acsys.CVC4.SmtEngine;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -17,9 +21,61 @@ import java.util.*;
 public class IteFixedPointSolverUnitTest {
     @org.junit.Test
     public void fg_mpg_plane1_2examples() throws IOException {
+        String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS_Pos/mpg_guard3/grammar.sl")).useDelimiter("\\Z").next();
+
+        System.loadLibrary("cvc4jni");
+        SMTQGenerator.em = new ExprManager();
+        SMTQGenerator.smt = new SmtEngine(SMTQGenerator.em);
+        SMTQGenerator.integer = SMTQGenerator.em.integerType();
+        ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
+        QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        QSygusParserParser parser = new QSygusParserParser(tokens);
+        ParseTree parseTree = parser.synthFunCmd();
+        GrammarNode grammarNode = (GrammarNode)new ASTVisitor().visit(parseTree);
+        //System.out.println(grammarNode.toString());
+
+        GrammarInterpretor ginterpreter = new GrammarInterpretor(grammarNode);
+        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
+        Map<String,Vector<Integer>> inputEx = new HashMap<>();
+        Vector<Integer> xEx = new Vector<>();
+        xEx.add(-31);
+        //xEx.add(-6);
+        inputEx.put("x",xEx);
+        Vector<Integer> yEx = new Vector<>();
+        yEx.add(10);
+        //yEx.add(17);
+        inputEx.put("y",yEx);
+        Vector<Integer> zEx = new Vector<>();
+        zEx.add(13);
+        //zEx.add(-18);
+        inputEx.put("z",zEx);
+        Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS_Pos/mpg_plane2/solution.txt"));
+        System.out.println(solution.get("Start").size());
+        //writer.write(solution.get("Start").toString());
+        Vector<Integer> spec = new Vector<>();
+        spec.add(-23);
+        //spec.add(-23);
+        System.out.println(SMTQGenerator.checkSat(spec,solution.get("Start")));
+        //SMTQGenerator.checkSat_cmd(spec,solution.get("Start"));
+        writer.close();
+
+        //assert IteFixedPointSolver.iteCount == 1;
+    }
+    @org.junit.Test
+    public void fg_mpg_plane1_2examples_z3() throws IOException {
         String grammarString = new Scanner(new File("benchmarks/CLIA_Track_PLUS/mpg_plane3/grammar.sl")).useDelimiter("\\Z").next();
 
         System.loadLibrary("cvc4jni");
+        System.out.print("Z3 Major Version: ");
+        System.out.println(Version.getMajor());
+        System.out.print("Z3 Full Version: ");
+        System.out.println(Version.getString());
+        System.out.print("Z3 Full Version String: ");
+        System.out.println(Version.getFullVersion());
+
+        SMTQGenerator.SMTSolver = 1;
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -263,6 +319,49 @@ public class IteFixedPointSolverUnitTest {
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
         BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
         System.out.println(solution.get("Start").size());
+        writer.write(solution.get("Start").toString());
+        Vector<Integer> spec = new Vector<>();
+        spec.add(-20);
+        spec.add(26);
+        System.out.println(SMTQGenerator.genearteSimpleSMTQ(solution.get("Start"),spec));
+        writer.close();
+
+        //assert IteFixedPointSolver.iteCount == 1;
+    }
+
+
+    @org.junit.Test
+    public void test_correctness() throws IOException {
+        String grammarString = new Scanner(new File("benchmarks/simple.sl")).useDelimiter("\\Z").next();
+
+        System.loadLibrary("cvc4jni");
+        ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
+        QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        QSygusParserParser parser = new QSygusParserParser(tokens);
+        ParseTree parseTree = parser.synthFunCmd();
+        GrammarNode grammarNode = (GrammarNode)new ASTVisitor().visit(parseTree);
+        //System.out.println(grammarNode.toString());
+
+        GrammarInterpretor ginterpreter = new GrammarInterpretor(grammarNode);
+        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
+        Map<String,Vector<Integer>> inputEx = new HashMap<>();
+        Vector<Integer> xEx = new Vector<>();
+        xEx.add(-15);
+        xEx.add(11);
+        inputEx.put("x",xEx);
+        Vector<Integer> yEx = new Vector<>();
+        yEx.add(5);
+        yEx.add(15);
+        inputEx.put("y",yEx);
+        Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputEx);
+        BufferedWriter writer = new BufferedWriter(new FileWriter("benchmarks/CLIA_Track_PLUS/fg_mpg_plane2/solution.txt"));
+        System.out.println(solution.get("Start").size());
+        for(LinearSet ls:solution.get("Start"))
+        {
+            System.out.println(ls.getBase());
+        }
+        System.out.println(solution.get("Start").iterator().next().getPeriod());
         writer.write(solution.get("Start").toString());
         Vector<Integer> spec = new Vector<>();
         spec.add(-20);

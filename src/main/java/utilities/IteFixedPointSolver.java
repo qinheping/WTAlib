@@ -13,12 +13,22 @@ public class IteFixedPointSolver {
     public static int totalStage = 0;
     public static float bvSize = 0;
     public static int bvCount = 0;
+    public static Boolean opt = true;
     public static Map<String,Set<LinearSet>> SolveIteFixedPoint(List<Equation> termEqs, Map<String, Vector<Integer>> map){
+
+
         Map<String,Set<LinearSet>> finalSolution = new HashMap<>();
         dim = map.values().iterator().next().size();
         List<Equation> oriValEqs = ExpressionApplication.EquationEval_LinearSet(termEqs,map);
         DAG dag = new DAG(oriValEqs);
-        Set<String> currentEq = dag.popRoot();
+        Set<String> currentEq = new HashSet<>();
+        if (opt)
+            currentEq = dag.popRoot();
+        else{
+            for(Equation eq:termEqs)
+                currentEq.add(eq.left);
+        }
+
         while(currentEq!=null) {
 
             System.out.println("current eq: "+currentEq);
@@ -86,6 +96,7 @@ public class IteFixedPointSolver {
 
                     for(String key:currentSolution.keySet()){
                         System.out.println(key+" : "+currentSolution.get(key).size());
+                        //System.out.println(currentSolution.get(key));
                     }
                     //System.out.println(currentSolution);
                     finalSolution = currentSolution;
@@ -97,8 +108,9 @@ public class IteFixedPointSolver {
 
                 // TODO check if the current solution reach a fixed point
             }
-
-            currentEq = dag.popRoot();
+            if(opt)
+                currentEq = dag.popRoot();
+            else break;
         }
         return finalSolution;
     }
@@ -448,7 +460,7 @@ public class IteFixedPointSolver {
         }
         if (flag)
             return "";
-        return result.toString();
+        return "_"+result.toString();
     }
 
     private static Set<String> find_expr_vars(Expression expr) {

@@ -5,10 +5,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parser.*;
 import semirings.LinearSet;
-import utilities.Equation;
-import utilities.GrammarInterpretor;
-import utilities.IteFixedPointSolver;
-import utilities.SMTQGenerator;
+import utilities.*;
 
 import java.io.*;
 import java.util.*;
@@ -19,13 +16,30 @@ public class SLMain {
 
         int numEx = Integer.parseInt(args[1]);
 
-        System.loadLibrary("cvc4jni");
-         ExprManager em = new ExprManager(); // CVC4 component
-         SmtEngine smt = new SmtEngine(em);
+
+        String grammarString;
+        if(args.length>3 && args[3].equals("b"))
+            grammarString = new Scanner(new File(path)).useDelimiter("\\Z").next();
+        else
+            grammarString = new Scanner(new File(path+"/grammar.sl")).useDelimiter("\\Z").next();
 
 
-        
-        String grammarString = new Scanner(new File(path+"/grammar.sl")).useDelimiter("\\Z").next();
+        if(args.length>3 && args[3].equals("noOpt")) {
+            Newton.opt = false;
+            IteFixedPointSolver.opt = false;
+        }
+
+        if(args.length>3 && args[3].equals("z3")) {
+            SMTQGenerator.SMTSolver = 1;
+        }else {
+            System.loadLibrary("cvc4jni");
+            SMTQGenerator.em = new ExprManager();
+            SMTQGenerator.smt = new SmtEngine(SMTQGenerator.em);
+            SMTQGenerator.integer = SMTQGenerator.em.integerType();
+        }
+
+
+
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -33,10 +47,12 @@ public class SLMain {
         ParseTree parseTree = parser.synthFunCmd();
         GrammarNode grammarNode = (GrammarNode)new ASTVisitor().visit(parseTree);
         GrammarInterpretor ginterpreter = new GrammarInterpretor(grammarNode);
-        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode); // target
-
-        Scanner scanner = new Scanner(new File(path+"/example"+args[2]+".txt"));
-
+        List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
+        Scanner scanner;
+        if(args.length>3 && args[3].equals("b"))
+            scanner = new Scanner(new File("/u/q/h/qhu28/repositories/WTAlib/benchmarks/benchmarking/example"+args[2]+".txt"));
+        else
+            scanner = new Scanner(new File(path+"/example"+args[2]+".txt"));
         String[] var_array = scanner.nextLine().split(" ");
         Vector<Integer> spec = new Vector<>();
         Map<String,Vector<Integer>> inputExMap = new HashMap<>();
@@ -66,7 +82,6 @@ public class SLMain {
         float timeElapsed_sl = endTime_sl - startTime_sl;
 
         System.out.println(solution);
-        System.out.println("hi");
         int solutionSize = solution.get("Start").size();
 
         float avgPeriod = 0;
@@ -76,12 +91,12 @@ public class SLMain {
                 avgPeriod = ls.getPeriod().size();
             avgPeriod = avgPeriod*periodCount+ls.getPeriod().size();
             periodCount++;
-            avgPeriod = ls.getPeriod().size();
+            avgPeriod = avgPeriod/periodCount;
         }
 
 
         System.setOut(original);
-        System.out.println(IteFixedPointSolver.totalStage+" & "+ IteFixedPointSolver.bvSize+
+        System.out.print(IteFixedPointSolver.totalStage+" & "+ IteFixedPointSolver.bvSize+
                         " & "+solutionSize+ " & "+avgPeriod + " & "+String.format ("%.2f",(timeElapsed_sl/1000000000))+ " & ");
 
         //BufferedWriter writer = new BufferedWriter(new FileWriter(path+"out.txt"));
@@ -89,7 +104,8 @@ public class SLMain {
         //writer.close();
         //File file = new File(path+"out.txt");
         //file.delete();
-
+        if(args.length > 3 && args[3].equals("b"))
+            return;
         float startTime_smt = System.nanoTime();
         Boolean result = SMTQGenerator.checkSat(spec,solution.get("Start"));
         float endTime_smt = System.nanoTime();

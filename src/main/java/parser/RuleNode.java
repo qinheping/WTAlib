@@ -12,31 +12,40 @@ public class RuleNode extends ProgramNode {
     List<String> weight;
 
     public String getSymbol() {
-        return symbol;
+        return content.symbol;
     }
 
-    String symbol;
 
     public List<GTermNode> getChildren() {
-        return children;
+        return content.children;
     }
 
-    List<GTermNode> children;
+    public GTermNode getContent() {
+        return content;
+    }
+
+    public void setContent(GTermNode content) {
+        this.content = content;
+    }
+
+    GTermNode content;
 
     public RuleNode(List<String> weight, GTermNode gterm){
         this.weight = weight;
         if(weight == null)
             this.weight = new ArrayList<String>();
-        this.symbol = gterm.symbol;
-        this.children = gterm.children;
+        content = new GTermNode(gterm.getSymbol(),gterm.getChildren());
     }
 
+    public RuleNode( GTermNode gterm){
+        this(new ArrayList<>(),gterm);
+    }
     @Override
     public String toString(){
-        if (children == null)
-            return symbol;
-        String result = "( " + symbol + " ";
-        for(GTermNode node: children)
+        if (content.children == null)
+            return content.symbol;
+        String result = "( " + content.symbol + " ";
+        for(GTermNode node: content.children)
             result = result + node.toString() + " ";
         return result + ")";
     }
@@ -46,8 +55,8 @@ public class RuleNode extends ProgramNode {
         if(weight.size() > index)
             w=sr.parse(weight.get(index));
         List<Integer> to = new ArrayList<Integer>();
-        if(children != null){
-            for(GTermNode child: children) {
+        if(content.children != null){
+            for(GTermNode child: content.children) {
                 if (idDic.get(child.symbol) != null) {
                     to.add(idDic.get(child.symbol));
                 }
@@ -56,13 +65,13 @@ public class RuleNode extends ProgramNode {
             }
         }else
             to.add(1);
-        return new WTAMove<S,R>(from,to, (S)symbol, w);
+        return new WTAMove<S,R>(from,to, (S)content.symbol, w);
     }
 
     public <S>FTAMove<S> toFTAMove(Map<String, Integer> idDic, Integer from){
         List<Integer> to = new ArrayList<Integer>();
-        if(this.children != null){
-            for(GTermNode child: children) {
+        if(this.content.children != null){
+            for(GTermNode child: content.children) {
                 if (idDic.get(child.symbol) != null) {
                     to.add(idDic.get(child.symbol));
                 }
@@ -71,7 +80,7 @@ public class RuleNode extends ProgramNode {
             }
         }else
             to.add(1);
-        return new FTAMove<S>(from,to,(S)symbol);
+        return new FTAMove<S>(from,to,(S)content.symbol);
 
     }
 }

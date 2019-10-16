@@ -80,6 +80,14 @@ public class QSygusNode extends ProgramNode{
         return result;
     }
 
+    public String toString_Grammar(FTA fta){
+
+        String result = "";
+        result = result + synthFun.toString(fta);
+        return result;
+    }
+
+
     public TermNode getWeightConstraint() {
         return weightConstraint;
     }
