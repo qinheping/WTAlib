@@ -26,7 +26,6 @@
 (declare-var y Int ) 
 (declare-var z Int ) 
 
-; if ( 2x -3 <= -2y +4 + z) then min(x,y,z) else max(x,y,z) endif
 
 ( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  x )  ( <= (eq1 x y z ) x ) ) )
 ( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  y )  ( <= (eq1 x y z ) y ) ) )

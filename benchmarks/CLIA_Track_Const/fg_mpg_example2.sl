@@ -28,10 +28,10 @@
 
 ; if ( 2x -3 <= -2y +4 + z) then min(x,y,z) else max(x,y,z) endif
 
-( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  x )  ( <= (eq1 x y z ) x ) ) )
-( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  y )  ( <= (eq1 x y z ) y ) ) )
-( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  z )  ( <= (eq1 x y z ) z ) ) )
-( constraint (  or3 (  =  ( eq1 x y z )  x ) (  =  ( eq1 x y z )  y ) (  =  ( eq1 x y z )  z ) ) )
+( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  (+ x 1))  ( <= (eq1 x y z ) (+ x 1)) ) )
+( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  (+ y 1))  ( <= (eq1 x y z ) (+ y 1)) ) )
+( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  (+ z 1))  ( <= (eq1 x y z ) (+ z 1)) ) )
+( constraint (  or3 (  =  ( eq1 x y z )  (+ x 1) ) (  =  ( eq1 x y z )  (+ x 1) ) (  =  ( eq1 x y z )  (+ x 1) ) ) )
 
 
 (check-synth)

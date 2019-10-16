@@ -1,15 +1,13 @@
 ( synth-fun eq1  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (
 	(Start  Int (		NT1
 		NT4
-))
-	(NT1  Int (		x
+))	(NT1  Int (		x
 		y
 		0
 		1
 		z
 		(+ NT1 NT1)
 ))
-
 	(NT3  Bool (		(>= NT1 NT1)
 		(not NT3)
 		(or NT3)

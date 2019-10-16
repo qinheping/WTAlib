@@ -3,10 +3,8 @@
 (set-logic LIA)
 
 (synth-fun eq1 ( (x Int) (y Int) (z Int)) Int ((Start Int (x y 0 1 z
-             ((+ Start D):1)
              ((+ Start Start):1)
              (ite StartBool Start Start)))
-(D Int (-x -y -1 -z))
  (StartBool Bool (                  (>= Start Start) (and StartBool StartBool) ))
 ))
 

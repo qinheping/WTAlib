@@ -1,0 +1,428 @@
+benchmarking_2_1_1 2 1 1 6 & 20 & 10 & 1 & 2 & 2.0 & 13 & 3.0 & 0.07 & 
+benchmarking_2_1_2 2 1 2 6 & 20 & 10 & 2 & 2 & 4.0 & 259 & 25.0 & 0.37 & 
+benchmarking_2_1_3 2 1 3 6 & 20 & 10 & 3 & benchmarking_2_1_4 2 1 4 6 & 20 & 10 & 4 & benchmarking_2_1_5 2 1 5 6 & 20 & 10 & 5 & benchmarking_2_1_6 2 1 6 6 & 20 & 10 & 6 & benchmarking_2_1_7 2 1 7 6 & 20 & 10 & 7 & benchmarking_2_1_8 2 1 8 6 & 20 & 10 & 8 & benchmarking_2_1_9 2 1 9 6 & 20 & 10 & 9 & benchmarking_2_1_10 2 1 10 6 & 20 & 10 & 10 & benchmarking_2_1_11 2 1 11 6 & 20 & 10 & 11 & benchmarking_2_1_12 2 1 12 6 & 20 & 10 & 12 & benchmarking_2_1_13 2 1 13 6 & 20 & 10 & 13 & benchmarking_2_1_14 2 1 14 6 & 20 & 10 & 14 & benchmarking_2_1_15 2 1 15 6 & 20 & 10 & 15 & benchmarking_2_1_16 2 1 16 6 & 20 & 10 & 16 & benchmarking_2_1_17 2 1 17 6 & 20 & 10 & 17 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f584ce5d1f8, pid=20376, tid=140017933981440
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid20376.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_1_18 2 1 18 6 & 20 & 10 & 18 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f3d92c4c1f8, pid=20520, tid=139904346945280
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid20520.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_1_19 2 1 19 6 & 20 & 10 & 19 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007feddb0f51f8, pid=20687, tid=140660271372032
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid20687.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_1 2 2 1 6 & 21 & 10 & 1 & 2 & 2.0 & 18 & 3.0 & 0.07 & 
+benchmarking_2_2_2 2 2 2 6 & 21 & 10 & 2 & 2 & 4.0 & 709 & 25.0 & 0.37 & 
+benchmarking_2_2_3 2 2 3 6 & 21 & 10 & 3 & benchmarking_2_2_4 2 2 4 6 & 21 & 10 & 4 & benchmarking_2_2_5 2 2 5 6 & 21 & 10 & 5 & benchmarking_2_2_6 2 2 6 6 & 21 & 10 & 6 & benchmarking_2_2_7 2 2 7 6 & 21 & 10 & 7 & benchmarking_2_2_8 2 2 8 6 & 21 & 10 & 8 & benchmarking_2_2_9 2 2 9 6 & 21 & 10 & 9 & benchmarking_2_2_10 2 2 10 6 & 21 & 10 & 10 & benchmarking_2_2_11 2 2 11 6 & 21 & 10 & 11 & benchmarking_2_2_12 2 2 12 6 & 21 & 10 & 12 & benchmarking_2_2_13 2 2 13 6 & 21 & 10 & 13 & benchmarking_2_2_14 2 2 14 6 & 21 & 10 & 14 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f101b0f51f8, pid=3910, tid=139709062170368
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid3910.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_15 2 2 15 6 & 21 & 10 & 15 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f06770f51f8, pid=6819, tid=139667659536128
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid6819.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_16 2 2 16 6 & 21 & 10 & 16 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f21af0f51f8, pid=6921, tid=139782759790336
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid6921.log
+Compiled method (nm)  489669  564     n 0       edu.nyu.acsys.CVC4.CVC4JNI::delete_Expr (native)
+ total in heap  [0x00007f21bd2390d0,0x00007f21bd239418] = 840
+ relocation     [0x00007f21bd2391f8,0x00007f21bd239240] = 72
+ main code      [0x00007f21bd239240,0x00007f21bd239410] = 464
+ oops           [0x00007f21bd239410,0x00007f21bd239418] = 8
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_17 2 2 17 6 & 21 & 10 & 17 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f6b22c4c1f8, pid=7099, tid=140099033298688
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid7099.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_18 2 2 18 6 & 21 & 10 & 18 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ff830be51f8, pid=7207, tid=140705254704896
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid7207.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_2_19 2 2 19 6 & 21 & 10 & 19 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f9f170f51f8, pid=10090, tid=140321909634816
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid10090.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_3_1 2 3 1 6 & 22 & 10 & 1 & 2 & 2.0 & 21 & 3.0 & 0.03 & 
+benchmarking_2_3_2 2 3 2 6 & 22 & 10 & 2 & 2 & 4.0 & 835 & 25.0 & 0.40 & 
+benchmarking_2_3_3 2 3 3 6 & 22 & 10 & 3 & benchmarking_2_3_4 2 3 4 6 & 22 & 10 & 4 & benchmarking_2_3_5 2 3 5 6 & 22 & 10 & 5 & benchmarking_2_3_6 2 3 6 6 & 22 & 10 & 6 & benchmarking_2_3_7 2 3 7 6 & 22 & 10 & 7 & benchmarking_2_3_8 2 3 8 6 & 22 & 10 & 8 & benchmarking_2_3_9 2 3 9 6 & 22 & 10 & 9 & benchmarking_2_3_10 2 3 10 6 & 22 & 10 & 10 & benchmarking_2_3_11 2 3 11 6 & 22 & 10 & 11 & benchmarking_2_3_12 2 3 12 6 & 22 & 10 & 12 & benchmarking_2_3_13 2 3 13 6 & 22 & 10 & 13 & benchmarking_2_3_14 2 3 14 6 & 22 & 10 & 14 & benchmarking_2_3_15 2 3 15 6 & 22 & 10 & 15 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f36e12611f8, pid=20988, tid=139874593179392
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid20988.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_3_16 2 3 16 6 & 22 & 10 & 16 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f60713ed1f8, pid=23724, tid=140053501126400
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid23724.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_3_17 2 3 17 6 & 22 & 10 & 17 & benchmarking_2_3_18 2 3 18 6 & 22 & 10 & 18 & benchmarking_2_3_19 2 3 19 6 & 22 & 10 & 19 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f412f1090c4, pid=27304, tid=139918587963136
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x3060c4]  CVC4::expr::NodeValue::inc()+0x4
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid27304.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_4_1 2 4 1 6 & 23 & 10 & 1 & 2 & 2.0 & 25 & 3.0 & 0.03 & 
+benchmarking_2_4_2 2 4 2 6 & 23 & 10 & 2 & 2 & 4.0 & 979 & 25.0 & 0.40 & 
+benchmarking_2_4_3 2 4 3 6 & 23 & 10 & 3 & benchmarking_2_4_4 2 4 4 6 & 23 & 10 & 4 & benchmarking_2_4_5 2 4 5 6 & 23 & 10 & 5 & benchmarking_2_4_6 2 4 6 6 & 23 & 10 & 6 & benchmarking_2_4_7 2 4 7 6 & 23 & 10 & 7 & benchmarking_2_4_8 2 4 8 6 & 23 & 10 & 8 & benchmarking_2_4_9 2 4 9 6 & 23 & 10 & 9 & benchmarking_2_4_10 2 4 10 6 & 23 & 10 & 10 & benchmarking_2_4_11 2 4 11 6 & 23 & 10 & 11 & benchmarking_2_4_12 2 4 12 6 & 23 & 10 & 12 & benchmarking_2_4_13 2 4 13 6 & 23 & 10 & 13 & benchmarking_2_4_14 2 4 14 6 & 23 & 10 & 14 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f69e2c4c1f8, pid=8460, tid=140093997401856
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid8460.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_4_15 2 4 15 6 & 23 & 10 & 15 & benchmarking_2_4_16 2 4 16 6 & 23 & 10 & 16 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f76d30f51f8, pid=8848, tid=140148643768064
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid8848.log
+Compiled method (nm)  484330  580     n 0       edu.nyu.acsys.CVC4.CVC4JNI::delete_Expr (native)
+ total in heap  [0x00007f76f01dc810,0x00007f76f01dcb58] = 840
+ relocation     [0x00007f76f01dc938,0x00007f76f01dc980] = 72
+ main code      [0x00007f76f01dc980,0x00007f76f01dcb50] = 464
+ oops           [0x00007f76f01dcb50,0x00007f76f01dcb58] = 8
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_4_17 2 4 17 6 & 23 & 10 & 17 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f231f0f51f8, pid=11724, tid=139789601904384
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid11724.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_4_18 2 4 18 6 & 23 & 10 & 18 & benchmarking_2_4_19 2 4 19 6 & 23 & 10 & 19 & benchmarking_2_5_1 2 5 1 6 & 24 & 10 & 1 & 2 & 2.0 & 29 & 3.0 & 0.03 & 
+benchmarking_2_5_2 2 5 2 6 & 24 & 10 & 2 & 2 & 4.0 & 1076 & 25.0 & 0.44 & 
+benchmarking_2_5_3 2 5 3 6 & 24 & 10 & 3 & benchmarking_2_5_4 2 5 4 6 & 24 & 10 & 4 & benchmarking_2_5_5 2 5 5 6 & 24 & 10 & 5 & benchmarking_2_5_6 2 5 6 6 & 24 & 10 & 6 & benchmarking_2_5_7 2 5 7 6 & 24 & 10 & 7 & benchmarking_2_5_8 2 5 8 6 & 24 & 10 & 8 & benchmarking_2_5_9 2 5 9 6 & 24 & 10 & 9 & benchmarking_2_5_10 2 5 10 6 & 24 & 10 & 10 & benchmarking_2_5_11 2 5 11 6 & 24 & 10 & 11 & benchmarking_2_5_12 2 5 12 6 & 24 & 10 & 12 & benchmarking_2_5_13 2 5 13 6 & 24 & 10 & 13 & benchmarking_2_5_14 2 5 14 6 & 24 & 10 & 14 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f52899681f8, pid=25558, tid=139992508643072
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid25558.log
+Compiled method (nm)  547389  580     n 0       edu.nyu.acsys.CVC4.CVC4JNI::delete_Expr (native)
+ total in heap  [0x00007f529523a3d0,0x00007f529523a718] = 840
+ relocation     [0x00007f529523a4f8,0x00007f529523a540] = 72
+ main code      [0x00007f529523a540,0x00007f529523a710] = 464
+ oops           [0x00007f529523a710,0x00007f529523a718] = 8
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_5_15 2 5 15 6 & 24 & 10 & 15 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f8ecec4c1f8, pid=25717, tid=140252109444864
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid25717.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_5_16 2 5 16 6 & 24 & 10 & 16 & benchmarking_2_5_17 2 5 17 6 & 24 & 10 & 17 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fcb087561f8, pid=28763, tid=140510572685056
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid28763.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_5_18 2 5 18 6 & 24 & 10 & 18 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f80eac4c1f8, pid=28875, tid=140192586499840
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid28875.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_5_19 2 5 19 6 & 24 & 10 & 19 & #
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f35296651f8, pid=31062, tid=139866880403200
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libcvc4.so.6+0x2f21f8]  CVC4::expr::NodeValue::dec()+0xb8
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /afs/cs.wisc.edu/u/q/h/qhu28/repositories/WTAlib/benchmarks/hs_err_pid31062.log
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+benchmarking_2_6_1 2 6 1 6 & 25 & 10 & 1 & 2 & 2.0 & 30 & 3.0 & 0.03 & 
+benchmarking_2_6_2 2 6 2 6 & 25 & 10 & 2 & 2 & 4.0 & 1125 & 25.0 & 0.44 & 
+benchmarking_2_6_3 2 6 3 6 & 25 & 10 & 3 & benchmarking_2_6_4 2 6 4 6 & 25 & 10 & 4 & benchmarking_2_6_5 2 6 5 6 & 25 & 10 & 5 & benchmarking_2_6_6 2 6 6 6 & 25 & 10 & 6 & 

@@ -29,7 +29,7 @@
 
 
 ( constraint ( iteB ( >= (plus2 x y) 1 ) 
-                    ( = ( eq1 x y z) ( plus2 x  y    ) )
+                    ( = ( eq1 x y z) ( plus3 x  y   1 ) )
 		    ( = ( eq1 x y z) ( plus2 x  (minus y)   ) )
              )
 )      

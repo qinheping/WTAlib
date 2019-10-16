@@ -11,8 +11,6 @@
 ))
 
 	(NT3  Bool (		(>= NT1 NT1)
-		(not NT3)
-		(or NT3)
 ))
 	(NT4  Int (		(ite NT3 NT1 NT1)
 		(+ NT4 NT1)
