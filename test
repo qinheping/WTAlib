@@ -3,5 +3,5 @@ echo "building"
 find -name "*.java" > sources.txt
 javac -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" @sources.txt
 echo "start to test"
-java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS $1 -t 500 ../../../$2
+java -classpath . -cp ".:parser/antlr-4.5.3-complete.jar" QSyGuS $1 -t 500 ../../../$2 
 cd ../../..
