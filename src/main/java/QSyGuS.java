@@ -100,7 +100,6 @@ public class QSyGuS {
             semirings.add(gr.get(1).sr);
         }
 
-
         String initial_script = null;
 
         boolean isInterval = false;
@@ -108,7 +107,7 @@ public class QSyGuS {
 
 
         System.out.println("Start to find initial solution");
-        // no weight constain
+        // check if weight constrain presents
         if(prog.weightConstraint == null){
             currentGrammar = prog.getSynthFun().toFTA();
             initial_script = prog.toString(currentGrammar);
@@ -118,7 +117,7 @@ public class QSyGuS {
             // parse weight constraint
             // 1. interval [l,h]
             // 2. base case (-inf,h] [h,h] [l,inf)
-            // 3. combinzation of base case
+            // 3. combination of base case
             // special case
             isInterval = isInterval(constraint);
             if(isInterval){
@@ -332,7 +331,10 @@ public class QSyGuS {
         }
     }
 
+    // construct grammar from term describing weight constraint
     static public FTA getGrammarFromTerm(TermNode term, QSygusNode prog) {
+
+        // if the weight constraint term is a complicated sentence
         if (term.getSymbol().equals("and")) {
             return getGrammarFromTerm(term.getChildren().get(0), prog).intersectionWith(getGrammarFromTerm(term.getChildren().get(1), prog));
         }
@@ -343,6 +345,7 @@ public class QSyGuS {
             return getGrammarFromTerm(term.getChildren().get(0), prog).complement().intersectionWith(prog.getSynthFun().toFTA());
         }
 
+        // if the weight constraint is an atom sentence
         reset();
         Integer atomCheck = checkIneq(term);
         if (atomCheck != 3) {
@@ -354,6 +357,7 @@ public class QSyGuS {
             }
             if (atomCheck > 0) {
                 // TODO greater than? complement
+                // working here 12/05/2019
                 return gr.get(constaintedIndex).mkFTAInRange(prog.toWTA(constaintedIndex), semirings.get(constaintedIndex).one(), true, l, !inf).complement().intersectionWith(prog.getSynthFun().toFTA());
             }
         }
