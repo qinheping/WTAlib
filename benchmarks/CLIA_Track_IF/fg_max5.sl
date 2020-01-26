@@ -1,5 +1,3 @@
-; max5.sl
-; Synthesize the maximum of 5 integers, from a purely declarative spec
 
 (set-logic LIA)
 ( synth-fun max5  (        ( x  Int )  ( y  Int )  ( z  Int )  ( w  Int )  ( u  Int ) )  Int (
