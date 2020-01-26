@@ -3,5 +3,7 @@ FILES=../../../benchmarks/CLIA_Track_IF/*
 
 for f in $FILES
 do
-	echo "Processing $f file..." 
+	fbase = ${f##*/}
+	fpref = ${fbase%.*}
+	echo "Processing $fpref file..." 
 done
