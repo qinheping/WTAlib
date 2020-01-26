@@ -106,4 +106,3 @@ if __name__ == "__main__":
         candidate_solution = synthesizer(input_file_name,example_list)
         print candidate_solution
         example_list.append(verifier(input_file_name,candidate_solution))
-        print example_list

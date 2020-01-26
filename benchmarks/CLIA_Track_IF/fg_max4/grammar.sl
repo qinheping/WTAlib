@@ -1,60 +1,43 @@
-(synth-fun max4 (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (
-	(Start  Int (		x1
-		x2
-		x3
-		x4
+( synth-fun max4  (       ( x  Int )  ( y  Int )  ( z  Int )  ( w  Int ) )  Int (
+	(Start  Int (		x
+		y
+		z
+		w
 		0
 		1
-		(ite NT4 NT1 NT1)
 		(+ NT1 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT4 NT1)
+		(ite NT3 NT5 NT1)
+		(+ NT5 NT5)
 		(ite NT3 NT1 NT1)
-		(ite NT4 NT2 NT1)
-		(ite NT4 NT1 NT2)
-		(+ NT2 NT1)
-		(ite NT3 NT2 NT1)
-		(ite NT3 NT1 NT2)
-		(ite NT4 NT2 NT2)
-		(ite NT6 NT1 NT1)
-		(ite NT4 NT5 NT1)
+		(+ NT5 NT1)
 ))
-	(NT1  Int (		x1
-		x2
-		x3
-		x4
+	(NT1  Int (		x
+		y
+		z
+		w
 		0
 		1
-		(ite NT4 NT1 NT1)
+		(+ NT1 NT1)
 ))
-	(NT2  Int (		(+ NT1 NT1)
-		(ite NT3 NT1 NT1)
-		(ite NT4 NT2 NT1)
-		(ite NT4 NT1 NT2)
-))
-	(NT3  Bool (		(<= NT1 NT1)
-		(not NT3)
-		(= NT2 NT1)
-		(>= NT2 NT1)
-))
-	(NT4  Bool (		(= NT1 NT1)
-		(>= NT1 NT1)
-		(not NT4)
-		(and NT4 NT4)
-		(or NT4 NT4)
-))
-	(NT5  Int (		(+ NT2 NT1)
-		(ite NT3 NT2 NT1)
-		(ite NT3 NT1 NT2)
-		(ite NT4 NT2 NT2)
-		(ite NT6 NT1 NT1)
-		(ite NT4 NT5 NT1)
-))
-	(NT6  Bool (		(<= NT2 NT1)
-		(= NT2 NT2)
-		(>= NT2 NT2)
-		(and NT3 NT3)
-		(or NT3 NT3)
-		(not NT6)
+	(NT2  Bool (		(<= NT1 NT1)
+		(not NT2)
 		(= NT5 NT1)
 		(>= NT5 NT1)
+))
+	(NT3  Bool (		(= NT1 NT1)
+		(>= NT1 NT1)
+		(not NT3)
+		(and NT3 NT3)
+		(or NT3 NT3)
+))
+	(NT4  Int (		(ite NT2 NT1 NT1)
+		(+ NT4 NT1)
+		(ite NT3 NT5 NT1)
+		(+ NT5 NT5)
+))
+	(NT5  Int (		(ite NT3 NT1 NT1)
+		(+ NT5 NT1)
 ))
 ))
