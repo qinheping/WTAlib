@@ -57,9 +57,10 @@ def verifier(fname,candidate_solution):
     result = []
     for ex in new_ex_list:
 	    result.append(ex)
+    row = ""
     for varname in smt_varlist:
-        print varname +" "
-    print "\n"
+        row += varname +" "
+    print row
     return result
 
 
@@ -109,6 +110,7 @@ if __name__ == "__main__":
         print candidate_solution
         example_list.append(verifier(input_file_name,candidate_solution))
         for example_row in example_list:
+            row = ""
             for example in example_row:
-                print example  +" "
-            print "\n"
+                row += example  +" "
+            print row
