@@ -5,5 +5,5 @@ for f in $FILES
 do
 	fbase=${f##*/}
 	fpref=${fbase%.*}
-	echo "Processing $fpref file..." 
+	timeout 600 python CEGIS_Verifier.py f
 done
