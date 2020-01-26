@@ -47,7 +47,7 @@ def verifier(fname,candidate_solution):
     with open(outname, "w+") as f:
         f.write(smt_query)	
     	f.close()
-    print smt_query
+    #print smt_query
     output = subprocess.check_output(["z3",outname])
     os.remove(outname)
     smt_varlist = [] 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     example_list = []
     while True:
         candidate_solution = synthesizer(input_file_name,example_list)
-        print candidate_solution
+        #print candidate_solution
         example_list.append(verifier(input_file_name,candidate_solution))
         for example_row in example_list:
             row = ""
