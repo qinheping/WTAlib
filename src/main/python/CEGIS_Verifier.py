@@ -115,5 +115,5 @@ if __name__ == "__main__":
                 if "-" not in example:
                     row += example  + " "
                 if "-" in example:
-                    row += "-"+example[2,-1]
+                    row += "-"+example[2:-1]
             print row
