@@ -80,9 +80,7 @@
 		(ite NT16 NT1 NT10)
 		(ite NT14 NT1 NT12)
 ))
-	(NT1  Int (		x1
-		x2
-		x3
+	(NT1  Int (x y z
 		0
 		1
 		(ite NT4 NT1 NT1)

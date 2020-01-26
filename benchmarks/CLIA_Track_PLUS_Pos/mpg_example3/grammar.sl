@@ -2446,9 +2446,9 @@
 		(ite NT98 NT86 NT1)
 		(ite NT98 NT1 NT86)
 ))
-	(NT1  Int (		x1
-		x2
-		x3
+	(NT1  Int (		x
+		y
+		z
 		0
 		1
 		(ite NT4 NT1 NT1)

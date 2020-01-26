@@ -9911,9 +9911,9 @@ z1
 		(ite NT252 NT160 NT1)
 		(ite NT252 NT1 NT160)
 ))
-	(NT1  Int (		x1
-		x2
-		x3
+	(NT1  Int (		x
+		y
+		z z1
 		0
 		1
 		(ite NT4 NT1 NT1)

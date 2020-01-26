@@ -1,4 +1,4 @@
-( synth-fun eq1  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (
+( synth-fun eq1  (      ( x  Int )  ( y  Int )  )  Int (
 	(Start  Int (		NT6
 		NT1
 		NT3

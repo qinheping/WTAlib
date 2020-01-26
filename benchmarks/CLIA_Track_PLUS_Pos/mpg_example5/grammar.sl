@@ -17008,8 +17008,8 @@
 		(ite NT39 NT20 NT20)
 		(ite NT102 NT1 NT1)
 ))
-	(NT1  Int (		x1
-		x2
+	(NT1  Int (		x
+		y
 		0
 		1
 		(ite NT4 NT1 NT1)
