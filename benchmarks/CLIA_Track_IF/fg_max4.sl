@@ -1,6 +1,3 @@
-; max4.sl
-; Synthesize the maximum of 4 integers, from a purely declarative spec
-
 (set-logic LIA)
 
 (synth-fun max4 ((x Int) (y Int) (z Int) (w Int)) Int( synth-fun findSum  (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (

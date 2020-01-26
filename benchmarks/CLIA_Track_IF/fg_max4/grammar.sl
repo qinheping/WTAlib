@@ -1,4 +1,4 @@
-( synth-fun max4 (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (
+(synth-fun max4 (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (
 	(Start  Int (		x1
 		x2
 		x3
@@ -58,11 +58,3 @@
 		(>= NT5 NT1)
 ))
 ))
-  ( declare-var x  Int )
-  ( declare-var y  Int )
-  ( declare-var z  Int )
-  ( constraint  ( >=     ( max3      x  y  z )  x ) )
-  ( constraint  ( >=     ( max3      x  y  z )  y ) )
-  ( constraint  ( >=     ( max3      x  y  z )  z ) )
-  ( constraint  ( or     ( =     x  ( max3      x  y  z ) )  ( or     ( =     y  ( max3      x  y  z ) )  ( =     z  ( max3      x  y  z ) ) ) ) )
-  ( check-synth )
