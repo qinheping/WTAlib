@@ -1,5 +1,3 @@
-	
-(set-weight (w TROP))
 (set-logic LIA)
 
 ( synth-fun eq2  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (

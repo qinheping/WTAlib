@@ -1,7 +1,7 @@
 (set-logic LIA)
 
 
-( synth-fun eq1 (      ( x  Int )  ( y  Int )   )  Int (
+( synth-fun eq1 (      ( x  Int )  ( y  Int )  ( z  Int )   )  Int (
 	(Start  Int (		NT1
 ))
 	(NT1  Int (		x
