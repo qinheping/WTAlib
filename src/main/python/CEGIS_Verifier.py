@@ -59,6 +59,7 @@ def verifier(fname,candidate_solution):
 	    result.append(ex)
     for varname in smt_varlist:
         print varname +" "
+    print "\n"
     return result
 
 
@@ -107,5 +108,7 @@ if __name__ == "__main__":
         candidate_solution = synthesizer(input_file_name,example_list)
         print candidate_solution
         example_list.append(verifier(input_file_name,candidate_solution))
-        for example in example_list:
-            print example  +" "
+        for example_row in example_list:
+            for example in example_row:
+                print example  +" "
+            print "\n"
