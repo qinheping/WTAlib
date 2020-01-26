@@ -1,10 +1,8 @@
-; max4.sl
-; Synthesize the maximum of 4 integers, from a purely declarative spec
-
-(set-logic LIA)
-
-(synth-fun max4 ((x Int) (y Int) (z Int) (w Int)) Int( synth-fun findSum  (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (
-	(Start  Int (		x y z w
+( synth-fun max4 (       ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int ) )  Int (
+	(Start  Int (		x1
+		x2
+		x3
+		x4
 		0
 		1
 		(ite NT4 NT1 NT1)
@@ -19,7 +17,10 @@
 		(ite NT6 NT1 NT1)
 		(ite NT4 NT5 NT1)
 ))
-	(NT1  Int (		x y z w
+	(NT1  Int (		x1
+		x2
+		x3
+		x4
 		0
 		1
 		(ite NT4 NT1 NT1)
@@ -57,19 +58,11 @@
 		(>= NT5 NT1)
 ))
 ))
-(declare-var x Int)
-(declare-var y Int)
-(declare-var z Int)
-(declare-var w Int)
-
-(constraint (>= (max4 x y z w) x))
-(constraint (>= (max4 x y z w) y))
-(constraint (>= (max4 x y z w) z))
-(constraint (>= (max4 x y z w) w))
-(constraint (or (= x (max4 x y z w))
-            (or (= y (max4 x y z w))
-            (or (= z (max4 x y z w))
-	        (= w (max4 x y z w))))))
-
-(check-synth)
-
+  ( declare-var x  Int )
+  ( declare-var y  Int )
+  ( declare-var z  Int )
+  ( constraint  ( >=     ( max3      x  y  z )  x ) )
+  ( constraint  ( >=     ( max3      x  y  z )  y ) )
+  ( constraint  ( >=     ( max3      x  y  z )  z ) )
+  ( constraint  ( or     ( =     x  ( max3      x  y  z ) )  ( or     ( =     y  ( max3      x  y  z ) )  ( =     z  ( max3      x  y  z ) ) ) ) )
+  ( check-synth )
