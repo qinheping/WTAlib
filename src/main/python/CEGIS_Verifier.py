@@ -112,5 +112,8 @@ if __name__ == "__main__":
         for example_row in example_list:
             row = ""
             for example in example_row:
-                row += example  +" "
+                if "-" not in example:
+                    row += example  + " "
+                if "-" in example:
+                    row += example[2,len(example)-1]
             print row
