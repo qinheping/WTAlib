@@ -1,85 +1,59 @@
-"C:\Program Files\Java\jdk1.8.0_161\bin\java.exe" -ea -Didea.test.cyclic.buffer.size=1048576 "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.1\lib\idea_rt.jar=12898:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.1\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.1\lib\idea_rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.1\plugins\junit\lib\junit-rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.1\plugins\junit\lib\junit5-rt.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_161\jre\lib\rt.jar;D:\repositories\WTAlib\target\test-classes;D:\repositories\WTAlib\target\classes;C:\Users\hqhep\.m2\repository\org\antlr\antlr4-runtime\4.5.3\antlr4-runtime-4.5.3.jar;C:\Users\hqhep\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\hqhep\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar" com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit4 ParserUnitTest,testReduction
-  ( set-logic LIA )
-( synth-fun findSum  (        ( x1  Int )  ( x2  Int )  ( x3  Int )  ( x4  Int )  ( x5  Int ) )  Int (
-	(Start  Int (		x1
-		x2
-		x3
-		x4
-		x5
+( synth-fun max5  (        ( x  Int )  ( y  Int )  ( z  Int )  ( w  Int )  ( u  Int ) )  Int (
+	(Start  Int (		x
+		y
+		z
+		w
+		u
 		0
 		1
-		(ite NT4 NT1 NT1)
 		(+ NT1 NT1)
-		(ite NT3 NT1 NT1)
-		(ite NT4 NT2 NT1)
-		(ite NT4 NT1 NT2)
-		(+ NT2 NT1)
-		(ite NT3 NT2 NT1)
-		(ite NT3 NT1 NT2)
-		(ite NT4 NT2 NT2)
-		(ite NT7 NT1 NT1)
-		(ite NT4 NT5 NT1)
-		(+ NT2 NT2)
-		(+ NT5 NT1)
-		(ite NT3 NT2 NT2)
-		(ite NT3 NT5 NT1)
-		(ite NT8 NT1 NT1)
-		(ite NT4 NT6 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
+		(ite NT2 NT4 NT1)
+		(ite NT6 NT1 NT1)
+		(+ NT7 NT1)
 ))
-	(NT1  Int (		x1
-		x2
-		x3
-		x4
-		x5
+	(NT1  Int (		x
+		y
+		z
+		w
+		u
 		0
 		1
-		(ite NT4 NT1 NT1)
+		(+ NT1 NT1)
 ))
-	(NT2  Int (		(+ NT1 NT1)
-		(ite NT3 NT1 NT1)
-		(ite NT4 NT2 NT1)
-		(ite NT4 NT1 NT2)
+	(NT2  Bool (		(<= NT1 NT1)
+		(not NT2)
+		(and NT2 NT2)
+		(or NT2 NT2)
 ))
-	(NT3  Bool (		(<= NT1 NT1)
-		(not NT3)
-		(= NT2 NT1)
-		(>= NT2 NT1)
+	(NT3  Int (		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
 ))
-	(NT4  Bool (		(= NT1 NT1)
-		(>= NT1 NT1)
-		(not NT4)
-		(and NT4 NT4)
-		(or NT4 NT4)
+	(NT4  Int (		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
 ))
-	(NT5  Int (		(+ NT2 NT1)
-		(ite NT3 NT2 NT1)
-		(ite NT3 NT1 NT2)
-		(ite NT4 NT2 NT2)
-		(ite NT7 NT1 NT1)
-		(ite NT4 NT5 NT1)
+	(NT5  Bool (		(<= NT3 NT1)
+		(not NT5)
+		(and NT5 NT2)
+		(or NT5 NT2)
 ))
-	(NT6  Int (		(+ NT2 NT2)
-		(+ NT5 NT1)
-		(ite NT3 NT2 NT2)
-		(ite NT3 NT5 NT1)
-		(ite NT8 NT1 NT1)
-		(ite NT4 NT6 NT1)
+	(NT6  Bool (		(<= NT4 NT1)
+		(<= NT3 NT3)
+		(not NT6)
+		(and NT6 NT2)
+		(or NT6 NT2)
+		(and NT5 NT5)
+		(or NT5 NT5)
 ))
-	(NT7  Bool (		(<= NT2 NT1)
-		(= NT2 NT2)
-		(>= NT2 NT2)
-		(and NT3 NT3)
-		(or NT3 NT3)
-		(= NT5 NT1)
-		(>= NT5 NT1)
-		(not NT7)
-))
-	(NT8  Bool (		(<= NT2 NT2)
-		(<= NT5 NT1)
-		(= NT6 NT1)
-		(>= NT6 NT1)
-		(not NT8)
-		(and NT7 NT3)
-		(or NT7 NT3)
+	(NT7  Int (		(ite NT2 NT4 NT1)
+		(ite NT6 NT1 NT1)
+		(+ NT7 NT1)
 ))
 ))

@@ -58,7 +58,7 @@ def verifier(fname,candidate_solution):
     for ex in new_ex_list:
 	    result.append(ex)
     row = ""
-    for varname in smt_varlist:
+    for varname in sc_list[6]:
         row += varname +" "
     print row
     return result
