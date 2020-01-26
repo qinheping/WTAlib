@@ -1,6 +1,17 @@
 (set-logic LIA)
+( synth-fun eq1  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (
+	(Start  Int (		NT1
+))
+	(NT1  Int (		x
+		y
+		0
+z
+		1
+		(+ NT1 NT1)
+))
+	
+))
 
-(synth-fun eq1 ( (x Int) (y Int) (z Int) ) Int)
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )
 (define-fun plus2 ((b1 Int) (b2 Int)) Int ( + b1 b2))

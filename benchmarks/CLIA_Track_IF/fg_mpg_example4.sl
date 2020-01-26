@@ -1,6 +1,52 @@
 (set-logic LIA)
 
-(synth-fun eq2 ( (x Int) (y Int) (z Int) (z1 Int) ) Int)
+( synth-fun eq2  (       ( x  Int )  ( y  Int )  ( z  Int )  ( z1  Int ) )  Int (
+	(Start  Int (		x
+		y
+		z
+		z1
+		0
+		1
+		(+ NT1 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
+))
+	(NT1  Int (		x
+		y
+		z
+		z1
+		0
+		1
+		(+ NT1 NT1)
+))
+	(NT2  Bool (		(<= NT1 NT1)
+		(= NT1 NT1)
+		(>= NT1 NT1)
+		(not NT2)
+		(and NT2 NT2)
+		(or NT2 NT2)
+))
+	(NT3  Int (		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+	(NT4  Int (		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
+))
+	(NT5  Bool (		(<= NT3 NT1)
+		(= NT3 NT1)
+		(>= NT3 NT1)
+		(not NT5)
+		(and NT5 NT2)
+		(or NT5 NT2)
+))
+))
+
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )
 (define-fun plus2 ((b1 Int) (b2 Int)) Int ( + b1 b2))
@@ -34,14 +80,6 @@
 (declare-var z Int ) 
 (declare-var z1 Int)
 
-; ite 2x+ z - z1 >= -y
-;  ite x + z1 <= y
-;    10x + 20y + 15z - 99
-;    9y + 25z1 - 11
-; else 
-; ite x + 3z + z1 <= -9
-;    11x + 15y + 30z + 22z1 + 11
-;    16x + 18z + 5z1  - 55      
 
 
 ( constraint (  iteB  (>=  ( plus3 ( two-times x ) z ( minus z1) )   ( minus y )  ) 

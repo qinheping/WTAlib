@@ -1,6 +1,79 @@
 (set-logic LIA)
 
-(synth-fun eq1 ( (x Int) (y Int) (z Int) ) Int)
+( synth-fun eq1  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (
+	(Start  Int (		x
+		y
+		z
+		0
+		1
+		(+ NT1 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
+		(+ NT4 NT4)
+		(+ NT7 NT1)
+		(ite NT5 NT4 NT1)
+		(ite NT5 NT1 NT4)
+		(ite NT2 NT8 NT1)
+		(ite NT10 NT1 NT1)
+		(ite NT2 NT4 NT1)
+		(ite NT6 NT1 NT1)
+		(+ NT8 NT1)
+))
+	(NT1  Int (		x
+		y
+		z
+		0
+		1
+		(+ NT1 NT1)
+))
+	(NT2  Bool (		(<= NT1 NT1)
+		(not NT2)
+		(and NT2 NT2)
+		(or NT2 NT2)
+))
+	(NT3  Int (		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+	(NT4  Int (		(+ NT4 NT1)
+		(+ NT3 NT3)
+		(ite NT2 NT3 NT1)
+		(ite NT5 NT1 NT1)
+))
+	(NT5  Bool (		(<= NT3 NT1)
+		(not NT5)
+		(and NT5 NT2)
+		(or NT5 NT2)
+))
+	(NT6  Bool (		(<= NT4 NT1)
+		(<= NT3 NT3)
+		(not NT6)
+		(and NT6 NT2)
+		(or NT6 NT2)
+		(and NT5 NT5)
+		(or NT5 NT5)
+))
+	(NT7  Int (		(+ NT4 NT4)
+		(+ NT7 NT1)
+		(ite NT5 NT4 NT1)
+		(ite NT5 NT1 NT4)
+		(ite NT2 NT8 NT1)
+		(ite NT10 NT1 NT1)
+))
+	(NT8  Int (		(ite NT2 NT4 NT1)
+		(ite NT6 NT1 NT1)
+		(+ NT8 NT1)
+))
+	(NT10  Bool (		(<= NT8 NT1)
+		(not NT10)
+		(and NT10 NT2)
+		(or NT10 NT2)
+))
+))
+
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )
 (define-fun plus2 ((b1 Int) (b2 Int)) Int ( + b1 b2))
@@ -25,8 +98,6 @@
 (declare-var x Int ) 
 (declare-var y Int ) 
 (declare-var z Int ) 
-
-; if ( 2x -3 <= -2y +4 + z) then min(x,y,z) else max(x,y,z) endif
 
 ( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  x )  ( <= (eq1 x y z ) x ) ) )
 ( constraint (  iteB ( <=  (  plus2 ( two-times x ) ( minus 3 ) )   ( plus3 z  ( minus ( two-times y ) )  4    ) ) (  >=  ( eq1 x y z )  y )  ( <= (eq1 x y z ) y ) ) )

@@ -3,13 +3,9 @@
 ))
 	(NT1  Int (		x
 		y
+z
 		0
 		1
 		(+ NT1 NT1)
-		(+ NT1 NT2)
-))
-	(NT2  Int (		-x
-		-y
-		-1
 ))
 ))

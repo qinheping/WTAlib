@@ -1,6 +1,16 @@
 (set-logic LIA)
 
-(synth-fun ex ( (x Int) (y Int) ) Int)
+( synth-fun ex (      ( x  Int )  ( y  Int )   )  Int (
+	(Start  Int (		NT1
+))
+	(NT1  Int (		x
+		y
+		0
+		1
+		(+ NT1 NT1)
+))
+))
+
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )
 (define-fun plus2 ((b1 Int) (b2 Int)) Int ( + b1 b2))
@@ -27,7 +37,6 @@
 (declare-var x Int ) 
 (declare-var y Int ) 
 
-; if x >= 5 , 5x + 3y +17 , 3x +1
 
 (constraint ( iteB  ( >= x 5 ) ( = ( ex x y ) ( plus3 (five-times x ) (three-times y) 17 ) ) ( = (ex x y ) ( plus2 (three-times x) 1 ) ) ) )
 

@@ -4,12 +4,9 @@
 	(NT1  Int (		x
 		y
 		0
+z
 		1
 		(+ NT1 NT1)
-		(+ NT1 NT2)
 ))
-	(NT2  Int (		-x
-		-y
-		-1
-))
+	
 ))
