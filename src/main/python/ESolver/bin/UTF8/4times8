@@ -1,0 +1,27 @@
+(set-logic BV)
+(define-fun B ((h (BitVec 8)) (l (BitVec 8)) (v (BitVec 32))) (BitVec 32)
+   (bvlshr (bvshl v (bvsub #x1f h)) (bvsub #x1f (bvsub h l)))
+)
+
+(define-fun E_1 ((x (BitVec 32))) (BitVec 32) (bvor #x000000f0 (B #x14 #x12 x)) )
+(define-fun E_2 ((x (BitVec 32))) (BitVec 32) (bvor #x00000080 (B #x11 #x0c x)) )
+(define-fun E_3 ((x (BitVec 32))) (BitVec 32) (bvor #x00000080 (B #x0b #x06 x)) )
+(define-fun E_4 ((x (BitVec 32))) (BitVec 32) (bvor #x00000080 (B #x05 #x00 x)) )
+
+(define-fun domainE ((x (BitVec 32))) Bool (and (bvule x #x001fffff)
+						(bvuge x #x00010000)) )
+
+(synth-fun D ((y_1 (BitVec 32)) (y_2 (BitVec 32)) (y_3 (BitVec 32)) (y_4 (BitVec 32))) (BitVec 32)
+    	((Start (BitVec 32) (
+			(bvshl Start Const)
+			(bvor Start Start)
+			(bvor Start Start)
+			(B Const Const Start) y_1 y_2 y_3 y_4
+			))
+	 (Const (BitVec 8) (#x01 #x03 #x06 #x07 #x04 #x05 #x02 #x00))
+	)
+)
+
+(declare-var x (BitVec 32))
+(constraint (or (not (domainE x))  (= (D (E_1 x) (E_2 x) (E_3 x) (E_4 x)) x)))
+(check-synth)
