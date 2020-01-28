@@ -1,7 +1,15 @@
 (set-logic LIA)
-(synth-fun findSum ( (x Int) (y Int) )Int ((Start Int (x y 0 1
-             (+ Start Start)
-             ((ite StartBool Start Start):1)))
+( synth-fun findSum  (      ( x1  Int )  ( x2  Int )  )  Int (
+	(Start  Int (		NT1
+))
+	(NT1  Int (		x1
+		x2
+		0
+		1
+		(+ NT1 NT1)
+))
+))
+
  (StartBool Bool (                  (>= Start Start)))))
 (declare-var x1 Int)
 (declare-var x2 Int)
