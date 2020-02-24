@@ -50,7 +50,7 @@ public class SLMain {
         List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
         Scanner scanner;
         if(args.length>3 && args[3].equals("b"))
-            scanner = new Scanner(new File("/u/q/h/qhu28/repositories/WTAlib/benchmarks/benchmarking/example"+args[2]+".txt"));
+            scanner = new Scanner(new File("/benchmarks/benchmarking/example"+args[2]+".txt"));
         else
             scanner = new Scanner(new File(path+"/example"+args[2]+".txt"));
         String[] var_array = scanner.nextLine().split(" ");
