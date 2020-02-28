@@ -118,7 +118,6 @@ for s in "${benchmark_plus_2[@]}"; do
 				break
 			fi
 		done
-
 	done 
 	avgT=$(echo print\(\'%.2f\' % \($sumT/$count\)\) | python2 2>>$out_error)
 	avgEx=$(echo print\(\'%.2f\' % \($sumEx.0/$count\)\) | python2 2>>$out_error)
@@ -129,8 +128,8 @@ for s in "${benchmark_plus_2[@]}"; do
 	fi
 	echo -n "avg time: $avgT & avg example: " >> $out_path
 	echo $avgEx >> $out_path
-	
 done
+
 for s in "${benchmark_plus_3[@]}"; do
 	echo -n $s" & " >> $out_path
 	echo "processing $s in $path"
