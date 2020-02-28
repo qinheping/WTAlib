@@ -1,0 +1,51 @@
+(set-logic LIA)
+( synth-fun findSum  (      ( x1  Int )  ( x2  Int )  ( x3  Int ) )  Int (
+	(Start  Int (		x1
+		x2
+		x3
+		0
+		1
+		(+ NT1 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+	(NT1  Int (		x1
+		x2
+		x3
+		0
+		1
+		(+ NT1 NT1)
+))
+	(NT2  Bool (		(<= NT1 NT1)
+		(= NT1 NT1)
+		(>= NT1 NT1)
+		(not NT2)
+		(and NT2 NT2)
+		(or NT2 NT2)
+))
+	(NT3  Int (		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+))
+(declare-var x1 Int)
+(declare-var x2 Int)
+(declare-var x3 Int)
+(constraint (=> (> (+ 0 0 ) 15 ) (= (findSum 0 0 0 ) (+ 0 0 ) ) ))
+(constraint (=> (> (+ (- 1) 0 ) 15 ) (= (findSum (- 1) 0 (- 1) ) (+ (- 1) 0 ) ) ))
+(constraint (=> (> (+ 0 (- 1) ) 15 ) (= (findSum 0 (- 1) 0 ) (+ 0 (- 1) ) ) ))
+(constraint (=> (> (+ 16 0 ) 15 ) (= (findSum 16 0 (- 1) ) (+ 16 0 ) ) ))
+(constraint (=> (> (+ 0 1 ) 15 ) (= (findSum 0 1 15 ) (+ 0 1 ) ) ))
+(constraint (=> (> (+ 9 9 ) 15 ) (= (findSum 9 9 7 ) (+ 9 9 ) ) ))
+(constraint (=> (and (<= (+ 0 0 ) 15 ) (> (+ 0 0 ) 15 ) ) (= (findSum 0 0 0 ) (+ 0 0 ) ) ))
+(constraint (=> (and (<= (+ (- 1) 0 ) 15 ) (> (+ 0 (- 1) ) 15 ) ) (= (findSum (- 1) 0 (- 1) ) (+ 0 (- 1) ) ) ))
+(constraint (=> (and (<= (+ 0 (- 1) ) 15 ) (> (+ (- 1) 0 ) 15 ) ) (= (findSum 0 (- 1) 0 ) (+ (- 1) 0 ) ) ))
+(constraint (=> (and (<= (+ 16 0 ) 15 ) (> (+ 0 (- 1) ) 15 ) ) (= (findSum 16 0 (- 1) ) (+ 0 (- 1) ) ) ))
+(constraint (=> (and (<= (+ 0 1 ) 15 ) (> (+ 1 15 ) 15 ) ) (= (findSum 0 1 15 ) (+ 1 15 ) ) ))
+(constraint (=> (and (<= (+ 9 9 ) 15 ) (> (+ 9 7 ) 15 ) ) (= (findSum 9 9 7 ) (+ 9 7 ) ) ))
+(constraint (=> (and (<= (+ 0 0 ) 15 ) (<= (+ 0 0 ) 15 ) ) (= (findSum 0 0 0 ) 0 ) ))
+(constraint (=> (and (<= (+ (- 1) 0 ) 15 ) (<= (+ 0 (- 1) ) 15 ) ) (= (findSum (- 1) 0 (- 1) ) 0 ) ))
+(constraint (=> (and (<= (+ 0 (- 1) ) 15 ) (<= (+ (- 1) 0 ) 15 ) ) (= (findSum 0 (- 1) 0 ) 0 ) ))
+(constraint (=> (and (<= (+ 16 0 ) 15 ) (<= (+ 0 (- 1) ) 15 ) ) (= (findSum 16 0 (- 1) ) 0 ) ))
+(constraint (=> (and (<= (+ 0 1 ) 15 ) (<= (+ 1 15 ) 15 ) ) (= (findSum 0 1 15 ) 0 ) ))
+(constraint (=> (and (<= (+ 9 9 ) 15 ) (<= (+ 9 7 ) 15 ) ) (= (findSum 9 9 7 ) 0 ) ))
+(check-synth)

@@ -1,0 +1,24 @@
+(set-logic LIA)
+( synth-fun findSum (      ( x1  Int )  ( x2  Int ) )  Int (
+	(Start  Int (		NT1
+))
+	(NT1  Int (		x1
+		x2
+		0
+		1
+		(+ NT1 NT1)
+))
+	
+))
+
+(declare-var x1 Int)
+(declare-var x2 Int)
+(constraint (=> (> (+ 0 0 ) 15 ) (= (findSum 0 0 ) (+ 0 0 ) ) ))
+(constraint (=> (> (+ (- 1) 0 ) 15 ) (= (findSum (- 1) 0 ) (+ (- 1) 0 ) ) ))
+(constraint (=> (> (+ 0 (- 1) ) 15 ) (= (findSum 0 (- 1) ) (+ 0 (- 1) ) ) ))
+(constraint (=> (> (+ 16 0 ) 15 ) (= (findSum 16 0 ) (+ 16 0 ) ) ))
+(constraint (=> (<= (+ 0 0 ) 15 ) (= (findSum 0 0 ) 0 ) ))
+(constraint (=> (<= (+ (- 1) 0 ) 15 ) (= (findSum (- 1) 0 ) 0 ) ))
+(constraint (=> (<= (+ 0 (- 1) ) 15 ) (= (findSum 0 (- 1) ) 0 ) ))
+(constraint (=> (<= (+ 16 0 ) 15 ) (= (findSum 16 0 ) 0 ) ))
+(check-synth)

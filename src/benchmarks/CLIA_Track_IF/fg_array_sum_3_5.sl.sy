@@ -1,0 +1,51 @@
+(set-logic LIA)
+( synth-fun findSum  (      ( x1  Int )  ( x2  Int )  ( x3  Int ) )  Int (
+	(Start  Int (		x1
+		x2
+		x3
+		0
+		1
+		(+ NT1 NT1)
+		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+	(NT1  Int (		x1
+		x2
+		x3
+		0
+		1
+		(+ NT1 NT1)
+))
+	(NT2  Bool (		(<= NT1 NT1)
+		(= NT1 NT1)
+		(>= NT1 NT1)
+		(not NT2)
+		(and NT2 NT2)
+		(or NT2 NT2)
+))
+	(NT3  Int (		(ite NT2 NT1 NT1)
+		(+ NT3 NT1)
+))
+))
+(declare-var x1 Int)
+(declare-var x2 Int)
+(declare-var x3 Int)
+(constraint (=> (> (+ 0 0 ) 5 ) (= (findSum 0 0 0 ) (+ 0 0 ) ) ))
+(constraint (=> (> (+ (- 1) 0 ) 5 ) (= (findSum (- 1) 0 (- 1) ) (+ (- 1) 0 ) ) ))
+(constraint (=> (> (+ 0 (- 1) ) 5 ) (= (findSum 0 (- 1) 0 ) (+ 0 (- 1) ) ) ))
+(constraint (=> (> (+ 6 0 ) 5 ) (= (findSum 6 0 (- 1) ) (+ 6 0 ) ) ))
+(constraint (=> (> (+ 0 1 ) 5 ) (= (findSum 0 1 5 ) (+ 0 1 ) ) ))
+(constraint (=> (> (+ 4 4 ) 5 ) (= (findSum 4 4 2 ) (+ 4 4 ) ) ))
+(constraint (=> (and (<= (+ 0 0 ) 5 ) (> (+ 0 0 ) 5 ) ) (= (findSum 0 0 0 ) (+ 0 0 ) ) ))
+(constraint (=> (and (<= (+ (- 1) 0 ) 5 ) (> (+ 0 (- 1) ) 5 ) ) (= (findSum (- 1) 0 (- 1) ) (+ 0 (- 1) ) ) ))
+(constraint (=> (and (<= (+ 0 (- 1) ) 5 ) (> (+ (- 1) 0 ) 5 ) ) (= (findSum 0 (- 1) 0 ) (+ (- 1) 0 ) ) ))
+(constraint (=> (and (<= (+ 6 0 ) 5 ) (> (+ 0 (- 1) ) 5 ) ) (= (findSum 6 0 (- 1) ) (+ 0 (- 1) ) ) ))
+(constraint (=> (and (<= (+ 0 1 ) 5 ) (> (+ 1 5 ) 5 ) ) (= (findSum 0 1 5 ) (+ 1 5 ) ) ))
+(constraint (=> (and (<= (+ 4 4 ) 5 ) (> (+ 4 2 ) 5 ) ) (= (findSum 4 4 2 ) (+ 4 2 ) ) ))
+(constraint (=> (and (<= (+ 0 0 ) 5 ) (<= (+ 0 0 ) 5 ) ) (= (findSum 0 0 0 ) 0 ) ))
+(constraint (=> (and (<= (+ (- 1) 0 ) 5 ) (<= (+ 0 (- 1) ) 5 ) ) (= (findSum (- 1) 0 (- 1) ) 0 ) ))
+(constraint (=> (and (<= (+ 0 (- 1) ) 5 ) (<= (+ (- 1) 0 ) 5 ) ) (= (findSum 0 (- 1) 0 ) 0 ) ))
+(constraint (=> (and (<= (+ 6 0 ) 5 ) (<= (+ 0 (- 1) ) 5 ) ) (= (findSum 6 0 (- 1) ) 0 ) ))
+(constraint (=> (and (<= (+ 0 1 ) 5 ) (<= (+ 1 5 ) 5 ) ) (= (findSum 0 1 5 ) 0 ) ))
+(constraint (=> (and (<= (+ 4 4 ) 5 ) (<= (+ 4 2 ) 5 ) ) (= (findSum 4 4 2 ) 0 ) ))
+(check-synth)
