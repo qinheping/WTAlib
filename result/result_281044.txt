@@ -1,0 +1,49 @@
+Category: limitedPlus
+array_search_3 &  & |N|: 7 & |Delta|: 25 & |V|: 4 & avg example: 4.00 & avg time: 0.65 & solved run: 1/1
+Category: limitedIf
+Category: limitedConst
+example1 &  & |N|: 2 & |Delta|: 9 & |V|: 3 & example: 1.00 & time: 0.08 & solved run: 1/1
+example2 &  & |N|: 2 & |Delta|: 9 & |V|: 3 & example: 3.00 & time: 19.75 & solved run: 1/1
+example3 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.07 & solved run: 1/1
+example4 &  & |N|: 2 & |Delta|: 11 & |V|: 4 & example: 1.00 & time: 0.12 & solved run: 1/1
+example5 &  & |N|: 2 & |Delta|: 9 & |V|: 2 & example: 1.00 & time: 0.08 & solved run: 1/1
+fg_search_2 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.08 & solved run: 1/1
+fg_search_3 &  & |N|: 2 & |Delta|: 11 & |V|: 4 & example: 2.00 & time: 0.91 & solved run: 1/1
+fg_search_4 &  & |N|: 2 & |Delta|: 12 & |V|: 5 & example: 2.00 & time: 1.43 & solved run: 1/1
+fg_search_5 &  & |N|: 2 & |Delta|: 13 & |V|: 6 & example: 2.00 & time: 2.05 & solved run: 1/1
+fg_search_6 &  & |N|: 2 & |Delta|: 14 & |V|: 7 & example: 2.00 & time: 2.67 & solved run: 1/1
+fg_search_7 &  & |N|: 2 & |Delta|: 15 & |V|: 8 & example: 2.00 & time: 3.31 & solved run: 1/1
+fg_search_8 &  & |N|: 2 & |Delta|: 16 & |V|: 9 & example: 2.00 & time: 4.38 & solved run: 1/1
+fg_search_9 &  & |N|: 2 & |Delta|: 17 & |V|: 10 & example: 2.00 & time: 5.37 & solved run: 1/1
+fg_search_10 &  & |N|: 2 & |Delta|: 18 & |V|: 11 & example: 2.00 & time: 6.64 & solved run: 1/1
+fg_search_11 &  & |N|: 2 & |Delta|: 19 & |V|: 12 & example: 2.00 & time: 7.43 & solved run: 1/1
+fg_search_12 &  & |N|: 2 & |Delta|: 20 & |V|: 13 & example: 2.00 & time: 8.59 & solved run: 1/1
+fg_search_13 &  & |N|: 2 & |Delta|: 21 & |V|: 14 & example: 2.00 & time: 9.81 & solved run: 1/1
+fg_search_14 &  & |N|: 2 & |Delta|: 22 & |V|: 15 & example: 2.00 & time: 11.69 & solved run: 1/1
+fg_search_15 &  & |N|: 2 & |Delta|: 23 & |V|: 16 & example: 2.00 & time: 12.11 & solved run: 1/1
+fg_guard1 & fail
+fg_guard2 & fail
+fg_guard3 & fail
+fg_guard4 & fail
+ite1 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.10 & solved run: 1/1
+ite2 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.10 & solved run: 1/1
+plane2 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.08 & solved run: 1/1
+plane3 &  & |N|: 2 & |Delta|: 10 & |V|: 3 & example: 1.00 & time: 0.08 & solved run: 1/1
+fg_sum_2_5 & fail
+fg_sum_2_15 & fail
+fg_sum_3_5 & fail
+fg_sum_3_15 & fail
+fg_sum_4_5 & fail
+fg_sum_4_15 & fail
+fg_sum_5_5 & fail
+fg_sum_5_15 & fail
+fg_sum_6_5 & fail
+fg_sum_6_15 & fail
+fg_sum_7_5 & fail
+fg_sum_7_15 & fail
+fg_sum_8_5 & fail
+fg_sum_8_15 & fail
+fg_sum_9_5 & fail
+fg_sum_9_15 & fail
+fg_sum_10_5 & fail
+fg_sum_10_15 & fail

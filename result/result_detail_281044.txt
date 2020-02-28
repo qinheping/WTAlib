@@ -1,0 +1,113 @@
+Category: limitedPlus
+array_search_3 & run: 1 & example: 1 & 7 & 25 & 4 & 1 & 3 & 2.0 & 4 & 0.0 & 0.07 & 0.00 & 0.07 & true\\ 
+array_search_3 & run: 1 & example: 2 & 7 & 25 & 4 & 2 & 3 & 4.0 & 28 & 0.0 & 0.10 & 0.00 & 0.10 & true\\ 
+array_search_3 & run: 1 & example: 3 & 7 & 25 & 4 & 3 & 4 & 8.0 & 257 & 0.0 & 0.15 & 0.00 & 0.15 & true\\ 
+array_search_3 & run: 1 & example: 4 & 7 & 25 & 4 & 4 & 4 & 16.0 & 2800 & 0.0 & 0.65 & 0.00 & 0.65 & false\\ 
+ 
+Category: limitedIf
+Category: limitedConst
+example1 & run: 1 & example: 1 & 2 & 9 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & false\\ 
+ 
+example2 & run: 1 & example: 1 & 2 & 9 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+example2 & run: 1 & example: 2 & 2 & 9 & 3 & 2 & 1 & 4.0 & 45 & 15.0 & 0.10 & 0.18 & 0.29 & true\\ 
+example2 & run: 1 & example: 3 & 2 & 9 & 3 & 3 & 1 & 8.0 & 645 & 111.0 & 0.32 & 19.43 & 19.75 & false\\ 
+ 
+example3 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.07 & 0.00 & 0.07 & false\\ 
+ 
+example4 & run: 1 & example: 1 & 2 & 11 & 4 & 1 & 1 & 2.0 & 3 & 1.0 & 0.12 & 0.00 & 0.12 & false\\ 
+ 
+example5 & run: 1 & example: 1 & 2 & 9 & 2 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & false\\ 
+ 
+fg_search_2 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 5 & 2.0 & 0.08 & 0.00 & 0.08 & false\\ 
+ 
+fg_search_3 & run: 1 & example: 1 & 2 & 11 & 4 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_3 & run: 1 & example: 2 & 2 & 11 & 4 & 2 & 1 & 4.0 & 78 & 25.0 & 0.13 & 0.77 & 0.91 & false\\ 
+ 
+fg_search_4 & run: 1 & example: 1 & 2 & 12 & 5 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_4 & run: 1 & example: 2 & 2 & 12 & 5 & 2 & 1 & 4.0 & 98 & 31.0 & 0.13 & 1.29 & 1.43 & false\\ 
+ 
+fg_search_5 & run: 1 & example: 1 & 2 & 13 & 6 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & true\\ 
+fg_search_5 & run: 1 & example: 2 & 2 & 13 & 6 & 2 & 1 & 4.0 & 118 & 37.0 & 0.13 & 1.91 & 2.05 & false\\ 
+ 
+fg_search_6 & run: 1 & example: 1 & 2 & 14 & 7 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_6 & run: 1 & example: 2 & 2 & 14 & 7 & 2 & 1 & 4.0 & 138 & 43.0 & 0.13 & 2.53 & 2.67 & false\\ 
+ 
+fg_search_7 & run: 1 & example: 1 & 2 & 15 & 8 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_7 & run: 1 & example: 2 & 2 & 15 & 8 & 2 & 1 & 4.0 & 158 & 49.0 & 0.13 & 3.17 & 3.31 & false\\ 
+ 
+fg_search_8 & run: 1 & example: 1 & 2 & 16 & 9 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & true\\ 
+fg_search_8 & run: 1 & example: 2 & 2 & 16 & 9 & 2 & 1 & 4.0 & 178 & 55.0 & 0.18 & 4.19 & 4.38 & false\\ 
+ 
+fg_search_9 & run: 1 & example: 1 & 2 & 17 & 10 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & true\\ 
+fg_search_9 & run: 1 & example: 2 & 2 & 17 & 10 & 2 & 1 & 4.0 & 198 & 61.0 & 0.18 & 5.18 & 5.37 & false\\ 
+ 
+fg_search_10 & run: 1 & example: 1 & 2 & 18 & 11 & 1 & 1 & 2.0 & 3 & 1.0 & 0.12 & 0.00 & 0.12 & true\\ 
+fg_search_10 & run: 1 & example: 2 & 2 & 18 & 11 & 2 & 1 & 4.0 & 218 & 67.0 & 0.15 & 6.49 & 6.64 & false\\ 
+ 
+fg_search_11 & run: 1 & example: 1 & 2 & 19 & 12 & 1 & 1 & 2.0 & 3 & 1.0 & 0.12 & 0.00 & 0.12 & true\\ 
+fg_search_11 & run: 1 & example: 2 & 2 & 19 & 12 & 2 & 1 & 4.0 & 238 & 73.0 & 0.23 & 7.20 & 7.43 & false\\ 
+ 
+fg_search_12 & run: 1 & example: 1 & 2 & 20 & 13 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_12 & run: 1 & example: 2 & 2 & 20 & 13 & 2 & 1 & 4.0 & 258 & 79.0 & 0.18 & 8.41 & 8.59 & false\\ 
+ 
+fg_search_13 & run: 1 & example: 1 & 2 & 21 & 14 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & true\\ 
+fg_search_13 & run: 1 & example: 2 & 2 & 21 & 14 & 2 & 1 & 4.0 & 278 & 85.0 & 0.20 & 9.61 & 9.81 & false\\ 
+ 
+fg_search_14 & run: 1 & example: 1 & 2 & 22 & 15 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & true\\ 
+fg_search_14 & run: 1 & example: 2 & 2 & 22 & 15 & 2 & 1 & 4.0 & 298 & 91.0 & 0.20 & 11.49 & 11.69 & false\\ 
+ 
+fg_search_15 & run: 1 & example: 1 & 2 & 23 & 16 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & true\\ 
+fg_search_15 & run: 1 & example: 2 & 2 & 23 & 16 & 2 & 1 & 4.0 & 318 & 97.0 & 0.23 & 11.88 & 12.11 & false\\ 
+ 
+fg_guard1 & run: 1 & example: 1 & fail 
+ 
+fg_guard2 & run: 1 & example: 1 & fail 
+ 
+fg_guard3 & run: 1 & example: 1 & fail 
+ 
+fg_guard4 & run: 1 & example: 1 & fail 
+ 
+ite1 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & false\\ 
+ 
+ite2 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.10 & 0.00 & 0.10 & false\\ 
+ 
+plane2 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & false\\ 
+ 
+plane3 & run: 1 & example: 1 & 2 & 10 & 3 & 1 & 1 & 2.0 & 3 & 1.0 & 0.08 & 0.00 & 0.08 & false\\ 
+ 
+fg_sum_2_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_2_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_3_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_3_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_4_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_4_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_5_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_5_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_6_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_6_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_7_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_7_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_8_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_8_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_9_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_9_15 & run: 1 & example: 1 & fail 
+ 
+fg_sum_10_5 & run: 1 & example: 1 & fail 
+ 
+fg_sum_10_15 & run: 1 & example: 1 & fail 
+ 
