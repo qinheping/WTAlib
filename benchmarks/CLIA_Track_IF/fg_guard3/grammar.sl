@@ -1,5 +1,5 @@
 
-( synth-fun ex (      ( x  Int )  ( y  Int )   )  Int (
+( synth-fun ex (      ( x  Int )  ( y  Int )  ( z  Int )   )  Int (
 	(Start  Int (		x
 		y
 z

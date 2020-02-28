@@ -1,6 +1,12 @@
 ( synth-fun eq1  (      ( x  Int )  ( y  Int )  ( z  Int ) )  Int (
-	(Start  Int (		NT1
-		NT4
+	(Start  Int (			x
+		y
+		0
+		1
+		z
+		(+ NT1 NT1)
+		(ite NT3 NT1 NT1)
+		(+ NT4 NT1)
 ))	(NT1  Int (		x
 		y
 		0

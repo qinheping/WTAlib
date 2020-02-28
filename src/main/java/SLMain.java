@@ -12,23 +12,26 @@ import java.util.*;
 
 public class SLMain {
     public static void main(String args[]) throws IOException {
+	// read arguments
+	// input file path
         String path = args[0];
-
+	// number of examples
         int numEx = Integer.parseInt(args[1]);
-
-
+	
+	// read and parse grammar
         String grammarString;
         if(args.length>3 && args[3].equals("b"))
             grammarString = new Scanner(new File(path)).useDelimiter("\\Z").next();
         else
             grammarString = new Scanner(new File(path+"/grammar.sl")).useDelimiter("\\Z").next();
 
-
+	// with or without optimization
         if(args.length>3 && args[3].equals("noOpt")) {
             Newton.opt = false;
             IteFixedPointSolver.opt = false;
         }
 
+	// cvc4 or z3 as SMT solver
         if(args.length>3 && args[3].equals("z3")) {
             SMTQGenerator.SMTSolver = 1;
         }else {
@@ -39,7 +42,7 @@ public class SLMain {
         }
 
 
-
+	// parse grammar
         ANTLRInputStream inputStream = new ANTLRInputStream(grammarString);
         QSygusParserLexer lexer = new QSygusParserLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -47,8 +50,11 @@ public class SLMain {
         ParseTree parseTree = parser.synthFunCmd();
         GrammarNode grammarNode = (GrammarNode)new ASTVisitor().visit(parseTree);
         GrammarInterpretor ginterpreter = new GrammarInterpretor(grammarNode);
+	// build the term equations
         List<Equation> termEqs = ginterpreter.GrammarToEquations(grammarNode);
         Scanner scanner;
+
+	// read examples
         if(args.length>3 && args[3].equals("b"))
             scanner = new Scanner(new File("/benchmarks/benchmarking/example"+args[2]+".txt"));
         else
@@ -56,7 +62,8 @@ public class SLMain {
         String[] var_array = scanner.nextLine().split(" ");
         Vector<Integer> spec = new Vector<>();
         Map<String,Vector<Integer>> inputExMap = new HashMap<>();
-
+	
+	// add spec from examples
         for(int i = 0; i < numEx; i++){
             String[] line = scanner.nextLine().replace("\t"," ").split(" ");
             for(int j = 0; j < line.length-1; j++){
@@ -67,20 +74,24 @@ public class SLMain {
             spec.add(Integer.parseInt(line[line.length-1]));
         }
 
-
         PrintStream original = System.out;
-
+	
+	// get number of transition
         int totalTrans = 0;
         for (NTNode nt:grammarNode.getNtNodes()){
             totalTrans+=nt.getRules().size();
         }
+	// dump problem size
         System.out.print(grammarNode.getNtNodes().size()+" & "+totalTrans+ " & "+inputExMap.keySet().size()+" & "+numEx+" & ");
         System.setOut(new PrintStream(new OutputStream() {            public void write(int b) {                          }        }));
         float startTime_sl = System.nanoTime();
+
+	// solve the semi-linear set
         Map<String,Set<LinearSet>> solution =  IteFixedPointSolver.SolveIteFixedPoint(termEqs,inputExMap);
         float endTime_sl = System.nanoTime();
         float timeElapsed_sl = endTime_sl - startTime_sl;
-
+	
+	// parse solution and dump result
         System.out.println(solution);
         int solutionSize = solution.get("Start").size();
 
