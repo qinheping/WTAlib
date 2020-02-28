@@ -1,0 +1,195 @@
+(set-logic LIA)
+
+(synth-fun findIdx ( (y1 Int) (y2 Int) (y3 Int) (y4 Int) (y5 Int) (y6 Int) (y7 Int) (y8 Int) (y9 Int) (y10 Int) (y11 Int) (y12 Int) (y13 Int) (y14 Int) (y15 Int) (k1 Int)) Int 
+(
+(Start Int (0 16 y1 y2 y3 y4 y5 y6 y7 y8 y9 y10 y11 y12 y13 y14 y15 k1 (+ Start Start) (ite B Start Start) ))
+(B Bool ( (= NT0 NT0) (>= NT0 NT0)))
+)
+)
+
+(declare-var x Int ) 
+(declare-var y Int ) 
+
+
+
+(constraint   ( iteB  ( >= x 5 ) ( = ( ex x y ) ( plus3 (five-times x ) (three-times y) 17 ) ) ( = (ex x y ) ( plus2 (three-times x) 1 ) ) ) )
+
+
+
+(check-synth)
+
+
+ANTLR runtime and generated code versions disagree: 4.7.1!=4.5.1
+ANTLR runtime and generated code versions disagree: 4.7.1!=4.5.1
+(set-logicLIA)(synth-funfindIdx((y1Int)(y2Int)(y3Int)(y4Int)(y5Int)(y6Int)(y7Int)(y8Int)(y9Int)(y10Int)(y11Int)(y12Int)(y13Int)(y14Int)(y15Int)(k1Int))Int((StartInt(016y1y2y3y4y5y6y7y8y9y10y11y12y13y14y15k1(+StartStart)(iteBStartStart)))(BBool((=NT0NT0)(>=NT0NT0)))))(declare-varxInt)(declare-varyInt)(constraint(iteB(>=x5)(=(exxy)(plus3(five-timesx)(three-timesy)17))(=(exxy)(plus2(three-timesx)1))))(check-synth)
+fg_mpg_example1.sl
+1
+
+typedef _Bool bool;
+extern void __VERIFIER_error (void);
+extern int __VERIFIER_nondet_int();
+int I_0 = -1;
+int I_1 = -1;
+void  Start(int y1_0,int y2_0,int y3_0,int y4_0,int y5_0,int y6_0,int y7_0,int y8_0,int y9_0,int y10_0,int y11_0,int y12_0,int y13_0,int y14_0,int y15_0,int k1_0,int y1_1,int y2_1,int y3_1,int y4_1,int y5_1,int y6_1,int y7_1,int y8_1,int y9_1,int y10_1,int y11_1,int y12_1,int y13_1,int y14_1,int y15_1,int k1_1);
+void  B(int y1_0,int y2_0,int y3_0,int y4_0,int y5_0,int y6_0,int y7_0,int y8_0,int y9_0,int y10_0,int y11_0,int y12_0,int y13_0,int y14_0,int y15_0,int k1_0,int y1_1,int y2_1,int y3_1,int y4_1,int y5_1,int y6_1,int y7_1,int y8_1,int y9_1,int y10_1,int y11_1,int y12_1,int y13_1,int y14_1,int y15_1,int k1_1);
+
+void Start(int y1_0,int y2_0,int y3_0,int y4_0,int y5_0,int y6_0,int y7_0,int y8_0,int y9_0,int y10_0,int y11_0,int y12_0,int y13_0,int y14_0,int y15_0,int k1_0,int y1_1,int y2_1,int y3_1,int y4_1,int y5_1,int y6_1,int y7_1,int y8_1,int y9_1,int y10_1,int y11_1,int y12_1,int y13_1,int y14_1,int y15_1,int k1_1){
+	if(__VERIFIER_nondet_int()){
+		I_0 = 0;
+		I_1 = 0;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = 16;
+		I_1 = 16;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y1_0;
+		I_1 = y1_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y2_0;
+		I_1 = y2_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y3_0;
+		I_1 = y3_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y4_0;
+		I_1 = y4_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y5_0;
+		I_1 = y5_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y6_0;
+		I_1 = y6_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y7_0;
+		I_1 = y7_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y8_0;
+		I_1 = y8_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y9_0;
+		I_1 = y9_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y10_0;
+		I_1 = y10_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y11_0;
+		I_1 = y11_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y12_0;
+		I_1 = y12_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y13_0;
+		I_1 = y13_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y14_0;
+		I_1 = y14_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = y15_0;
+		I_1 = y15_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		I_0 = k1_0;
+		I_1 = k1_1;
+		return;}
+	if(__VERIFIER_nondet_int()){
+		Start(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_1_0 = I_0;
+		int temp_1_1 = I_1;
+		Start(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_0_0 = I_0;
+		int temp_0_1 = I_1;
+		I_0 = temp_0_0+temp_1_0;
+		I_1 = temp_0_1+temp_1_1;
+		 return;}
+	if(__VERIFIER_nondet_int()){
+		B(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_2_0 = I_0;
+		int temp_2_1 = I_1;
+		Start(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_1_0 = I_0;
+		int temp_1_1 = I_1;
+		Start(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_0_0 = I_0;
+		int temp_0_1 = I_1;
+		if(temp_2_0) {I_0=temp_1_0; return;} else {I_0=temp_0_0; return; }		if(temp_2_1) {I_1=temp_1_1; return;} else {I_1=temp_0_1; return; }		 return;}
+}
+void B(int y1_0,int y2_0,int y3_0,int y4_0,int y5_0,int y6_0,int y7_0,int y8_0,int y9_0,int y10_0,int y11_0,int y12_0,int y13_0,int y14_0,int y15_0,int k1_0,int y1_1,int y2_1,int y3_1,int y4_1,int y5_1,int y6_1,int y7_1,int y8_1,int y9_1,int y10_1,int y11_1,int y12_1,int y13_1,int y14_1,int y15_1,int k1_1){
+	if(__VERIFIER_nondet_int()){
+		NT0(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_1_0 = I_0;
+		int temp_1_1 = I_1;
+		NT0(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_0_0 = I_0;
+		int temp_0_1 = I_1;
+		I_0 = temp_0_0==temp_1_0;
+		I_1 = temp_0_1==temp_1_1;
+		 return;}
+	if(__VERIFIER_nondet_int()){
+		NT0(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_1_0 = I_0;
+		int temp_1_1 = I_1;
+		NT0(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+		int temp_0_0 = I_0;
+		int temp_0_1 = I_1;
+		I_0 = temp_0_0>=temp_1_0;
+		I_1 = temp_0_1>=temp_1_1;
+		 return;}
+}
+
+bool spec(int y1,int y2,int y3,int y4,int y5,int y6,int y7,int y8,int y9,int y10,int y11,int y12,int y13,int y14,int y15,int k1,int f){
+}
+int main(){
+int y1_0 = 0;
+int y2_0 = 0;
+int y3_0 = 0;
+int y4_0 = 0;
+int y5_0 = 0;
+int y6_0 = 0;
+int y7_0 = 0;
+int y8_0 = 0;
+int y9_0 = 0;
+int y10_0 = 0;
+int y11_0 = 0;
+int y12_0 = 0;
+int y13_0 = 0;
+int y14_0 = 0;
+int y15_0 = 0;
+int k1_0 = 0;
+
+int y1_1 = 0;
+int y2_1 = 0;
+int y3_1 = 0;
+int y4_1 = 0;
+int y5_1 = 0;
+int y6_1 = 0;
+int y7_1 = 0;
+int y8_1 = 0;
+int y9_1 = 0;
+int y10_1 = 0;
+int y11_1 = 0;
+int y12_1 = 0;
+int y13_1 = 0;
+int y14_1 = 0;
+int y15_1 = 0;
+int k1_1 = 0;
+
+Start(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1);
+bool spec_out_0 = spec(y1_0,y2_0,y3_0,y4_0,y5_0,y6_0,y7_0,y8_0,y9_0,y10_0,y11_0,y12_0,y13_0,y14_0,y15_0,k1_0,I_0);
+bool spec_out_1 = spec(y1_1,y2_1,y3_1,y4_1,y5_1,y6_1,y7_1,y8_1,y9_1,y10_1,y11_1,y12_1,y13_1,y14_1,y15_1,k1_1,I_1);
+(void)((!spec_out_0||!spec_out_1)||(__VERIFIER_error (), 0));
+}
