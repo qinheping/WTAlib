@@ -1,5 +1,0 @@
-Category: limitedPlus
-array_search_3 &  & |N|: 7 & |Delta|: 25 & |V|: 4 & avg example: 4.00 & avg time: 0.74 & solved run: 1/1
-Category: limitedIf
-Category: limitedIf
-benchmarks/CLIA_Track_Const// & fail
