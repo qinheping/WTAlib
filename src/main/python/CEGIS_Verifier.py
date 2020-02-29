@@ -34,7 +34,7 @@ def verifier(fname,candidate_solution):
     sc_list = GRewritter([],inputStr)
     smt_query = sc_list[2]+candidate_solution+"\n"+sc_list[3]
     # run z3 on smt_query
-    outname = "tmpSMT/"+fname+".smt"
+    outname = "tmpSMT/check_candidate_solution.smt"
 
 
     if not os.path.exists(os.path.dirname(outname)):
@@ -48,8 +48,9 @@ def verifier(fname,candidate_solution):
         f.write(smt_query)	
     	f.close()
     #print smt_query
-    output = subprocess.check_output(["z3",outname])
-    os.remove(outname)
+    output = subprocess.check_output(["./z3",outname])
+    #print output
+    #os.remove(outname)
     smt_varlist = [] 
     for i in range(0,len(sc_list[6])):
     	smt_varlist.append(sc_list[6][i]+"!")
@@ -60,7 +61,7 @@ def verifier(fname,candidate_solution):
     row = ""
     for varname in sc_list[6]:
         row += varname +" "
-    print row
+    #print row
     return result
 
 
@@ -116,4 +117,4 @@ if __name__ == "__main__":
                     row += example  + " "
                 if "-" in example:
                     row += "-"+example[3:-1]+ " "
-            print row
+            #print row

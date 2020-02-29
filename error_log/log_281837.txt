@@ -1,0 +1,318 @@
+processing mpg_guard1 & run: 1 & example: 1
+processing mpg_guard1 & run: 1 & example: 2
+processing mpg_guard1 & run: 2 & example: 1
+processing mpg_guard1 & run: 2 & example: 2
+processing mpg_guard1 & run: 3 & example: 1
+processing mpg_guard1 & run: 3 & example: 2
+processing mpg_guard1 & run: 4 & example: 1
+processing mpg_guard1 & run: 4 & example: 2
+processing mpg_guard1 & run: 4 & example: 3
+processing mpg_guard1 & run: 4 & example: 4
+processing mpg_guard1 & run: 4 & example: 5
+processing mpg_guard1 & run: 4 & example: 6
+processing mpg_guard1 & run: 4 & example: 7
+processing mpg_guard1 & run: 5 & example: 1
+processing mpg_guard2 & run: 1 & example: 1
+processing mpg_guard2 & run: 1 & example: 2
+processing mpg_guard2 & run: 1 & example: 3
+processing mpg_guard2 & run: 1 & example: 4
+processing mpg_guard2 & run: 2 & example: 1
+processing mpg_guard2 & run: 2 & example: 2
+processing mpg_guard2 & run: 2 & example: 3
+processing mpg_guard2 & run: 3 & example: 1
+processing mpg_guard2 & run: 3 & example: 2
+processing mpg_guard2 & run: 3 & example: 3
+processing mpg_guard2 & run: 3 & example: 4
+processing mpg_guard2 & run: 4 & example: 1
+processing mpg_guard2 & run: 4 & example: 2
+processing mpg_guard2 & run: 4 & example: 3
+processing mpg_guard2 & run: 4 & example: 4
+processing mpg_guard2 & run: 4 & example: 5
+Exception in thread "main" java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1540)
+	at SLMain.main(SLMain.java:61)
+processing mpg_guard2 & run: 5 & example: 1
+processing mpg_guard2 & run: 5 & example: 2
+processing mpg_guard2 & run: 5 & example: 3
+processing mpg_guard3 & run: 1 & example: 1
+processing mpg_guard3 & run: 2 & example: 1
+processing mpg_guard3 & run: 2 & example: 2
+processing mpg_guard3 & run: 2 & example: 3
+processing mpg_guard3 & run: 2 & example: 4
+processing mpg_guard3 & run: 3 & example: 1
+processing mpg_guard3 & run: 3 & example: 2
+processing mpg_guard3 & run: 3 & example: 3
+processing mpg_guard3 & run: 3 & example: 4
+processing mpg_guard3 & run: 4 & example: 1
+processing mpg_guard3 & run: 4 & example: 2
+processing mpg_guard3 & run: 4 & example: 3
+processing mpg_guard3 & run: 4 & example: 4
+processing mpg_guard3 & run: 5 & example: 1
+processing mpg_guard3 & run: 5 & example: 2
+processing mpg_guard3 & run: 5 & example: 3
+processing mpg_guard4 & run: 1 & example: 1
+processing mpg_guard4 & run: 1 & example: 2
+processing mpg_guard4 & run: 1 & example: 3
+processing mpg_guard4 & run: 1 & example: 4
+processing mpg_guard4 & run: 2 & example: 1
+processing mpg_guard4 & run: 2 & example: 2
+processing mpg_guard4 & run: 2 & example: 3
+processing mpg_guard4 & run: 3 & example: 1
+processing mpg_guard4 & run: 3 & example: 2
+processing mpg_guard4 & run: 3 & example: 3
+processing mpg_guard4 & run: 3 & example: 4
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at java.util.Vector.<init>(Vector.java:138)
+	at java.util.Vector.<init>(Vector.java:151)
+	at java.util.Vector.<init>(Vector.java:160)
+	at semirings.LinearSet.dicSum(LinearSet.java:51)
+	at utilities.SemilinearFactory.dot(SemilinearFactory.java:47)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:19)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.Newton.SolveSlEq(Newton.java:48)
+	at utilities.IteFixedPointSolver.SolveIteFixedPoint(IteFixedPointSolver.java:74)
+	at SLMain.main(SLMain.java:80)
+processing mpg_guard4 & run: 4 & example: 1
+processing mpg_guard4 & run: 4 & example: 2
+processing mpg_guard4 & run: 4 & example: 3
+processing mpg_guard4 & run: 4 & example: 4
+processing mpg_guard4 & run: 5 & example: 1
+processing mpg_guard4 & run: 5 & example: 2
+processing mpg_guard4 & run: 5 & example: 3
+processing mpg_guard4 & run: 5 & example: 4
+processing mpg_plane1 & run: 1 & example: 1
+processing mpg_plane2 & run: 1 & example: 1
+processing mpg_plane2 & run: 1 & example: 2
+processing mpg_plane2 & run: 2 & example: 1
+processing mpg_plane2 & run: 3 & example: 1
+processing mpg_plane2 & run: 3 & example: 2
+processing mpg_plane2 & run: 4 & example: 1
+processing mpg_plane2 & run: 4 & example: 2
+processing mpg_plane2 & run: 5 & example: 1
+processing mpg_plane3 & run: 1 & example: 1
+processing mpg_plane3 & run: 1 & example: 2
+processing mpg_plane3 & run: 2 & example: 1
+processing mpg_plane3 & run: 2 & example: 2
+processing mpg_plane3 & run: 2 & example: 3
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at java.util.HashSet.clone(HashSet.java:256)
+	at semirings.LinearSet.dicSum(LinearSet.java:56)
+	at utilities.SemilinearFactory.dot(SemilinearFactory.java:47)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:19)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.Newton.SolveSlEq(Newton.java:48)
+	at utilities.IteFixedPointSolver.SolveIteFixedPoint(IteFixedPointSolver.java:74)
+	at SLMain.main(SLMain.java:80)
+processing mpg_plane3 & run: 3 & example: 1
+processing mpg_plane3 & run: 4 & example: 1
+processing mpg_plane3 & run: 4 & example: 2
+processing mpg_plane3 & run: 5 & example: 1
+processing mpg_ite1 & run: 1 & example: 1
+processing mpg_ite1 & run: 1 & example: 2
+processing mpg_ite1 & run: 2 & example: 1
+processing mpg_ite1 & run: 2 & example: 2
+processing mpg_ite1 & run: 3 & example: 1
+processing mpg_ite1 & run: 3 & example: 2
+processing mpg_ite1 & run: 4 & example: 1
+processing mpg_ite1 & run: 5 & example: 1
+processing mpg_ite1 & run: 5 & example: 2
+processing mpg_ite1 & run: 5 & example: 3
+processing mpg_ite2 & run: 1 & example: 1
+processing mpg_ite2 & run: 1 & example: 2
+processing mpg_ite2 & run: 1 & example: 3
+processing mpg_ite2 & run: 1 & example: 4
+processing mpg_ite2 & run: 2 & example: 1
+processing mpg_ite2 & run: 2 & example: 2
+processing mpg_ite2 & run: 2 & example: 3
+processing mpg_ite2 & run: 3 & example: 1
+processing mpg_ite2 & run: 3 & example: 2
+processing mpg_ite2 & run: 3 & example: 3
+processing mpg_ite2 & run: 3 & example: 4
+processing mpg_ite2 & run: 4 & example: 1
+processing mpg_ite2 & run: 4 & example: 2
+processing mpg_ite2 & run: 4 & example: 3
+processing mpg_ite2 & run: 4 & example: 4
+processing mpg_ite2 & run: 5 & example: 1
+processing mpg_ite2 & run: 5 & example: 2
+processing mpg_ite2 & run: 5 & example: 3
+processing mpg_ite2 & run: 5 & example: 4
+processing array_sum_2_5 & run: 1 & example: 1
+processing array_sum_2_5 & run: 1 & example: 2
+processing array_sum_2_5 & run: 1 & example: 3
+processing array_sum_2_5 & run: 1 & example: 4
+processing array_sum_2_5 & run: 2 & example: 1
+processing array_sum_2_5 & run: 2 & example: 2
+processing array_sum_2_5 & run: 2 & example: 3
+processing array_sum_2_5 & run: 2 & example: 4
+processing array_sum_2_5 & run: 2 & example: 5
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at java.util.Vector.<init>(Vector.java:138)
+	at java.util.Vector.<init>(Vector.java:151)
+	at java.util.Vector.<init>(Vector.java:160)
+	at semirings.LinearSet.dicSum(LinearSet.java:51)
+	at utilities.SemilinearFactory.dot(SemilinearFactory.java:47)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:19)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.Newton.SolveSlEq(Newton.java:48)
+	at utilities.IteFixedPointSolver.SolveIteFixedPoint(IteFixedPointSolver.java:74)
+	at SLMain.main(SLMain.java:80)
+processing array_sum_2_5 & run: 3 & example: 1
+processing array_sum_2_5 & run: 3 & example: 2
+processing array_sum_2_5 & run: 3 & example: 3
+processing array_sum_2_5 & run: 3 & example: 4
+processing array_sum_2_5 & run: 4 & example: 1
+processing array_sum_2_5 & run: 4 & example: 2
+processing array_sum_2_5 & run: 4 & example: 3
+processing array_sum_2_5 & run: 4 & example: 4
+processing array_sum_2_5 & run: 4 & example: 5
+processing array_sum_2_5 & run: 5 & example: 1
+processing array_sum_2_5 & run: 5 & example: 2
+processing array_sum_2_5 & run: 5 & example: 3
+processing array_sum_2_5 & run: 5 & example: 4
+processing array_sum_2_5 & run: 5 & example: 5
+processing array_sum_2_5 & run: 5 & example: 6
+Exception in thread "main" java.util.NoSuchElementException: No line found
+	at java.util.Scanner.nextLine(Scanner.java:1540)
+	at SLMain.main(SLMain.java:61)
+processing array_search_2 & run: 1 & example: 1
+processing array_search_2 & run: 1 & example: 2
+processing array_search_2 & run: 1 & example: 3
+processing array_search_3 & run: 1 & example: 1
+processing array_search_3 & run: 1 & example: 2
+processing array_search_3 & run: 1 & example: 3
+processing array_search_3 & run: 1 & example: 4
+processing fg_max2 & run: 1 & example: 1
+processing fg_max2 & run: 1 & example: 2
+processing fg_max2 & run: 1 & example: 3
+processing fg_max2 & run: 1 & example: 4
+processing fg_sum_2_5 & run: 1 & example: 1
+processing fg_sum_2_5 & run: 1 & example: 2
+processing fg_sum_2_5 & run: 1 & example: 3
+processing fg_sum_2_15 & run: 1 & example: 1
+processing fg_sum_2_15 & run: 1 & example: 2
+processing fg_sum_2_15 & run: 1 & example: 3
+processing fg_mpg_example1 & run: 1 & example: 1
+line 3:15 extraneous input 'Int' expecting '('
+processing fg_mpg_example1 & run: 1 & example: 2
+line 3:15 extraneous input 'Int' expecting '('
+processing fg_mpg_example1 & run: 1 & example: 3
+line 3:15 extraneous input 'Int' expecting '('
+processing fg_guard1 & run: 1 & example: 1
+processing fg_guard1 & run: 1 & example: 2
+processing fg_guard1 & run: 1 & example: 3
+processing fg_guard1 & run: 1 & example: 4
+processing fg_guard2 & run: 1 & example: 1
+processing fg_guard2 & run: 1 & example: 2
+processing fg_guard2 & run: 1 & example: 3
+processing fg_guard2 & run: 1 & example: 4
+processing fg_guard3 & run: 1 & example: 1
+processing fg_guard3 & run: 1 & example: 2
+processing fg_guard3 & run: 1 & example: 3
+processing fg_guard3 & run: 1 & example: 4
+processing fg_guard4 & run: 1 & example: 1
+processing fg_guard4 & run: 1 & example: 2
+processing fg_guard4 & run: 1 & example: 3
+processing fg_guard4 & run: 1 & example: 4
+processing example1 & run: 1 & example: 1
+processing example2 & run: 1 & example: 1
+processing example2 & run: 1 & example: 2
+processing example3 & run: 1 & example: 1
+processing example4 & run: 1 & example: 1
+processing example5 & run: 1 & example: 1
+processing fg_search_2 & run: 1 & example: 1
+processing fg_search_3 & run: 1 & example: 1
+processing fg_search_3 & run: 1 & example: 2
+processing fg_search_4 & run: 1 & example: 1
+processing fg_search_4 & run: 1 & example: 2
+processing fg_search_5 & run: 1 & example: 1
+processing fg_search_5 & run: 1 & example: 2
+processing fg_search_6 & run: 1 & example: 1
+processing fg_search_6 & run: 1 & example: 2
+processing fg_search_7 & run: 1 & example: 1
+processing fg_search_7 & run: 1 & example: 2
+processing fg_search_8 & run: 1 & example: 1
+processing fg_search_8 & run: 1 & example: 2
+processing fg_search_9 & run: 1 & example: 1
+processing fg_search_9 & run: 1 & example: 2
+processing fg_search_10 & run: 1 & example: 1
+processing fg_search_10 & run: 1 & example: 2
+processing fg_search_11 & run: 1 & example: 1
+processing fg_search_11 & run: 1 & example: 2
+processing fg_search_12 & run: 1 & example: 1
+processing fg_search_12 & run: 1 & example: 2
+processing fg_search_13 & run: 1 & example: 1
+processing fg_search_13 & run: 1 & example: 2
+processing fg_search_14 & run: 1 & example: 1
+processing fg_search_14 & run: 1 & example: 2
+processing fg_search_15 & run: 1 & example: 1
+processing fg_search_15 & run: 1 & example: 2
+processing guard1 & run: 1 & example: 1
+processing guard1 & run: 1 & example: 2
+processing guard1 & run: 1 & example: 3
+processing guard2 & run: 1 & example: 1
+processing guard2 & run: 1 & example: 2
+processing guard2 & run: 1 & example: 3
+processing guard3 & run: 1 & example: 1
+processing guard3 & run: 1 & example: 2
+processing guard3 & run: 1 & example: 3
+processing guard4 & run: 1 & example: 1
+processing guard4 & run: 1 & example: 2
+processing guard4 & run: 1 & example: 3
+timeout: the monitored command dumped core
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing ite1 & run: 1 & example: 1
+processing ite2 & run: 1 & example: 1
+processing plane2 & run: 1 & example: 1
+processing plane3 & run: 1 & example: 1
+processing sum_2_5 & run: 1 & example: 1
+processing sum_2_5 & run: 1 & example: 2
+processing sum_2_15 & run: 1 & example: 1
+processing sum_2_15 & run: 1 & example: 2
+processing sum_3_5 & run: 1 & example: 1
+processing sum_3_5 & run: 1 & example: 2
+processing sum_3_15 & run: 1 & example: 1
+processing sum_3_15 & run: 1 & example: 2
+processing sum_4_5 & run: 1 & example: 1
+processing sum_4_5 & run: 1 & example: 2
+processing sum_4_15 & run: 1 & example: 1
+processing sum_4_15 & run: 1 & example: 2
+processing sum_5_5 & run: 1 & example: 1
+processing sum_5_5 & run: 1 & example: 2
+processing sum_5_15 & run: 1 & example: 1
+processing sum_5_15 & run: 1 & example: 2
+processing sum_6_5 & run: 1 & example: 1
+processing sum_6_5 & run: 1 & example: 2
+processing sum_6_15 & run: 1 & example: 1
+processing sum_6_15 & run: 1 & example: 2
+processing sum_7_5 & run: 1 & example: 1
+processing sum_7_5 & run: 1 & example: 2
+processing sum_7_15 & run: 1 & example: 1
+processing sum_7_15 & run: 1 & example: 2
+processing sum_8_5 & run: 1 & example: 1
+processing sum_8_5 & run: 1 & example: 2
+processing sum_8_15 & run: 1 & example: 1
+processing sum_8_15 & run: 1 & example: 2
+processing sum_9_5 & run: 1 & example: 1
+processing sum_9_5 & run: 1 & example: 2
+processing sum_9_15 & run: 1 & example: 1
+processing sum_9_15 & run: 1 & example: 2
+processing sum_10_5 & run: 1 & example: 1
+processing sum_10_5 & run: 1 & example: 2
+processing sum_10_15 & run: 1 & example: 1
+processing sum_10_15 & run: 1 & example: 2
