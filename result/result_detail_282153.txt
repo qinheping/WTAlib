@@ -1,0 +1,11 @@
+Category: limitedPlus
+mpg_guard4 & run: 1 & example: 1 & 11 & 72 & 3 & 1 & 5 & 2.0 & 20 & 0.0 & 0.22 & 0.00 & 0.22 & true\\ 
+mpg_guard4 & run: 1 & example: 2 & 11 & 72 & 3 & 2 & 5 & 4.0 & 1700 & 0.0 & 0.75 & 0.00 & 0.75 & true\\ 
+mpg_guard4 & run: 1 & example: 3 & 11 & 72 & 3 & 3 & 6 & 8.0 & 120700 & 0.0 & 31.53 & 0.06 & 31.60 & true\\ 
+mpg_guard4 & run: 1 & example: 4 & 11 & 72 & 3 & 4 & 6 & 14.4 & 791960 & 0.0 & 176.95 & 0.11 & 177.06 & false\\ 
+mpg_guard4 & run: 2 & example: 1 & 11 & 72 & 3 & 1 & 5 & 2.0 & 71 & 0.0 & 0.10 & 0.00 & 0.10 & true\\ 
+mpg_guard4 & run: 2 & example: 2 & 11 & 72 & 3 & 2 & 5 & 4.0 & 3621 & 0.0 & 0.34 & 0.00 & 0.34 & true\\ 
+mpg_guard4 & run: 2 & example: 3 & 11 & 72 & 3 & 3 & 5 & 8.0 & 166566 & 0.0 & 18.51 & 0.05 & 18.57 & false\\ 
+mpg_guard4 & run: 3 & example: 1 & 11 & 72 & 3 & 1 & 5 & 2.0 & 78 & 0.0 & 0.11 & 0.00 & 0.11 & true\\ 
+mpg_guard4 & run: 3 & example: 2 & 11 & 72 & 3 & 2 & 5 & 4.0 & 6240 & 0.0 & 0.61 & 0.00 & 0.62 & true\\ 
+mpg_guard4 & run: 3 & example: 3 & 

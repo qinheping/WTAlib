@@ -19,7 +19,7 @@ for s in "${benchmark_plus_2[@]}"; do
 	echo -n $s" & " >> $out_path
 	echo "processing $s in $path"
 	line=$(timeout 600 python src/main/python/NAY_Horn/spacer.py $path$s"/grammar.sl" $path$s"/example1.txt" 2>>$out_error)
-	result=$( { time timeout 600 z3 tmp/horn_query.smt; } 2>&1)
+	result=$( { time timeout 600 ./z3 tmp/horn_query.smt; } 2>&1)
 	IFS='
 '
 	count=0
@@ -63,7 +63,7 @@ for s in "${benchmark_if[@]}"; do
 	echo -n $s" & " >> $out_path
 	echo "processing $s in $path"
 	line=$(timeout 600 python src/main/python/NAY_Horn/spacer.py $path$s"/grammar.sl" $path$s"/example1.txt" 2>>$out_error)
-	result=$( { time timeout 600 z3 tmp/horn_query.smt; } 2>&1)
+	result=$( { time timeout 600 ./z3 tmp/horn_query.smt; } 2>&1)
 	echo $result
 	IFS='
 '
@@ -141,7 +141,7 @@ for s in "${benchmark_const[@]}"; do
 	echo -n $s" & " >> $out_path
 	echo "processing $s in $path"
 	line=$(timeout 600 python src/main/python/NAY_Horn/spacer.py $path$s"/grammar.sl" $path$s"/example1.txt" 2>>$out_error)
-	result=$( { time timeout 600 z3 tmp/horn_query.smt; } 2>&1)
+	result=$( { time timeout 600 ./z3 tmp/horn_query.smt; } 2>&1)
 	IFS='
 '
 	count=0

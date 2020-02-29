@@ -1,0 +1,23 @@
+processing mpg_guard4 & run: 1 & example: 1
+processing mpg_guard4 & run: 1 & example: 2
+processing mpg_guard4 & run: 1 & example: 3
+processing mpg_guard4 & run: 1 & example: 4
+processing mpg_guard4 & run: 2 & example: 1
+processing mpg_guard4 & run: 2 & example: 2
+processing mpg_guard4 & run: 2 & example: 3
+processing mpg_guard4 & run: 3 & example: 1
+processing mpg_guard4 & run: 3 & example: 2
+processing mpg_guard4 & run: 3 & example: 3
+processing mpg_guard4 & run: 3 & example: 4
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at semirings.LinearSet.dicSum(LinearSet.java:57)
+	at utilities.SemilinearFactory.dot(SemilinearFactory.java:47)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:19)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.ExpressionApplication.ExpressionEval_SemilinearSet(ExpressionApplication.java:22)
+	at utilities.Newton.SolveSlEq(Newton.java:48)
+	at utilities.IteFixedPointSolver.SolveIteFixedPoint(IteFixedPointSolver.java:74)
+	at SLMain.main(SLMain.java:80)

@@ -42,7 +42,7 @@ def GRewritter(ex_list,inputStr):
     for i in range(0,v.num_ex):
         j = 0
         for var in v.varList:
-            result += "int " + var + "_" + str(i) + " = "+ex_list[i][j]+";\n"
+            result += "int " + var + "_" + str(i) + " = "+str(ex_list[i][j])+";\n"
             j = j+1
         result +="\n"
     result += "Start" + v.get_application() +";\n"
@@ -62,6 +62,28 @@ def GRewritter(ex_list,inputStr):
         sygus_ex+=line+"\n"
     sygus_ex += v.sygus_ex +"(check-synth)"
 
+    sygusgrammar = ""
+    insynthesisfun = False
+    for line in inputStr.splitlines():
+        if(len(line)>1 and line[1]=="c"):
+            break
+        if(len(line)>1 and line[1]=="d"):
+            break
+        if(len(line)>2 and line[2]=="c"):
+            break
+        if(len(line)>2 and line[2]=="d"):
+            break
+	if "declare" in line or "define" in line:
+		break
+	if "constraint" in line:
+		break
+	if "synth" in line:
+		insynthesisfun = True
+	if not insynthesisfun:
+		continue
+        sygusgrammar+=line+"\n"
+
+
     smt_top = ""
     for line in inputStr.splitlines():
         if(line.find("define-fun")!=-1):
@@ -70,7 +92,8 @@ def GRewritter(ex_list,inputStr):
     for i in range(0,len(v.spec_varlist)):
         smt_top += "(declare-fun " + v.spec_varlist[i]+"! () Int)\n"
     smt_spec = "(assert (or "+v.smt_spec+"))\n(check-sat)\n(get-model)"
-    return [result, sygus_ex,smt_top,smt_spec,len(v.spec_varlist), v.synthName, v.varList]
+    smt_spec_neg = "(assert (not(or "+v.smt_spec+")))\n(check-sat)\n(get-model)"
+    return [result, sygus_ex,smt_top,smt_spec,len(v.spec_varlist), v.synthName, v.varList,smt_spec_neg,sygusgrammar]
 
 
 # test

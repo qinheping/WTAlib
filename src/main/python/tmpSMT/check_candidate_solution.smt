@@ -1,6 +1,6 @@
 (declare-fun x! () Int)
 (declare-fun y! () Int)
-(define-fun max2 ((x Int) (y Int)) Int    0)
+(define-fun max2 ((x Int) (y Int)) Int    y)
 (assert (or (not (>= (max2 x! y! ) x! )) (not (>= (max2 x! y! ) y! )) (not (or (= x! (max2 x! y! ) ) (= y! (max2 x! y! ) ) )) ))
 (check-sat)
 (get-model)

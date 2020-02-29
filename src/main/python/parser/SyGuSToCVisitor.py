@@ -312,7 +312,7 @@ class SygusVisitor(ParseTreeVisitor):
 
         self.regEx_term = "(" + ctx.SYMBOL().getText() +" "
         for i in range(0,len(self.regEx_term_star)):
-            self.regEx_term +=self.regEx_term_star[i]+" "
+            self.regEx_term = self.regEx_term + str(self.regEx_term_star[i])+" "
         self.regEx_term += ")"
         self.regEx_term_star = []
 

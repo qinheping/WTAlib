@@ -4,14 +4,20 @@ def z3Parser(varlist,inputStr):
     ifsat = 0
     current_var = -1
     result = []
-    print inputStr
+    #print inputStr
     for i in range(0,len(varlist)):
         result.append("0")
     for line in inputStr.splitlines():
         if(line[0:3]=="sat"):
             ifsat = 1
         if current_var != -1:
-            result[current_var] = (line[0:len(line)-1] ).strip()
+	    value = (line[0:len(line)-1] ).strip()
+	    if "-" not in value:
+            	value = value
+            if "-" in value:
+            	value = "-"+value[3:-1]
+            result[current_var] = value
+		
             current_var = -1
 
         for i in range(0,len(varlist)):
