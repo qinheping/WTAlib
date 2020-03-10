@@ -1,0 +1,76 @@
+start
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.slstart
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl	1	0.28754901886
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl	2	0.3134329319
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl	3	0.338428020477
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_10.sl	4	265.047016144
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl	1	0.751523017883
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl	2	0.363161802292
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl	3	0.745894193649
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_11.sl	4	126.740806818
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl	1	0.418875932693
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl	2	0.699320077896
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_12.sl	3	138.35447216
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_13.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_13.sl	1	0.752174854279
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_13.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_13.sl	2	0.483655929565
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl	1	0.495988130569
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl	2	0.633809089661
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl	3	1.33839511871
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_14.sl	4	11.7089958191
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	1	0.579092025757
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	2	0.718891859055
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	3	0.81974697113
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	4	1.03402686119
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	5	52.4025530815
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_15.sl	6	205.645455837
+start
+ANTLR runtime and generated code versions disagree: 4.7.1!=4.5.1
+ANTLR runtime and generated code versions disagree: 4.7.1!=4.5.1
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	1	0.0961790084839
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	2	0.0552868843079
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	3	0.0772609710693
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	4	0.427333116531
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	5	1.24654817581
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	6	2.32670402527
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_3.sl	7	3.53210687637
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl	1	0.127439975739
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl	2	0.0736770629883
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl	3	0.0824990272522
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl	4	0.788318157196
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_4.sl	5	11.7270340919
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl	1	0.130367994308
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl	2	0.0957038402557
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl	3	0.113473176956
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl	4	0.372764110565
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_5.sl	5	57.5174810886
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl	1	0.146519899368
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl	2	0.12584400177
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl	3	0.524152994156
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_6.sl	4	1.44589209557
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	1	0.171288967133
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	2	0.16953587532
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	3	0.286955118179
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	4	0.43750500679
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	5	0.568138122559
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_7.sl	6	96.0296850204
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl	1	0.237900018692
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl	2	0.212083816528
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl	3	0.765261888504
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl	4	117.246797085
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_8.sl	5	397.749253035
+start
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl	1	0.270941972733
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl	2	0.766438007355
+../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl../../../benchmarks/CLIA_Track_IF/original_sygus/fg_array_search_9.sl	3	236.323142052
