@@ -1,0 +1,19 @@
+Category: limitedPlus
+Category: limitedIf
+search_2 & fail
+search_3 & fail
+search_4 & fail
+search_5 & fail
+search_6 & fail
+search_7 & fail
+search_8 & fail
+search_9 & fail
+search_10 & fail
+search_11 & fail
+search_12 & fail
+search_13 & fail
+search_14 & fail
+search_15 & fail
+fg_max2 &  & |N|: 1 & |Delta|: 5 & |V|: 2 & example: 4.00 & time: 0.07 & solved run: 1/1
+fg_max3 & fail
+fg_max4 & 

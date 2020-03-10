@@ -1,0 +1,7 @@
+Category: limitedPlus
+Category: limitedIf
+search_2 & run: 1 & example: 1 & 4 & 17 & 3 & 1 & 1 & 2.0 & 30 & 3.2666667 & 0.30 & 0.00 & 0.30 & true\\ 
+search_2 & run: 1 & example: 2 & 4 & 17 & 3 & 2 & 1 & 4.0 & 322 & 11.142853 & 0.07 & 0.00 & 0.07 & true\\ 
+search_2 & run: 1 & example: 3 & 4 & 17 & 3 & 3 & 1 & 8.0 & 2599 & 17.5206 & 0.17 & 0.00 & 0.17 & true\\ 
+search_2 & run: 1 & example: 4 & 4 & 17 & 3 & 4 & 1 & 16.0 & 16589 & 20.59056 & 0.54 & 0.03 & 0.57 & true\\ 
+search_2 & run: 1 & example: 5 & 

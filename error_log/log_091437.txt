@@ -1,0 +1,407 @@
+processing search_2 & run: 1 & example: 1
+processing search_2 & run: 1 & example: 2
+processing search_2 & run: 1 & example: 3
+processing search_2 & run: 1 & example: 4
+processing search_2 & run: 1 & example: 5
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_3 & run: 1 & example: 1
+processing search_3 & run: 1 & example: 2
+processing search_3 & run: 1 & example: 3
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 4
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_4 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 5
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_5 & run: 1 & example: 1
+line 1:0 token recognition error at: '"'
+line 1:1 mismatched input 'C' expecting '('
+line 1:3 token recognition error at: '\'
+line 1:17 token recognition error at: '\'
+line 1:22 token recognition error at: '\'
+line 1:35 token recognition error at: '\'
+line 1:39 token recognition error at: '\'
+line 1:48 token recognition error at: '"'
+line 1:93 token recognition error at: '"'
+line 1:107 token recognition error at: '\'
+line 1:121 token recognition error at: '\'
+line 1:131 token recognition error at: '\'
+line 1:154 token recognition error at: '\'
+line 1:158 token recognition error at: '\'
+line 1:179 token recognition error at: '\'
+line 1:193 token recognition error at: '\'
+line 1:203 token recognition error at: '\'
+line 1:226 token recognition error at: '\'
+line 1:230 token recognition error at: '"'
+line 1:265 token recognition error at: '"'
+line 1:268 token recognition error at: '\'
+line 1:282 token recognition error at: '\'
+line 1:292 token recognition error at: '\'
+line 1:315 token recognition error at: '\'
+line 1:319 token recognition error at: '\'
+line 1:331 token recognition error at: ';'
+line 1:334 token recognition error at: '\'
+line 1:348 token recognition error at: '\'
+line 1:358 token recognition error at: '\'
+line 1:381 token recognition error at: '\'
+line 1:389 token recognition error at: '\'
+line 1:395 token recognition error at: '\'
+line 1:399 token recognition error at: '\'
+line 1:412 token recognition error at: ';'
+line 1:415 token recognition error at: '\'
+line 1:429 token recognition error at: '\'
+line 1:439 token recognition error at: '\'
+line 1:462 token recognition error at: '\'
+line 1:470 token recognition error at: '\'
+line 1:476 token recognition error at: '\'
+line 1:480 token recognition error at: '\'
+line 1:494 token recognition error at: ';'
+line 1:497 token recognition error at: '\'
+line 1:511 token recognition error at: '\'
+line 1:516 token recognition error at: '\'
+line 1:529 token recognition error at: '\'
+line 1:533 token recognition error at: '\'
+line 1:537 token recognition error at: '\'
+line 1:550 token recognition error at: ';'
+line 1:553 token recognition error at: '\'
+line 1:567 token recognition error at: '\'
+line 1:572 token recognition error at: '\'
+line 1:585 token recognition error at: '\'
+line 1:589 token recognition error at: '\'
+line 1:593 token recognition error at: '\'
+line 1:604 token recognition error at: ';'
+line 1:607 token recognition error at: '\'
+line 1:621 token recognition error at: '\'
+line 1:626 token recognition error at: '\'
+line 1:639 token recognition error at: '\'
+line 1:643 token recognition error at: '\'
+line 1:647 token recognition error at: '\'
+line 1:651 token recognition error at: '\'
+line 1:672 token recognition error at: ';'
+line 1:675 token recognition error at: '\'
+line 1:689 token recognition error at: '\'
+line 1:694 token recognition error at: '\'
+line 1:707 token recognition error at: '\'
+line 1:711 token recognition error at: '\'
+line 1:715 token recognition error at: '\'
+line 1:719 token recognition error at: '\'
+line 1:732 token recognition error at: ';'
+line 1:735 token recognition error at: '\'
+line 1:749 token recognition error at: '\'
+line 1:754 token recognition error at: '\'
+line 1:767 token recognition error at: '\'
+line 1:771 token recognition error at: '\'
+line 1:775 token recognition error at: '\'
+line 1:779 token recognition error at: '\'
+line 1:789 token recognition error at: ';'
+line 1:792 token recognition error at: '\'
+line 1:806 token recognition error at: '\'
+line 1:811 token recognition error at: '\'
+line 1:824 token recognition error at: '\'
+line 1:828 token recognition error at: '\'
+line 1:832 token recognition error at: '\'
+line 1:836 token recognition error at: '\'
+line 1:848 token recognition error at: ';'
+line 1:851 token recognition error at: '\'
+line 1:865 token recognition error at: '\'
+line 1:870 token recognition error at: '\'
+line 1:883 token recognition error at: '\'
+line 1:887 token recognition error at: '\'
+line 1:891 token recognition error at: '\'
+line 1:895 token recognition error at: '\'
+line 1:905 token recognition error at: ';'
+line 1:908 token recognition error at: '\'
+line 1:922 token recognition error at: '\'
+line 1:927 token recognition error at: '\'
+line 1:940 token recognition error at: '\'
+line 1:944 token recognition error at: '\'
+line 1:948 token recognition error at: '\'
+line 1:952 token recognition error at: '\'
+line 1:967 token recognition error at: ';'
+line 1:970 token recognition error at: '\'
+line 1:984 token recognition error at: '\'
+line 1:989 token recognition error at: '\'
+line 1:1002 token recognition error at: '\'
+line 1:1006 token recognition error at: '\'
+line 1:1010 token recognition error at: '\'
+line 1:1014 token recognition error at: '\'
+line 1:1026 token recognition error at: ';'
+line 1:1029 token recognition error at: '\'
+line 1:1043 token recognition error at: '\'
+line 1:1048 token recognition error at: '\'
+line 1:1061 token recognition error at: '\'
+line 1:1065 token recognition error at: '\'
+line 1:1069 token recognition error at: '\'
+line 1:1073 token recognition error at: '\'
+line 1:1083 token recognition error at: ';'
+line 1:1086 token recognition error at: '\'
+line 1:1100 token recognition error at: '\'
+line 1:1105 token recognition error at: '\'
+line 1:1118 token recognition error at: '\'
+line 1:1122 token recognition error at: '\'
+line 1:1126 token recognition error at: '\'
+line 1:1130 token recognition error at: '\'
+line 1:1150 token recognition error at: ';'
+line 1:1153 token recognition error at: '\'
+line 1:1167 token recognition error at: '\'
+line 1:1172 token recognition error at: '\'
+line 1:1185 token recognition error at: '\'
+line 1:1189 token recognition error at: '\'
+line 1:1193 token recognition error at: '\'
+line 1:1197 token recognition error at: '\'
+line 1:1211 token recognition error at: ';'
+line 1:1214 token recognition error at: '\'
+line 1:1228 token recognition error at: '\'
+line 1:1233 token recognition error at: '\'
+line 1:1246 token recognition error at: '\'
+line 1:1250 token recognition error at: '\'
+line 1:1254 token recognition error at: '\'
+line 1:1258 token recognition error at: '\'
+line 1:1272 token recognition error at: ';'
+line 1:1275 token recognition error at: '\'
+line 1:1289 token recognition error at: '\'
+line 1:1294 token recognition error at: '\'
+line 1:1307 token recognition error at: '\'
+line 1:1311 token recognition error at: '\'
+line 1:1315 token recognition error at: '\'
+line 1:1319 token recognition error at: '\'
+line 1:1329 token recognition error at: ';'
+line 1:1332 token recognition error at: '\'
+line 1:1346 token recognition error at: '\'
+line 1:1351 token recognition error at: '\'
+line 1:1364 token recognition error at: '\'
+line 1:1368 token recognition error at: '\'
+line 1:1372 token recognition error at: '\'
+line 1:1383 token recognition error at: ';'
+line 1:1386 token recognition error at: '\'
+line 1:1400 token recognition error at: '\'
+line 1:1405 token recognition error at: '\'
+line 1:1418 token recognition error at: '\'
+line 1:1422 token recognition error at: '\'
+line 1:1426 token recognition error at: '\'
+line 1:1434 token recognition error at: ';'
+line 1:1437 token recognition error at: '\'
+line 1:1451 token recognition error at: '\'
+line 1:1456 token recognition error at: '\'
+line 1:1469 token recognition error at: '\'
+line 1:1473 token recognition error at: '\'
+line 1:1477 token recognition error at: '\'
+line 1:1485 token recognition error at: ';'
+line 1:1488 token recognition error at: '\'
+line 1:1502 token recognition error at: '\'
+line 1:1507 token recognition error at: '\'
+line 1:1520 token recognition error at: '\'
+line 1:1524 token recognition error at: '\'
+line 1:1528 token recognition error at: '\'
+line 1:1539 token recognition error at: ';'
+line 1:1542 token recognition error at: '\'
+line 1:1556 token recognition error at: '\'
+line 1:1561 token recognition error at: '\'
+line 1:1574 token recognition error at: '\'
+line 1:1578 token recognition error at: '\'
+line 1:1582 token recognition error at: '\'
+line 1:1591 token recognition error at: ';'
+line 1:1594 token recognition error at: '\'
+line 1:1608 token recognition error at: '\'
+line 1:1613 token recognition error at: '\'
+line 1:1626 token recognition error at: '\'
+line 1:1630 token recognition error at: '\'
+line 1:1634 token recognition error at: '\'
+line 1:1655 token recognition error at: ';'
+line 1:1658 token recognition error at: '\'
+line 1:1672 token recognition error at: '\'
+line 1:1677 token recognition error at: '\'
+line 1:1690 token recognition error at: '\'
+line 1:1694 token recognition error at: '\'
+line 1:1698 token recognition error at: '\'
+line 1:1709 token recognition error at: ';'
+line 1:1712 token recognition error at: '\'
+line 1:1726 token recognition error at: '\'
+line 1:1731 token recognition error at: '\'
+line 1:1744 token recognition error at: '\'
+line 1:1748 token recognition error at: '\'
+line 1:1752 token recognition error at: '\'
+line 1:1766 token recognition error at: ';'
+line 1:1769 token recognition error at: '\'
+line 1:1783 token recognition error at: '\'
+line 1:1788 token recognition error at: '\'
+line 1:1801 token recognition error at: '\'
+line 1:1805 token recognition error at: '\'
+line 1:1809 token recognition error at: '\'
+line 1:1816 token recognition error at: ';'
+line 1:1819 token recognition error at: '\'
+line 1:1832 token recognition error at: '\'
+line 1:1839 token recognition error at: '\'
+line 1:1846 token recognition error at: '\'
+line 1:1859 token recognition error at: ';'
+line 1:1862 token recognition error at: '\'
+line 1:1875 token recognition error at: '\'
+line 1:1882 token recognition error at: '\'
+line 1:1889 token recognition error at: '\'
+line 1:1897 token recognition error at: ';'
+line 1:1900 token recognition error at: '\'
+line 1:1906 token recognition error at: '\'
+line 1:1912 token recognition error at: '\'
+line 1:1916 token recognition error at: '\'
+line 1:1927 token recognition error at: '\'
+line 1:1931 token recognition error at: '\'
+line 1:1937 token recognition error at: '\'
+line 1:1952 token recognition error at: '\'
+line 1:1958 token recognition error at: '\'
+line 1:1983 token recognition error at: ';'
+line 1:1986 token recognition error at: '\'
+line 1:1992 token recognition error at: '\'
+line 1:1998 token recognition error at: '\'
+line 1:2002 token recognition error at: '\'
+line 1:2013 token recognition error at: '\'
+line 1:2019 token recognition error at: '\'
+line 1:2025 token recognition error at: '\'
+line 1:2030 token recognition error at: '\'
+line 1:2045 token recognition error at: ';'
+line 1:2048 token recognition error at: '\'
+line 1:2054 token recognition error at: '\'
+line 1:2060 token recognition error at: '\'
+line 1:2064 token recognition error at: '\'
+line 1:2075 token recognition error at: '\'
+line 1:2079 token recognition error at: '\'
+line 1:2088 token recognition error at: '\'
+line 1:2102 token recognition error at: '\'
+line 1:2106 token recognition error at: '\'
+line 1:2128 token recognition error at: '"'
+line 1:2210 token recognition error at: ','
+Exception in thread "main" java.lang.NullPointerException
+	at parser.ASTVisitor.getSplitedText(ASTVisitor.java:211)
+	at parser.ASTVisitor.visitSynthFunCmd(ASTVisitor.java:67)
+	at parser.ASTVisitor.visitSynthFunCmd(ASTVisitor.java:9)
+	at parser.QSygusParserParser$SynthFunCmdContext.accept(QSygusParserParser.java:2368)
+	at org.antlr.v4.runtime.tree.AbstractParseTreeVisitor.visit(AbstractParseTreeVisitor.java:42)
+	at SLMain.main(SLMain.java:48)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_6 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 7
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_7 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 8
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_8 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 9
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_9 & run: 1 & example: 1
+processing search_9 & run: 1 & example: 2
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 10
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_10 & run: 1 & example: 1
+processing search_10 & run: 1 & example: 2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_11 & run: 1 & example: 1
+processing search_11 & run: 1 & example: 2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_12 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 13
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_13 & run: 1 & example: 1
+processing search_13 & run: 1 & example: 2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_14 & run: 1 & example: 1
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 15
+	at SLMain.main(SLMain.java:63)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing search_15 & run: 1 & example: 1
+processing search_15 & run: 1 & example: 2
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing fg_max2 & run: 1 & example: 1
+processing fg_max2 & run: 1 & example: 2
+processing fg_max2 & run: 1 & example: 3
+processing fg_max2 & run: 1 & example: 4
+processing fg_max3 & run: 1 & example: 1
+processing fg_max3 & run: 1 & example: 2
+processing fg_max3 & run: 1 & example: 3
+processing fg_max3 & run: 1 & example: 4
+processing fg_max3 & run: 1 & example: 5
+timeout: the monitored command dumped core
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: float division by zero
+processing fg_max4 & run: 1 & example: 1
+processing fg_max4 & run: 1 & example: 2
+processing fg_max4 & run: 1 & example: 3
+processing fg_max4 & run: 1 & example: 4
