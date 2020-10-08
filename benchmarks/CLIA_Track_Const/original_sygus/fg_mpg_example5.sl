@@ -3,7 +3,7 @@
 (synth-fun eq1 ( (x Int) (y Int)  ) Int ((Start Int (x y  6
              (+ Start Start)
              (ite StartBool Start Start)))
- (StartBool Bool (           (not StartBool) (or StartBool)       (>= Start Start) (and StartBool StartBool) ))
+ (StartBool Bool (           (not StartBool)       (>= Start Start) (and StartBool StartBool) ))
 ))
 
 (define-fun iteB (( b1 Bool ) (b2 Bool ) (b3 Bool )) Bool ( or ( and b1 b2 ) ( and (not b1 ) b3 ) ) )

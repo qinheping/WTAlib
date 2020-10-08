@@ -3,7 +3,7 @@
   3
              (+ Start Start)
              (ite StartBool Start Start)))
- (StartBool Bool (           (not StartBool) (or StartBool)       (>= Start Start) (and StartBool StartBool) ))
+ (StartBool Bool (           (not StartBool)     (>= Start Start) (and StartBool StartBool) ))
 ))
 (declare-var x1 Int)
 (declare-var x2 Int)

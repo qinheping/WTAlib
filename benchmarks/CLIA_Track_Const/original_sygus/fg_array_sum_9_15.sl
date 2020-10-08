@@ -4,7 +4,7 @@
 		y1 y2 y3 y4 y5 y6 y7 y8 y9
              (+ Start Start)
              (ite StartBool Start Start)))
- (StartBool Bool (           (not StartBool) (or StartBool)       (>= Start Start) (and StartBool StartBool) ))
+ (StartBool Bool (           (not StartBool)       (>= Start Start) (and StartBool StartBool) ))
 ))
 (declare-var x1 Int)
 (declare-var x2 Int)
