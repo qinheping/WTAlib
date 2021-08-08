@@ -37,5 +37,5 @@ Finally, you can run Nay-SL with three arguments
 2. `num_e` a number indicating which example file you choose. Example: `num_e`=1 means that the file `example_1.txt` is chosen.
 3. `num_i` a number indicating how many examples you want to use in the file. Example: `num_i`=1 means that you want to use the first example in the example file.
 ```
-java -ea -Djava.library.path=../../../lib SLMain ../../../benchmarks/CLIA_Track_PLUS_Pos/mpg_guard1/ 1 1
+java -cp .:/usr/local/lib/antlr-4.9.2-complete.jar:../../../lib/CVC4-1.8.0.jar:../../..lib/com.microsoft.z3.jar -ea -Djava.library.path=../../../lib SLMain ../../../benchmarks/CLIA_Track_PLUS_Pos/mpg_guard1/ 1 1
 ```
