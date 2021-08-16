@@ -1,5 +1,7 @@
-import edu.nyu.acsys.CVC4.ExprManager;
-import edu.nyu.acsys.CVC4.SmtEngine;
+
+import edu.stanford.CVC4.*;
+
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -16,7 +18,7 @@ public class SLMain {
 	// input file path
         String path = args[0];
 	// number of examples
-        int numEx = Integer.parseInt(args[1]);
+        int numEx = java.lang.Integer.parseInt(args[1]);
 	
 	// read and parse grammar
         String grammarString;
@@ -60,18 +62,18 @@ public class SLMain {
         else
             scanner = new Scanner(new File(path+"/example"+args[2]+".txt"));
         String[] var_array = scanner.nextLine().split(" ");
-        Vector<Integer> spec = new Vector<>();
-        Map<String,Vector<Integer>> inputExMap = new HashMap<>();
+        Vector<java.lang.Integer> spec = new Vector<>();
+        Map<String,Vector<java.lang.Integer>> inputExMap = new HashMap<>();
 	
 	// add spec from examples
         for(int i = 0; i < numEx; i++){
             String[] line = scanner.nextLine().replace("\t"," ").split(" ");
             for(int j = 0; j < line.length-1; j++){
                 if(!inputExMap.keySet().contains(var_array[j]))
-                    inputExMap.put(var_array[j],new Vector<Integer>());
-                inputExMap.get(var_array[j]).add(Integer.parseInt(line[j]));
+                    inputExMap.put(var_array[j],new Vector<java.lang.Integer>());
+                inputExMap.get(var_array[j]).add(java.lang.Integer.parseInt(line[j]));
             }
-            spec.add(Integer.parseInt(line[line.length-1]));
+            spec.add(java.lang.Integer.parseInt(line[line.length-1]));
         }
 
         PrintStream original = System.out;

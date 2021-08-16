@@ -1,6 +1,5 @@
 package utilities;
 
-import com.sun.javafx.css.Rule;
 import parser.GTermNode;
 import parser.GrammarNode;
 import parser.NTNode;
